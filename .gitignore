@@ -1,0 +1,11 @@
+# 维护者本地备忘（不上传 GitHub，仅本地保留）
+DEVELOPMENT.md
+
+# 备份与临时文件
+*.bak
+*.md.bak
+temp/
+node_modules/
+
+# 本地发布包目录（不纳入源码仓库）
+发布/

@@ -1,0 +1,32 @@
+{
+  "version": "2026-08-20.4",
+  "updatedAt": "2026-08-20",
+  "official": [
+    {
+      "title": "DeepSeek Harness 官网",
+      "url": "https://www.deepseek.com/harness/"
+    },
+    {
+      "title": "DeepSeek 开放平台（官方 API 控制台）",
+      "url": "https://platform.deepseek.com"
+    },
+    {
+      "title": "DeepSeek API 文档（官方 API 介绍资料）",
+      "url": "https://api-docs.deepseek.com/zh-cn"
+    },
+    {
+      "title": "到智谱开放平台获取零费用 API Key",
+      "url": "https://open.bigmodel.cn"
+    }
+  ],
+  "selected": [
+    {
+      "title": "DSH 插件精选（awesome 站）",
+      "url": "https://awesome-dsh-plugin.com/zh"
+    },
+    {
+      "title": "DSH 社区插件（GitHub 站）",
+      "url": "https://github.com/topics/dsh-plugin"
+    }
+  ]
+}
