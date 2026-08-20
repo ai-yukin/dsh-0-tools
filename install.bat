@@ -18,6 +18,25 @@ echo.
 echo ===== dsh-0-tools 一键安装 =====
 echo.
 
+rem ---------- 前置检查：DSH 本体是否已安装 ----------
+where dsh >nul 2>nul
+if errorlevel 1 (
+    echo.
+    echo [警告] 未检测到 DSH（DeepSeek Harness）！
+    echo 本插件是 DSH 的插件，需要先安装 DSH 本体才能继续。
+    echo.
+    echo 二选一安装 DSH：
+    echo   方式 A（免安装，推荐新手）：npx @deepseek-ai/dsh web
+    echo   方式 B（全局安装）：        npm install -g @deepseek-ai/dsh
+    echo.
+    echo 安装好 DSH 后，重新运行本脚本即可。
+    echo.
+    pause
+    exit /b 1
+)
+echo     已检测到 DSH，继续安装插件...
+echo.
+
 set "PLUGIN_SRC=%~dp0"
 if "%PLUGIN_SRC:~-1%"=="\" set "PLUGIN_SRC=%PLUGIN_SRC:~0,-1%"
 set "PROFILE_DIR=%USERPROFILE%\.dsh\profiles\web"
