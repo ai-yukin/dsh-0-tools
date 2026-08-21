@@ -31,7 +31,15 @@ AIGC:
 
 ## 截图 Screenshots
 
-> 截图将在正式发布前补充（见 CONTRIBUTING.md / GitHub Release）。
+![DSH 主界面，点击左下角"点此处配置API免费模型"](screenshots/01_home_config.png)
+
+![按提示步骤注册获取API免费模型，并复制粘贴API Key，再点"一键配置免费模型"](screenshots/02_config_modal.png)
+
+![DSH 主界面，点击左下角"帮助"，将进入"零号工具"的帮助中心](screenshots/03_help_center.png)
+
+!["零号工具"的帮助中心分为三个部分：零门槛·小白帮助中心、零费用·API配置中心、零失控·费用管控中心](screenshots/04_zero_tools_sections.png)
+
+!["零号工具"安装后，当你选择DeepSeek系列模型，将依据DeepSeek官方API调用计价高峰/空闲时段不同提示用户"当前高峰时段API为原价"或"当前空闲时段API为半价"](screenshots/05_pricing_badge.png)
 
 ## 安装 Install
 
