@@ -18,7 +18,7 @@ AIGC:
 > 面向完全不懂 API / YAML / 环境变量的新手：**双击、粘贴、直接用**。
 > For users who know nothing about API / YAML / env vars: double-click, paste, and go.
 
-当前版本 Current version: **v1.3.0** · 依赖基线 Base: DSH `0.1.0-rc.7`
+当前版本 Current version: **v1.3.1** · 兼容范围 Compatible: DSH `0.1.0-rc.7` ～ `0.1.1-rc.2`
 
 ## 功能一览 Features
 
@@ -50,6 +50,17 @@ DSH 主界面，点击左下角"帮助"，将进入"零号工具"的帮助中心
 ![DeepSeek 系列模型计价提示](screenshots/05_pricing_badge.png)
 
 "零号工具"安装后，当你选择DeepSeek系列模型，将依据DeepSeek官方API调用计价高峰/空闲时段不同提示用户"当前高峰时段API为原价"或"当前空闲时段API为半价"
+
+## 兼容性 Compatibility
+
+本插件针对以下 DSH 版本开发与验证：
+
+| DSH 版本 | 状态 Status |
+|------|------|
+| `0.1.0-rc.7` | 开发基线（`peerDependencies` 声明 `^0.1.0-rc.7`）Development baseline |
+| `0.1.1-rc.2` | 已实测适配通过（页面加载 / 计价条 / 模型选择器 / 设置页签）Tested & verified |
+
+> 安装前请确认 DSH 版本在 `0.1.0-rc.7` ～ `0.1.1-rc.2` 范围内（查看最新版本：`npm view @deepseek-ai/dsh versions`）。DSH 发布新大版本（如 `0.2.x`）后，请先查看本插件 Release 说明确认适配，再决定是否升级。
 
 ## 安装 Install
 
