@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-24.1",
-  "updatedAt": "2026-08-24",
+  "version": "2026-08-25.1",
+  "updatedAt": "2026-08-25",
   "official": [
     {
       "title": "DeepSeek Harness 官网",
@@ -20,6 +20,11 @@
     }
   ],
   "selected": [
+    {
+      "kind": "openrouter",
+      "badge": "New",
+      "title": "热门免费模型Ox-Alpha一键安装API Key"
+    },
     {
       "title": "DSH Plugin 广场（腾讯站）",
       "url": "https://skillhub.cn/plugins"
