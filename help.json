@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-20.4",
-  "updatedAt": "2026-08-20",
+  "version": "2026-08-24.1",
+  "updatedAt": "2026-08-24",
   "official": [
     {
       "title": "DeepSeek Harness 官网",
@@ -20,6 +20,10 @@
     }
   ],
   "selected": [
+    {
+      "title": "DSH Plugin 广场（腾讯站）",
+      "url": "https://skillhub.cn/plugins"
+    },
     {
       "title": "DSH 插件精选（awesome 站）",
       "url": "https://awesome-dsh-plugin.com/zh"
