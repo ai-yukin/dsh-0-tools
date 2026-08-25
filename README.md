@@ -18,13 +18,13 @@ AIGC:
 > 面向完全不懂 API / YAML / 环境变量的新手：**双击、粘贴、直接用**。
 > For users who know nothing about API / YAML / env vars: double-click, paste, and go.
 
-当前版本 Current version: **v1.3.1** · 兼容范围 Compatible: DSH `0.1.0-rc.7` ～ `0.1.1-rc.2`
+当前版本 Current version: **v1.3.2** · 兼容范围 Compatible: DSH `0.1.0-rc.7` ～ `0.1.1-rc.2`
 
 ## 功能一览 Features
 
 | 位置 Position | 内容 Content | 说明 Description |
 |------|------|------|
-| 左下角（未配置时） | 蓝色按钮「点此处配置API免费模型」 | 一键接入智谱双免费模型（文本 + 图片） |
+| 左下角（未配置时） | 蓝色按钮「点此处配置API免费模型」 | 智谱与 OpenRouter 均未接入时才显示，接入任一即自动隐藏；支持一键接入智谱双免费模型（文本 + 图片） |
 | 左下角（选中 DeepSeek 系列大模型时） | 高峰 / 空闲计价提醒条 | 实时提示当前 DeepSeek 计费时段是API原价的高峰时段，还是API半价的空闲时段 |
 | 左下角（常驻） | 「帮助」 | 包括「零门槛·小白帮助中心」的官方资料、精选资料等内容，在线更新、离线兜底 |
 | 帮助中心精选资料（置顶） | 绿标 New「热门免费模型Ox-Alpha一键安装API Key」 | 粘贴 OpenRouter Key 一键接入当前热门免费大模型 Ox-Alpha（100万上下文、13.1万输出、图文输入），并自动设为默认模型 |
