@@ -1,16 +1,3 @@
----
-AIGC:
-    Label: "1"
-    ContentProducer: 001191440300708461136T1XGW3
-    ProduceID: d8ac214b9331b89602718b880fbbc556_985f344c9c7f11f19046525400287e28
-    ReservedCode1: NyHe7HeP7veKE9JC0KF+OdwdtQ++tL1OxYA5iRIWL3LZ7ny0dv6givDAgnmYv9B1oBYqQPh90zShYrQM0jdWjRXNc3/fWTvaxG9CFKM2m1S19oddaSw80VQ2pP/GXdiAgCAgLJvWAeoyyCJBLVOqDBfKqF/MEK8rdaLKTN5ry7RTnmMRaZGqM/5RW08=
-    ContentPropagator: 001191440300708461136T1XGW3
-    PropagateID: d8ac214b9331b89602718b880fbbc556_985f344c9c7f11f19046525400287e28
-    ReservedCode2: NyHe7HeP7veKE9JC0KF+OdwdtQ++tL1OxYA5iRIWL3LZ7ny0dv6givDAgnmYv9B1oBYqQPh90zShYrQM0jdWjRXNc3/fWTvaxG9CFKM2m1S19oddaSw80VQ2pP/GXdiAgCAgLJvWAeoyyCJBLVOqDBfKqF/MEK8rdaLKTN5ry7RTnmMRaZGqM/5RW08=
----
-
-
-
 # dsh-0-tools 零号工具 / Zero Tools
 
 **DeepSeek Harness 小白零门槛零费用套件 · A beginner-friendly, zero-cost toolkit for DeepSeek Harness (DSH)**

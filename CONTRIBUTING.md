@@ -1,14 +1,3 @@
----
-AIGC:
-    Label: "1"
-    ContentProducer: 001191440300708461136T1XGW3
-    ProduceID: d8ac214b9331b89602718b880fbbc556_9918f29f9c7f11f184de525400f8a581
-    ReservedCode1: kb65I4y9uBwA808eX0ETr4eVb4oh1mUrS7HZsQbV/1vCZK6Bq6GB7VHsW5LmL7UwDbdXWezKv/Y515SPHTYkTHbKpO7dXTLYWyblkVbdUgGabo6OUOa/ay3i6QUqqThTnlw2qf0gJQCCV3ixII1ZLmdSr8qweHPyq+z3h/UUSY7IT2vJRkmw3CAtyOM=
-    ContentPropagator: 001191440300708461136T1XGW3
-    PropagateID: d8ac214b9331b89602718b880fbbc556_9918f29f9c7f11f184de525400f8a581
-    ReservedCode2: kb65I4y9uBwA808eX0ETr4eVb4oh1mUrS7HZsQbV/1vCZK6Bq6GB7VHsW5LmL7UwDbdXWezKv/Y515SPHTYkTHbKpO7dXTLYWyblkVbdUgGabo6OUOa/ay3i6QUqqThTnlw2qf0gJQCCV3ixII1ZLmdSr8qweHPyq+z3h/UUSY7IT2vJRkmw3CAtyOM=
----
-
 # 贡献指南 Contributing
 
 感谢你愿意参与 **dsh-0-tools** 的开发。请先阅读本文件与 README，了解项目定位与维护约定，再开始改动。
