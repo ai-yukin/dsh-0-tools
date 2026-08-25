@@ -1,5 +1,5 @@
 {
-  "version": "2026-08-25.1",
+  "version": "2026-08-25.2",
   "updatedAt": "2026-08-25",
   "official": [
     {
@@ -21,11 +21,6 @@
   ],
   "selected": [
     {
-      "kind": "openrouter",
-      "badge": "New",
-      "title": "热门免费模型Ox-Alpha一键安装API Key"
-    },
-    {
       "title": "DSH Plugin 广场（腾讯站）",
       "url": "https://skillhub.cn/plugins"
     },
@@ -36,6 +31,29 @@
     {
       "title": "DSH 社区插件（GitHub 站）",
       "url": "https://github.com/topics/dsh-plugin"
+    }
+  ],
+  "freeModels": [
+    {
+      "type": "zai",
+      "title": "智谱 GLM 双免费模型一键配置",
+      "desc": "智谱 Flash 系列永久免费：GLM-4.7-Flash（文本）+ GLM-4V-Flash（图片理解），不耗余额，足够日常使用。粘贴 API Key 一键接入。",
+      "keysLabel": "智谱开放平台获取 Key ↗",
+      "keysUrl": "https://open.bigmodel.cn",
+      "keyPlaceholder": "粘贴你的智谱 API Key",
+      "note": "高峰时段智谱免费模型可能报错（厂商侧服务过载，与账号无关），稍后重试或空闲时段使用更顺畅。"
+    },
+    {
+      "type": "openrouter",
+      "title": "OpenRouter Ox-Alpha 免费模型一键配置",
+      "badge": "New",
+      "desc": "Ox-Alpha 是 OpenRouter 上当前最热门的免费大模型（匿名预览版）：100 万字符超长上下文、单次最多输出 13.1 万字符、支持文本与图片输入，当前完全免费。",
+      "keysLabel": "OpenRouter 获取 Key（注册免绑卡）↗",
+      "keysUrl": "https://openrouter.ai/keys",
+      "keyPlaceholder": "粘贴你的 OpenRouter API Key（sk-or- 开头）",
+      "keyPrefix": "sk-or-",
+      "endpoint": "/configure-openrouter",
+      "note": "匿名预览模型：官方无硬性截止日期，随时可能转收费、限流或下线；你的输入会被第三方留存，请勿提交敏感信息。"
     }
   ]
 }
