@@ -18,24 +18,74 @@ echo.
 echo ===== dsh-0-tools 一键安装 =====
 echo.
 
-rem ---------- 前置检查：DSH 本体是否已安装 ----------
+rem ---------- 前置检查：DSH 本体是否已安装（未装则自动安装） ----------
 where dsh >nul 2>nul
 if errorlevel 1 (
     echo.
-    echo [警告] 未检测到 DSH（DeepSeek Harness）！
-    echo 本插件是 DSH 的插件，需要先安装 DSH 本体才能继续。
+    echo [提示] 未检测到 DSH（DeepSeek Harness），开始自动安装...
     echo.
-    echo 二选一安装 DSH：
-    echo   方式 A（免安装，推荐新手）：npx @deepseek-ai/dsh web
-    echo   方式 B（全局安装）：        npm install -g @deepseek-ai/dsh
+
+    rem 检测 Node.js（DSH 依赖 Node 环境）
+    where node >nul 2>nul
+    if errorlevel 1 (
+        echo [提示] 未检测到 Node.js，尝试用 winget 自动安装 Node.js LTS...
+        where winget >nul 2>nul
+        if errorlevel 1 (
+            echo [错误] 本机没有 winget，无法自动安装 Node.js。
+            echo       请手动到 https://nodejs.org/ 下载 LTS 版安装后，重新运行本脚本。
+            echo.
+            pause
+            exit /b 1
+        )
+        winget install --id OpenJS.NodeJS.LTS -e --accept-package-agreements --accept-source-agreements
+        if errorlevel 1 (
+            echo [错误] Node.js 自动安装失败。
+            echo       请手动到 https://nodejs.org/ 下载 LTS 版安装后，重新运行本脚本。
+            echo.
+            pause
+            exit /b 1
+        )
+        rem 刷新 PATH，定位 npm（winget 安装的 Node 常见路径）
+        if exist "%ProgramFiles%\nodejs\npm.cmd" set "PATH=%ProgramFiles%\nodejs;%PATH%"
+        if exist "%LOCALAPPDATA%\Programs\nodejs\npm.cmd" set "PATH=%LOCALAPPDATA%\Programs\nodejs;%PATH%"
+        where npm >nul 2>nul
+        if errorlevel 1 (
+            echo [提示] Node.js 已安装，但当前窗口未刷新环境变量。
+            echo       请关闭本窗口，重新打开 cmd 后再次运行本脚本。
+            echo.
+            pause
+            exit /b 1
+        )
+    )
+
+    echo [1] 正在通过 npm 全局安装 DSH（@deepseek-ai/dsh），请稍候...
+    call npm install -g @deepseek-ai/dsh
+    if errorlevel 1 (
+        echo.
+        echo [错误] DSH 自动安装失败。请手动执行以下任一命令后，重新运行本脚本：
+        echo     npm install -g @deepseek-ai/dsh
+        echo     国内网络较慢时可改用镜像：npm install -g @deepseek-ai/dsh --registry=https://registry.npmmirror.com
+        echo.
+        pause
+        exit /b 1
+    )
+
+    rem 复核安装结果
+    where dsh >nul 2>nul
+    if errorlevel 1 (
+        echo.
+        echo [提示] DSH 已安装，但当前窗口尚未识别到 dsh 命令（PATH 未刷新）。
+        echo       请关闭本窗口，重新打开 cmd 后再次运行本脚本。
+        echo.
+        pause
+        exit /b 1
+    )
+    echo      DSH 安装成功，继续安装插件...
     echo.
-    echo 安装好 DSH 后，重新运行本脚本即可。
+) else (
+    echo     已检测到 DSH，跳过自动安装。
     echo.
-    pause
-    exit /b 1
 )
-echo     已检测到 DSH，继续安装插件...
-echo.
 
 set "PLUGIN_SRC=%~dp0"
 if "%PLUGIN_SRC:~-1%"=="\" set "PLUGIN_SRC=%PLUGIN_SRC:~0,-1%"
@@ -53,7 +103,7 @@ if exist "%TARGET%" (
 )
 
 echo.
-echo [2/4] 安装 dsh-0-tools 到 dsh web profile...
+echo [2/5] 安装 dsh-0-tools 到 dsh web profile...
 rem 优先使用 dsh plugin 命令（会调用 pnpm）；失败则直接复制源码目录
 dsh plugin --profile web add "%PLUGIN_SRC%"
 if %errorlevel% neq 0 (
@@ -63,13 +113,25 @@ if %errorlevel% neq 0 (
 )
 
 echo.
-echo [3/4] 启动 dsh web（新窗口，保留日志）...
+echo [3/5] 启动 dsh web（新窗口，保留日志）...
 start "dsh web" cmd /c "dsh web"
 
 echo.
-echo [4/4] 等待 6 秒后打开浏览器...
+echo [4/5] 等待 6 秒后打开浏览器...
 timeout /T 6 /NOBREAK >nul
 start http://127.0.0.1:3080/
+
+echo.
+echo [5/5] 创建桌面快捷方式「DeepSeek Harness」...
+set "DESKTOP=%USERPROFILE%\Desktop"
+if not exist "%DESKTOP%" if exist "%USERPROFILE%\OneDrive\Desktop" set "DESKTOP=%USERPROFILE%\OneDrive\Desktop"
+if not exist "%DESKTOP%" set "DESKTOP=%PUBLIC%\Desktop"
+powershell -NoProfile -Command "$ws=New-Object -ComObject WScript.Shell; $s=$ws.CreateShortcut('%DESKTOP%\DeepSeek Harness.lnk'); $s.TargetPath='%SystemRoot%\System32\cmd.exe'; $s.Arguments='/k ""dsh web & timeout /t 6 /NOBREAK >nul & start http://127.0.0.1:3080/""'; $s.WorkingDirectory='%USERPROFILE%'; $s.IconLocation='%SystemRoot%\System32\shell32.dll,220'; $s.Description='启动 DeepSeek Harness (dsh web)'; $s.Save()"
+if exist "%DESKTOP%\DeepSeek Harness.lnk" (
+    echo      已创建桌面快捷方式：「%DESKTOP%\DeepSeek Harness.lnk」
+) else (
+    echo [警告] 桌面快捷方式创建失败，不影响使用（可从命令行运行 dsh web）
+)
 
 echo.
 echo ===== 安装完成 =====
