@@ -128,4 +128,3 @@ dsh-0-tools/
 ## 许可证
 
 [MIT](LICENSE) © 2026 ai-yukin
-*（内容由AI生成，仅供参考）*

@@ -30,4 +30,3 @@
 - 版本号遵循 semver，发布目录：`发布/dsh-0-tools-vX.Y.Z/`。
 - 正式发布前补齐 README 截图，并在 GitHub Release 中说明改动。
 - 发布后记得执行帮助中心 JSON 托管（将 `help.json` 推送到 GitHub Pages 仓库 `ai-yukin/dsh-0-tools`，路径 `dsh-0-tools/help.json`）。
-*（内容由AI生成，仅供参考）*
