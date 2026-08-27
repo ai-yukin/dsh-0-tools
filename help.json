@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-25.2",
-  "updatedAt": "2026-08-25",
+  "version": "2026-08-27.1",
+  "updatedAt": "2026-08-27",
   "official": [
     {
       "title": "DeepSeek Harness 官网",
@@ -42,18 +42,13 @@
       "keysUrl": "https://open.bigmodel.cn",
       "keyPlaceholder": "粘贴你的智谱 API Key",
       "note": "高峰时段智谱免费模型可能报错（厂商侧服务过载，与账号无关），稍后重试或空闲时段使用更顺畅。"
-    },
+    }
+  ],
+  "retired": [
     {
       "type": "openrouter",
-      "title": "OpenRouter Ox-Alpha 免费模型一键配置",
-      "badge": "New",
-      "desc": "Ox-Alpha 是 OpenRouter 上当前最热门的免费大模型（匿名预览版）：100 万字符超长上下文、单次最多输出 13.1 万字符、支持文本与图片输入，当前完全免费。",
-      "keysLabel": "OpenRouter 获取 Key（注册免绑卡）↗",
-      "keysUrl": "https://openrouter.ai/keys",
-      "keyPlaceholder": "粘贴你的 OpenRouter API Key（sk-or- 开头）",
-      "keyPrefix": "sk-or-",
-      "endpoint": "/configure-openrouter",
-      "note": "匿名预览模型：官方无硬性截止日期，随时可能转收费、限流或下线；你的输入会被第三方留存，请勿提交敏感信息。"
+      "title": "OpenRouter Ox-Alpha",
+      "reason": "该免费模型已失效（官方 404 下线），不再支持一键配置；若此前已接入，建议一键清理其配置与密钥。"
     }
   ]
 }
