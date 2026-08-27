@@ -1,14 +1,3 @@
----
-AIGC:
-    Label: "1"
-    ContentProducer: 001191440300708461136T1XGW3
-    ProduceID: d8ac214b9331b89602718b880fbbc556_81a5c13fa1d911f1a413525400287e28
-    ReservedCode1: 06JR7Qg89Gy8qgyFaq3+Iu6h3IkXinzceyYtIhZFzsPfXqRoFBJul0wKlliN07vD2Ta4wzkEmgClObZ0xMrWBeusBK1dzAuZwRPBwoEIvOBWkCnhy+8BfZObzPL1tBj7g79au8mj8wzOfmzoprnQIZ62sa/CohLAzDYZJZvavOrBS7dbTS7QaMlgVX4=
-    ContentPropagator: 001191440300708461136T1XGW3
-    PropagateID: d8ac214b9331b89602718b880fbbc556_81a5c13fa1d911f1a413525400287e28
-    ReservedCode2: 06JR7Qg89Gy8qgyFaq3+Iu6h3IkXinzceyYtIhZFzsPfXqRoFBJul0wKlliN07vD2Ta4wzkEmgClObZ0xMrWBeusBK1dzAuZwRPBwoEIvOBWkCnhy+8BfZObzPL1tBj7g79au8mj8wzOfmzoprnQIZ62sa/CohLAzDYZJZvavOrBS7dbTS7QaMlgVX4=
----
-
 # dsh-0-tools 零号工具（No.0 Tools）
 
 [简体中文](./README.md) · [English](./README.en.md)

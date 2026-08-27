@@ -1,14 +1,3 @@
----
-AIGC:
-    Label: "1"
-    ContentProducer: 001191440300708461136T1XGW3
-    ProduceID: d8ac214b9331b89602718b880fbbc556_82f241c3a1d911f193c6525400f8a581
-    ReservedCode1: lHk/CSGf6lMFvP15ZVIT6+14JtOTyigHg830sjca5v3wa+Oo/kc5MvdU3lhVOfsdPXFFV7dR7rcHhRCGl5QG5VMJPf6uuGRj8BGFy3bnrjhytL3jU8F/pU79xPiLNxjVwZa5laoqMzQKod4qeXRhSR7wMojFKYgPixAea5WodXdyPTQ8NYeK5eCHM+s=
-    ContentPropagator: 001191440300708461136T1XGW3
-    PropagateID: d8ac214b9331b89602718b880fbbc556_82f241c3a1d911f193c6525400f8a581
-    ReservedCode2: lHk/CSGf6lMFvP15ZVIT6+14JtOTyigHg830sjca5v3wa+Oo/kc5MvdU3lhVOfsdPXFFV7dR7rcHhRCGl5QG5VMJPf6uuGRj8BGFy3bnrjhytL3jU8F/pU79xPiLNxjVwZa5laoqMzQKod4qeXRhSR7wMojFKYgPixAea5WodXdyPTQ8NYeK5eCHM+s=
----
-
 # dsh-0-tools No.0 Tools
 
 [English](./README.en.md) · [简体中文](./README.md)
