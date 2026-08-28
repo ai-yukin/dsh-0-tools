@@ -6,10 +6,12 @@ rem ============================================================
 rem dsh-0-tools 一键安装脚本（install.bat）
 rem ============================================================
 rem 作用：
+rem   0. 前置检查：DSH 若正在运行则提示（避免端口占用/热加载不生效）
 rem   1. 备份当前 ~/.dsh/profiles/web/node_modules/dsh-0-tools（如有）
 rem   2. 把本目录（本地源码）安装到 dsh web profile
 rem   3. 启动 dsh web
 rem   4. 浏览器打开 http://127.0.0.1:3080
+rem   5. 创建桌面快捷方式「DeepSeek Harness」
 rem
 rem 安装前请确保：没有正在运行的 dsh web（否则 3080 被占用，新插件不生效）
 rem ============================================================
@@ -93,7 +95,22 @@ set "PROFILE_DIR=%USERPROFILE%\.dsh\profiles\web"
 set "TARGET=%PROFILE_DIR%\node_modules\dsh-0-tools"
 set "BAK=%TARGET%.bak"
 
-echo [1/4] 备份当前已安装的插件（如有）...
+rem ---------- 前置检查：DSH 是否正在运行（运行中直接安装会因端口占用/热加载不生效） ----------
+netstat -ano | findstr /R /C:":3080 .*LISTENING" >nul 2>nul
+if not errorlevel 1 (
+    echo.
+    echo [提示] 检测到 dsh web 正在运行（端口 3080 已被占用）。
+    echo       继续安装可能导致新插件不生效或端口冲突。
+    echo       建议先关闭运行中的 DeepSeek Harness 窗口，再重新运行本脚本。
+    choice /C YN /M "仍要继续安装吗？[Y=继续 N=退出]"
+    if errorlevel 2 (
+        echo 已退出，未做任何改动。
+        pause
+        exit /b 0
+    )
+)
+
+echo [1/5] 备份当前已安装的插件（如有）...
 if exist "%BAK%" rmdir /S /Q "%BAK%" 2>nul
 if exist "%TARGET%" (
     xcopy /E /I /H /Y "%TARGET%" "%BAK%" >nul
@@ -104,12 +121,24 @@ if exist "%TARGET%" (
 
 echo.
 echo [2/5] 安装 dsh-0-tools 到 dsh web profile...
-rem 优先使用 dsh plugin 命令（会调用 pnpm）；失败则直接复制源码目录
+rem 优先使用 dsh plugin 命令（会调用 pnpm）；失败则白名单复制插件运行所需文件
+rem （v1.5.0：不再整目录复制——旧回退方案会把 .git、screenshots 等无关内容
+rem  一并拷进 node_modules，白白占用空间且可能干扰包管理器）
 dsh plugin --profile web add "%PLUGIN_SRC%"
 if %errorlevel% neq 0 (
-    echo      dsh plugin add 失败，改用直接复制...
+    echo      dsh plugin add 失败，改用白名单直接复制...
     rmdir /S /Q "%TARGET%" 2>nul
-    xcopy /E /I /H /Y "%PLUGIN_SRC%" "%TARGET%" >nul
+    mkdir "%TARGET%" 2>nul
+    mkdir "%TARGET%\lib" 2>nul
+    xcopy /Y "%PLUGIN_SRC%\lib\index.js" "%TARGET%\lib\" >nul
+    xcopy /Y "%PLUGIN_SRC%\lib\client.js" "%TARGET%\lib\" >nul
+    xcopy /Y "%PLUGIN_SRC%\cordis.patch.yml" "%TARGET%\" >nul
+    xcopy /Y "%PLUGIN_SRC%\package.json" "%TARGET%\" >nul
+    xcopy /Y "%PLUGIN_SRC%\help.json" "%TARGET%\" >nul
+    xcopy /Y "%PLUGIN_SRC%\LICENSE" "%TARGET%\" >nul
+    if exist "%PLUGIN_SRC%\README.md" xcopy /Y "%PLUGIN_SRC%\README.md" "%TARGET%\" >nul
+    if exist "%PLUGIN_SRC%\README.en.md" xcopy /Y "%PLUGIN_SRC%\README.en.md" "%TARGET%\" >nul
+    if exist "%PLUGIN_SRC%\install.bat" xcopy /Y "%PLUGIN_SRC%\install.bat" "%TARGET%\" >nul
 )
 
 echo.
