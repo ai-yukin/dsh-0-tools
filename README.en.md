@@ -16,7 +16,7 @@ No.0 Tools is designed for users with no programming background who are trying D
 ## Version & Compatibility
 
 - Current version: **v1.5.0**
-- Compatible DSH versions: `0.1.0-rc.7` – `0.1.1-rc.2`
+- Compatible DSH versions: **≥ `0.1.1`** (v1.5.0 switched to DSH's official config channel, raising the minimum supported version — see the compatibility notice below)
 - **System requirements**: Windows 10 / Windows 11 only. macOS and Linux are not supported at this time.
 
 ## Installation & Usage
@@ -81,18 +81,17 @@ This plugin is developed and verified against the following DSH versions:
 
 | DSH Version | Status |
 |------|------|
-| `0.1.0-rc.7` | Development baseline (peerDependency `^0.1.0-rc.7`) |
-| `0.1.1-rc.2` | Tested & verified (page load / pricing bar / model picker / settings tab) |
+| `0.1.1-rc.2` | Tested & verified (page load / pricing bar / model picker / settings tab / official config channel) |
 
-> Before installing, make sure your DSH version is within `0.1.0-rc.7` – `0.1.1-rc.2` (check the latest version with `npm view @deepseek-ai/dsh versions`). If DSH releases a new major version (e.g., `0.2.x`), check this plugin's Release notes for compatibility before upgrading.
+> **v1.5.0 compatibility notice**: This version uses DSH's official same-origin config channel (`/api` RPC), relying on its atomic writes, input validation and revision fencing. The minimum supported DSH version is therefore **raised to `0.1.1`**. The previously declared `0.1.0-rc.7` baseline was never really verified and is no longer promised. If your DSH is older than `0.1.1`, upgrade DSH first before installing this plugin (check your version with `dsh --version`; check the latest with `npm view @deepseek-ai/dsh versions`). If DSH releases a new major version (e.g., `0.2.x`), check this plugin's Release notes for compatibility before upgrading.
 
 ## Project Structure
 
 ```
 dsh-0-tools/
 ├── lib/
-│   ├── index.js     # host side: loopback service on 127.0.0.1:3090~3099 (/status /configure /uninstall)
-│   └── client.js    # browser side: bottom-left toolbar + "No.0 Tools" settings tab
+│   ├── index.js     # host side: no-op stub since v1.5.0 (config I/O moved to the browser half via the official channel)
+│   └── client.js    # browser side: bottom-left toolbar + "No.0 Tools" settings tab + config read/write via official /api
 ├── cordis.patch.yml # web profile injection declaration
 ├── package.json
 ├── help.json        # online data source for the help center (hosted on GitHub Pages)
@@ -101,12 +100,14 @@ dsh-0-tools/
 
 ## How It Works
 
-- **Config status detection**: The host side reads `~/.dsh/settings.yaml` and checks whether `llm-pi-ai.providers.zai` exists, using it as the source of truth; the browser side polls `GET /status` every 5 seconds.
-- **One-click config**: `POST /configure` writes the `ZAI_API_KEY` credential and the `llm-pi-ai.providers.zai` provider block, and switches the default model to Zhipu `glm-4.7-flash`.
-- **One-click uninstall**: `POST /uninstall` removes the zai provider block and credential, and switches the default model back to DeepSeek official `deepseek-official / deepseek-v4-flash`.
-- **Stale-config cleanup**: The Config Center detects locally retained providers that have been retired/removed (e.g., a free model you once configured that is no longer available), shows a "stale residue" notice, and offers one-click cleanup so orphaned configs can always be removed.
+> **v1.5.0 architecture change**: Earlier versions (≤ v1.4.x) had the host side open a local `127.0.0.1:3090~3099` service and rewrite config files with regexes. That self-hosted service had no origin check (any local web page could trigger writes — proven exploitable in the security audit), and raw regex writes raced DSH's own atomic writes and silently dropped unknown fields. Since v1.5.0 all of it goes through **DSH's official same-origin config channel**, eliminating those security and data risks; the host side is now just an empty stub.
+
+- **Config status detection**: The browser side calls the official `settings.describe` + `credentials.describe` to check whether `llm-pi-ai.providers.zai` exists and whether its credential is configured, as the source of truth; it polls every 5 seconds to refresh the UI.
+- **One-click config**: Via the official channel in sequence — `credentials.set` writes the `ZAI_API_KEY` credential, `settings.mutate` writes the `llm-pi-ai.providers.zai` provider block, and `settings.update` switches the default model to Zhipu `glm-4.7-flash` using merge semantics (so user-set fields like `reasoningEffort` are preserved, not wiped).
+- **One-click uninstall**: Removes the zai provider block and its credential via the official channel; only if the default model previously pointed at zai does it restore the original default recorded before configuration, otherwise it leaves your current selection untouched.
+- **Stale-config cleanup**: The Config Center detects locally retained providers that have been retired/removed (dynamically reading each provider's `apiKeyEnv` instead of relying on a static local list), shows a "stale residue" notice, and offers one-click cleanup so orphaned configs can always be removed.
 - **Settings tab**: Injected via the `settings.section` slot (the same mechanism official plugins use), id `dsh-0-tools`, tab name "No.0 Tools".
-- **Help center**: Fetches `https://ai-yukin.github.io/dsh-0-tools/help.json` and compares versions; falls back to bundled data on failure. Both the installable model list and the retired model list are driven by this remote data, so adding or retiring models requires no plugin reinstall.
+- **Help center**: Fetches `https://ai-yukin.github.io/dsh-0-tools/help.json` and runs it through a unified `filterRemotePayload` sanitizer (URLs forced to https, text fields reject control chars/newlines, model ids and credential names pass character whitelists) before it reaches the UI or the config chain; falls back to bundled data on failure or non-compliant entries. Both the installable model list and the retired model list are driven by this remote data, so adding or retiring models requires no plugin reinstall.
 
 ## Disclaimer
 
