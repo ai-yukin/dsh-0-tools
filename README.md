@@ -17,14 +17,20 @@
 
 ## 当前版本与兼容范围
 
-- 当前版本：**v1.6.1**
+- 当前版本：**v1.7.0**
+- **v1.7.0 新增**：新增 macOS / Linux 一键安装脚本 `install.sh`，功能与 Windows 版 `install.bat` 完全对齐（自动装 Node.js / DSH、备份旧插件、安装插件、启动 DSH、打开浏览器、创建桌面快捷方式）。插件核心代码（lib/index.js + lib/client.js）本身为纯 JavaScript、平台无关，此前仅因缺少一键安装脚本而未正式支持 macOS/Linux。
 - **v1.6.1 修复**：修复页脚「点此处配置API免费模型」提示条的显隐逻辑——旧版只检查智谱是否配置，导致仅接入 OpenRouter 免费模型池时提示条仍错误显示；改为检查是否有任一免费模型已接入（智谱 / OpenRouter / 未来新增模型均适用）。
 - 兼容 DSH 版本：**≥ `0.1.1`**（v1.5.0 起改用 DSH 官方配置通道，最低兼容版本收缩，详见下方「兼容性」公告）
-- **系统要求**：仅支持 **Windows 10 / Windows 11** 系统；暂不支持 macOS（苹果电脑）和 Linux 系统。
+- **系统要求**：一键安装脚本支持 **Windows 10 / Windows 11**（`install.bat`）和 **macOS / Linux**（`install.sh`）；插件核心代码本身跨平台，已手动装好 DSH 的用户可通过 `dsh plugin --profile web add /path/to/dsh-0-tools` 手动安装。
 
 ## 安装与使用（图文步骤）
 
-### 第 1 步：双击运行 install.bat
+### 第 1 步：运行一键安装脚本
+
+- **Windows 用户**：双击运行 install.bat
+- **macOS / Linux 用户**：在终端中运行 chmod +x install.sh && ./install.sh
+
+#### Windows 版（install.bat）
 
 - 电脑**已经装好 DSH**：脚本会自动检测并跳过安装，直接完成本工具的安装；
 - 电脑**还没装 DSH**：脚本会自动扫描运行环境，补齐缺失的环境后自动安装 DSH；
@@ -98,7 +104,8 @@ dsh-0-tools/
 ├── cordis.patch.yml # web profile 注入声明
 ├── package.json
 ├── help.json        # 帮助中心在线数据源（托管于 GitHub Pages）
-└── install.bat      # 一键安装 + 启动 + 验证
+├── install.bat      # Windows 一键安装 + 启动 + 验证
+└── install.sh       # macOS / Linux 一键安装 + 启动 + 验证
 ```
 
 ## 机制说明
