@@ -1,6 +1,6 @@
 {
   "name": "dsh-0-tools",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "DeepSeek Harness 小白零门槛零费用套件：一键接入智谱双免费模型（文本+图片）、DeepSeek 计价时段提醒、在线帮助中心。",
   "license": "MIT",
   "type": "module",
