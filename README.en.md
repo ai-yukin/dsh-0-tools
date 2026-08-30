@@ -17,14 +17,20 @@ No.0 Tools is designed for users with no programming background who are trying D
 
 ## Version & Compatibility
 
-- Current version: **v1.6.1**
+- Current version: **v1.7.0**
+- **v1.7.0 new**: added macOS / Linux one-click installer `install.sh`, fully aligned with the Windows `install.bat` (auto-install Node.js / DSH, backup old plugin, install plugin to dsh web profile, start DSH, open browser, create desktop shortcut). The plugin core (lib/index.js + lib/client.js) is pure JavaScript and platform-agnostic; macOS/Linux was previously unsupported only due to the lack of a one-click installer.
 - **v1.6.1 fix**: corrected the visibility logic of the footer "Click Here to Configure Free API Models" hint — the old logic only checked whether Zhipu was configured, so the hint wrongly stayed visible when only the OpenRouter free model pool was connected. It now checks whether any free model is connected (Zhipu / OpenRouter / any future model).
 - Compatible DSH versions: **≥ `0.1.1`** (v1.5.0 switched to DSH's official config channel, raising the minimum supported version — see the compatibility notice below)
-- **System requirements**: Windows 10 / Windows 11 only. macOS and Linux are not supported at this time.
+- **System requirements**: one-click installers support **Windows 10 / Windows 11** (`install.bat`) and **macOS / Linux** (`install.sh`); the plugin core itself is cross-platform, and users who already have DSH installed can manually install via `dsh plugin --profile web add /path/to/dsh-0-tools`.
 
 ## Installation & Usage
 
-### Step 1: Double-click install.bat
+### Step 1: Run the one-click installer
+
+- **Windows users**: double-click `install.bat`
+- **macOS / Linux users**: run `chmod +x install.sh && ./install.sh` in terminal
+
+#### Windows (install.bat)
 
 - If **DSH is already installed**: the script detects it and skips installation, then installs this tool directly.
 - If **DSH is not installed**: the script scans the environment, installs any missing prerequisites, then installs DSH automatically.
@@ -98,7 +104,8 @@ dsh-0-tools/
 ├── cordis.patch.yml # web profile injection declaration
 ├── package.json
 ├── help.json        # online data source for the help center (hosted on GitHub Pages)
-└── install.bat      # one-click install + launch + verify
+├── install.bat      # Windows one-click install + launch + verify
+└── install.sh       # macOS / Linux one-click install + launch + verify
 ```
 
 ## How It Works
