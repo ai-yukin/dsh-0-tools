@@ -15,7 +15,7 @@ No.0 Tools is designed for users with no programming background who are trying D
 
 ## Version & Compatibility
 
-- Current version: **v1.5.0**
+- Current version: **v1.6.0**
 - Compatible DSH versions: **≥ `0.1.1`** (v1.5.0 switched to DSH's official config channel, raising the minimum supported version — see the compatibility notice below)
 - **System requirements**: Windows 10 / Windows 11 only. macOS and Linux are not supported at this time.
 

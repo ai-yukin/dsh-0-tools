@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-27.1",
-  "updatedAt": "2026-08-27",
+  "version": "2026-08-30.1",
+  "updatedAt": "2026-08-30",
   "official": [
     {
       "title": "DeepSeek Harness 官网",
@@ -46,6 +46,35 @@
       "keysUrl": "https://open.bigmodel.cn",
       "keyPlaceholder": "粘贴你的智谱 API Key",
       "note": "高峰时段智谱免费模型可能报错（厂商侧服务过载，与账号无关），稍后重试或空闲时段使用更顺畅。"
+    },
+    {
+      "type": "openrouter-free",
+      "title": "OpenRouter 免费模型池（一个 Key 通吃数十款）",
+      "desc": "OpenRouter 官方免费模型路由器：每次请求自动从当前可用的免费模型池（约 27 款、动态更新）中挑选一款执行。你不需要指定具体模型——某款下架会自动绕开、换用其他免费模型，无需改任何配置，随时都有免费模型可用。",
+      "keysLabel": "OpenRouter 获取 Key ↗",
+      "keysUrl": "https://openrouter.ai/keys",
+      "keyPlaceholder": "粘贴你的 OpenRouter API Key（sk-or-v1- 开头）",
+      "keyPrefix": "sk-or-v1-",
+      "credentialRef": "OPENROUTER_API_KEY",
+      "displayName": "OpenRouter Free",
+      "api": "openai-completions",
+      "baseURL": "https://openrouter.ai/api/v1",
+      "compat": {
+        "thinkingFormat": "openrouter"
+      },
+      "models": [
+        {
+          "id": "openrouter/free",
+          "name": "OpenRouter 免费池（自动挑选）",
+          "input": [
+            "text",
+            "image"
+          ],
+          "contextWindow": 200000,
+          "maxTokens": 8192
+        }
+      ],
+      "note": "需零号工具 v1.6.0 及以上版本；旧版本安装时会提示配置不被支持。⚠️ 免费通道的对话内容可能被模型厂商留存用于训练，请勿在此通道输入商业机密、个人隐私等敏感内容。免费档限速较低（零余额约每天 50 次请求，社区实测值），高峰期可能排队或报错，稍后重试即可。每次回答可能来自池中不同的模型（自动挑选）。"
     }
   ],
   "retired": [
