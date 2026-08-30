@@ -9,9 +9,11 @@ No.0 Tools is designed for users with no programming background who are trying D
 ## Key Features
 
 1. **Zero Threshold** — One-click installation of DSH and this tool.
-2. **Zero Cost** — One-click configuration of free API models for DSH (currently Zhipu GLM).
+2. **Zero Cost** — One-click configuration of free API models for DSH (as of v1.6.0: Zhipu GLM + the OpenRouter free model pool).
 3. **Zero Loss of Control** — When calling the DeepSeek model API, the DSH UI shows real-time pricing (full price or half price).
 4. **Zero Threshold** — A help center with curated, trustworthy sources to help beginners master DSH faster.
+
+> **New in v1.6.0**: an "OpenRouter Free Model Pool" card in the Config Center — paste one OpenRouter API key (free signup, no card required) to hook up OpenRouter's official free-models router (`openrouter/free`): every request auto-picks from the live free pool (~27 models, dynamically updated), automatically routing around retired ones, so a free model is always available. Note: conversations on the free channel may be retained by model vendors for training — do not feed it trade secrets or personal data; the free tier is rate-limited (roughly 50 requests/day at zero balance, community-measured).
 
 ## Version & Compatibility
 
