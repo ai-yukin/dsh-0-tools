@@ -25,12 +25,28 @@
 
 ## 四、Git 标签与推送
 
+> **v1.7.0 起已配置 GitHub Actions 自动同步到 Gitee**（`.github/workflows/sync-to-gitee.yml`）。每次 push 到 GitHub main 分支，会自动同步到 Gitee 的 main + master 分支 + 所有 tags。**无需再手动推 Gitee**，只需推 GitHub 即可。
+>
+> 自动同步依赖 GitHub Secrets 中的 `GITEE_TOKEN`（Gitee 私人令牌）。如自动同步失败，先检查 Secret 是否存在、令牌是否过期。
+
 | # | 操作 | 说明 |
 |---|------|------|
 | 6 | `git tag -a vx.x.x -m "..."` | 打版本标签 |
-| 7 | `git push origin main --tags` | 推送到 GitHub（main 分支 + tag） |
-| 8 | `git push gitee main --tags` | 推送到 Gitee main 分支 |
-| 9 | `git push gitee main:master --tags` | 推送到 Gitee **master** 分支（Gitee 默认分支是 master，必须同步！） |
+| 7 | `git push origin main --tags` | 推送到 GitHub（main 分支 + tag）→ **触发自动同步到 Gitee** |
+| ~~8~~ | ~~`git push gitee main --tags`~~ | ~~已废弃，由 GitHub Actions 自动同步~~ |
+| ~~9~~ | ~~`git push gitee main:master --tags`~~ | ~~已废弃，由 GitHub Actions 自动同步~~ |
+
+## 四（附）、Gitee 自动同步配置说明
+
+| 项目 | 配置 |
+|------|------|
+| 工作流文件 | `.github/workflows/sync-to-gitee.yml` |
+| 触发条件 | push 到 main 分支 / 手动触发（workflow_dispatch） |
+| 同步内容 | Gitee main 分支 + Gitee master 分支 + 所有 tags |
+| 依赖 Secret | `GITEE_TOKEN`（Gitee 私人令牌，在 GitHub Settings → Secrets and variables → Actions 中配置） |
+| 已配置项目 | dsh-0-tools、awesome-dsh-plugin |
+| 首次验证方式 | 推送后打开 GitHub Actions 页面，确认「Sync to Gitee」工作流状态为 Success |
+| 手动触发验证 | GitHub Actions → Sync to Gitee → Run workflow → 选择 main 分支 |
 
 ## 五、外部收录平台同步
 
@@ -52,5 +68,5 @@
 
 - **README.en.md**：最容易被遗漏的文件，每次必须与 README.md 同步更新
 - **lib/client.js PLUGIN_VERSION**：帮助中心显示的版本号，容易被遗忘
-- **Gitee master 分支**：Gitee 默认分支是 master，不是 main，必须同时推送 main:master
-- **awesome-dsh-plugin**：外部收录平台的描述需要同步更新
+- **Gitee 自动同步**：v1.7.0 起已配置 GitHub Actions 自动同步，只需推 GitHub，Gitee 自动更新；如自动同步失败，检查 GitHub Secrets 中的 `GITEE_TOKEN` 是否存在、令牌是否过期
+- **awesome-dsh-plugin**：外部收录平台的描述需要同步更新；该项目也已配置 Gitee 自动同步
