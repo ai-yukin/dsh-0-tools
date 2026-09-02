@@ -32,17 +32,17 @@
   "freeModels": [
     {
       "type": "zai",
-      "title": "智谱 GLM 双免费模型一键配置",
-      "desc": "智谱 Flash 系列永久免费：GLM-4.7-Flash（文本）+ GLM-4V-Flash（图片理解），不耗余额，足够日常使用。粘贴 API Key 一键接入。",
+      "title": "智谱",
+      "desc": "GLM-4.7-Flash（文本）+ GLM-4V-Flash（图片理解）",
       "keysLabel": "智谱开放平台获取 Key ↗",
       "keysUrl": "https://open.bigmodel.cn",
       "keyPlaceholder": "粘贴你的智谱 API Key",
-      "note": "高峰时段智谱免费模型可能报错（厂商侧服务过载，与账号无关），稍后重试或空闲时段使用更顺畅。"
+      "shortName": "智谱"
     },
     {
       "type": "openrouter-free",
-      "title": "OpenRouter 免费模型池（一个 Key 通吃数十款）",
-      "desc": "OpenRouter 官方免费模型路由器：每次请求自动从当前可用的免费模型池（约 27 款、动态更新）中挑选一款执行。你不需要指定具体模型——某款下架会自动绕开、换用其他免费模型，无需改任何配置，随时都有免费模型可用。",
+      "title": "OpenRouter",
+      "desc": "OpenRouter 免费池",
       "keysLabel": "OpenRouter 获取 Key ↗",
       "keysUrl": "https://openrouter.ai/keys",
       "keyPlaceholder": "粘贴你的 OpenRouter API Key（sk-or-v1- 开头）",
@@ -58,17 +58,20 @@
         {
           "id": "openrouter/free",
           "name": "OpenRouter 免费池（自动挑选）",
-          "input": ["text", "image"],
+          "input": [
+            "text",
+            "image"
+          ],
           "contextWindow": 200000,
           "maxTokens": 8192
         }
       ],
-      "note": "需零号工具 v1.6.0 及以上版本；旧版本安装时会提示配置不被支持。⚠️ 免费通道的对话内容可能被模型厂商留存用于训练，请勿在此通道输入商业机密、个人隐私等敏感内容。免费档限速较低（零余额约每天 50 次请求，社区实测值），高峰期可能排队或报错，稍后重试即可。每次回答可能来自池中不同的模型（自动挑选）。"
+      "shortName": "OpenRouter"
     },
     {
       "type": "qianfan",
-      "title": "百度千帆 ERNIE-Speed-8K（永久免费，QPS=50）",
-      "desc": "百度千帆 ERNIE-Speed-8K 永久免费不限量，QPS 高达 50（比智谱免费版并发高 50 倍），国内访问速度快，适合高频率日常使用。粘贴 API Key 一键接入。",
+      "title": "百度",
+      "desc": "百度千帆 ERNIE-Speed-8K",
       "keysLabel": "百度千帆控制台获取 Key ↗",
       "keysUrl": "https://console.bce.baidu.com/qianfan/",
       "keyPlaceholder": "粘贴你的百度千帆 API Key（bce-v3/ 开头）",
@@ -81,17 +84,19 @@
         {
           "id": "ernie-speed-8k",
           "name": "百度 ERNIE-Speed-8K（永久免费）",
-          "input": ["text"],
+          "input": [
+            "text"
+          ],
           "contextWindow": 8000,
           "maxTokens": 2048
         }
       ],
-      "note": "需零号工具 v1.8.0 及以上版本。百度千帆免费模型 QPS=50，并发能力强，适合作为主力免费模型。"
+      "shortName": "百度"
     },
     {
       "type": "xinghuo",
-      "title": "讯飞星火 Spark Lite（永久免费）",
-      "desc": "讯飞星火 Spark Lite 永久免费，国内访问稳定，中文理解能力强。粘贴 API Key 一键接入。",
+      "title": "讯飞",
+      "desc": "讯飞星火 Spark Lite",
       "keysLabel": "讯飞星火控制台获取 Key ↗",
       "keysUrl": "https://console.xfyun.cn/services/cbm",
       "keyPlaceholder": "粘贴你的讯飞星火 API Key",
@@ -103,12 +108,14 @@
         {
           "id": "spark-lite",
           "name": "讯飞星火 Spark Lite（永久免费）",
-          "input": ["text"],
+          "input": [
+            "text"
+          ],
           "contextWindow": 8192,
           "maxTokens": 4096
         }
       ],
-      "note": "需零号工具 v1.8.0 及以上版本。讯飞星火 Spark Lite 永久免费，2QPS，中文理解能力强。"
+      "shortName": "讯飞"
     }
   ],
   "retired": [
