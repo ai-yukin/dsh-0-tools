@@ -33,7 +33,7 @@
     {
       "type": "zai",
       "title": "智谱",
-      "desc": "GLM-4.7-Flash（文本）+ GLM-4V-Flash（图片理解）",
+      "desc": "GLM-4.7-Flash+GLM-4V-Flash",
       "keysLabel": "智谱开放平台获取 API Key ↗",
       "keysUrl": "https://open.bigmodel.cn",
       "keyPlaceholder": "粘贴你的智谱 API Key",
@@ -74,7 +74,7 @@
       "desc": "百度千帆 ERNIE-Speed-8K",
       "keysLabel": "百度千帆控制台获取 API Key ↗",
       "keysUrl": "https://console.bce.baidu.com/qianfan/",
-      "keyPlaceholder": "粘贴你的百度千帆 API Key（bce-v3/ 开头）",
+      "keyPlaceholder": "粘贴你的百度千帆 API Key",
       "keyPrefix": "bce-v3/",
       "credentialRef": "QIANFAN_API_KEY",
       "displayName": "百度千帆",
