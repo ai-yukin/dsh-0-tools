@@ -1,6 +1,6 @@
 {
   "name": "dsh-0-tools",
-  "version": "1.8.0",
+  "version": "1.8.2",
   "description": "DeepSeek Harness 小白零门槛零费用套件：4个永久免费模型一键接入（智谱/百度千帆/讯飞星火/OpenRouter）、免费模型智能路由（自动测速优选最快）、DeepSeek 计价时段提醒、在线帮助中心。",
   "license": "MIT",
   "type": "module",
