@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenRouter API Key 配置引导 - 零号工具</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #fafafa; color: #333; line-height: 1.6; }
+  .container { max-width: 720px; margin: 0 auto; padding: 24px 16px 60px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .header .badge { display: inline-block; background: #f3e8ff; color: #7c3aed; font-size: 12px; padding: 4px 12px; border-radius: 12px; margin-bottom: 12px; }
+  .header h1 { font-size: 24px; font-weight: 700; color: #111; margin-bottom: 8px; }
+  .header p { font-size: 14px; color: #666; }
+  .step { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: #7c3aed; color: #fff; border-radius: 50%; font-size: 14px; font-weight: 700; margin-right: 10px; }
+  .step-title { font-size: 16px; font-weight: 600; color: #111; margin-bottom: 8px; display: flex; align-items: center; }
+  .step-desc { font-size: 14px; color: #555; margin-bottom: 12px; padding-left: 38px; }
+  .step-img { width: 100%; border-radius: 8px; border: 1px solid #eee; margin-top: 8px; }
+  .tip { background: #fff8e1; border-left: 3px solid #f5a623; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; color: #7a5c00; margin-bottom: 16px; }
+  .warn { background: #fef2f2; border-left: 3px solid #ef4444; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; color: #991b1b; margin-bottom: 16px; }
+  .final-section { background: #fff; border-radius: 12px; padding: 24px; margin-top: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); text-align: center; }
+  .final-section h3 { font-size: 18px; font-weight: 600; color: #111; margin-bottom: 12px; }
+  .final-section p { font-size: 14px; color: #666; margin-bottom: 16px; }
+  .paste-input { width: 100%; padding: 12px 16px; font-size: 14px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 12px; outline: none; transition: border-color 0.2s; }
+  .paste-input:focus { border-color: #7c3aed; }
+  .confirm-btn { width: 100%; padding: 14px; font-size: 16px; font-weight: 600; color: #fff; background: #7c3aed; border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
+  .confirm-btn:hover { background: #6d28d9; }
+  .confirm-btn:disabled { background: #ccc; cursor: not-allowed; }
+  .footer { text-align: center; margin-top: 32px; font-size: 12px; color: #999; }
+  .footer a { color: #7c3aed; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <span class="badge">零号工具 · 免费模型配置引导</span>
+    <h1>OpenRouter API Key 配置</h1>
+    <p>免费模型池（约27款，动态更新），一个 Key 通吃数十款免费模型</p>
+  </div>
+
+  <div class="warn">
+    ⚠️ OpenRouter 是国际网站，国内访问可能较慢或偶尔打不开。如果页面加载缓慢，请耐心等待，或尝试更换网络环境。推荐优先配置智谱和百度千帆（国内访问更稳定），OpenRouter 作为补充。
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">1</span>打开 OpenRouter</div>
+    <div class="step-desc">访问 <a href="https://openrouter.ai/" target="_blank">https://openrouter.ai/</a>，点击右上角紫色「Sign Up」按钮注册。</div>
+    <img src="images/or-1-home.png" alt="OpenRouter首页" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">2</span>注册账号</div>
+    <div class="step-desc">推荐用 GitHub 或 Google 账号一键注册（最快），也可以用邮箱注册。填写邮箱和密码，勾选同意条款后点击 Continue。</div>
+    <img src="images/or-2-signup.png" alt="OpenRouter注册" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">3</span>进入 API Keys 页面</div>
+    <div class="step-desc">登录后，点击右上角头像，在下拉菜单中找到「API Keys」并点击进入。</div>
+    <img src="images/or-3-apikeys.png" alt="API Keys页面" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">4</span>创建新的 API Key</div>
+    <div class="step-desc">点击右上角紫色「+ New Key」按钮。名称随意填写（如"零号工具"），过期时间选「No expiration」（永不过期），额度限制留空（不限制），点击「Create」。</div>
+    <img src="images/or-4-new-key.png" alt="创建API Key" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">5</span>复制 API Key</div>
+    <div class="step-desc">生成的 Key 以 <code>sk-or-v1-</code> 开头。点击复制按钮（📋）。<strong>注意：这个 Key 只显示一次，关闭后无法再次查看，请立即复制并妥善保管。</strong></div>
+    <img src="images/or-5-copy.png" alt="复制API Key" class="step-img">
+  </div>
+
+  <div class="tip">
+    💡 OpenRouter 免费模型池会自动从当前可用的免费模型中挑选一款执行，某款下架会自动绕开。零余额每天约 50 次请求（社区实测值），高峰期可能排队。免费通道的对话内容可能被模型厂商留存用于训练，请勿输入商业机密或个人隐私。
+  </div>
+
+  <div class="final-section">
+    <h3>最后一步：填入零号工具</h3>
+    <p>把你刚才复制的 API Key 粘贴到下方输入框，点击按钮将自动跳转到 DSH 并完成填充。</p>
+    <input type="text" class="paste-input" id="keyInput" placeholder="请把刚才复制的 API Key 粘贴在这一栏">
+    <button class="confirm-btn" id="confirmBtn" onclick="goToDSH()">我已复制了 OpenRouter 的 API Key</button>
+  </div>
+
+  <div class="footer">
+    <p>零号工具 dsh-0-tools · <a href="https://github.com/ai-yukin/dsh-0-tools" target="_blank">GitHub</a> · <a href="https://gitee.com/ai-yukin/dsh-0-tools" target="_blank">Gitee</a></p>
+  </div>
+</div>
+
+<script>
+function goToDSH() {
+  var key = document.getElementById('keyInput').value.trim();
+  if (!key) {
+    alert('请先粘贴 API Key');
+    return;
+  }
+  if (key.length < 16) {
+    alert('API Key 长度不正确，请检查是否复制完整');
+    return;
+  }
+  var url = 'http://127.0.0.1:3080/?autofill=' + encodeURIComponent(key);
+  window.location.href = url;
+}
+document.getElementById('keyInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') goToDSH();
+});
+</script>
+</body>
+</html>
