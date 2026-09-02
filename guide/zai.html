@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智谱 API Key 配置引导 - 零号工具</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #fafafa; color: #333; line-height: 1.6; }
+  .container { max-width: 720px; margin: 0 auto; padding: 24px 16px 60px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .header .badge { display: inline-block; background: #e8f0fe; color: #1a73e8; font-size: 12px; padding: 4px 12px; border-radius: 12px; margin-bottom: 12px; }
+  .header h1 { font-size: 24px; font-weight: 700; color: #111; margin-bottom: 8px; }
+  .header p { font-size: 14px; color: #666; }
+  .step { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: #1a73e8; color: #fff; border-radius: 50%; font-size: 14px; font-weight: 700; margin-right: 10px; }
+  .step-title { font-size: 16px; font-weight: 600; color: #111; margin-bottom: 8px; display: flex; align-items: center; }
+  .step-desc { font-size: 14px; color: #555; margin-bottom: 12px; padding-left: 38px; }
+  .step-img { width: 100%; border-radius: 8px; border: 1px solid #eee; margin-top: 8px; }
+  .tip { background: #fff8e1; border-left: 3px solid #f5a623; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; color: #7a5c00; margin-bottom: 16px; }
+  .final-section { background: #fff; border-radius: 12px; padding: 24px; margin-top: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); text-align: center; }
+  .final-section h3 { font-size: 18px; font-weight: 600; color: #111; margin-bottom: 12px; }
+  .final-section p { font-size: 14px; color: #666; margin-bottom: 16px; }
+  .paste-input { width: 100%; padding: 12px 16px; font-size: 14px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 12px; outline: none; transition: border-color 0.2s; }
+  .paste-input:focus { border-color: #1a73e8; }
+  .confirm-btn { width: 100%; padding: 14px; font-size: 16px; font-weight: 600; color: #fff; background: #1a73e8; border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
+  .confirm-btn:hover { background: #1557b0; }
+  .confirm-btn:disabled { background: #ccc; cursor: not-allowed; }
+  .footer { text-align: center; margin-top: 32px; font-size: 12px; color: #999; }
+  .footer a { color: #1a73e8; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <span class="badge">零号工具 · 免费模型配置引导</span>
+    <h1>智谱 API Key 配置</h1>
+    <p>GLM-4.7-Flash（文本）+ GLM-4V-Flash（图片理解），永久免费</p>
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">1</span>打开智谱开放平台</div>
+    <div class="step-desc">访问 <a href="https://open.bigmodel.cn/" target="_blank">https://open.bigmodel.cn/</a>，点击右上角「登录/注册」按钮。</div>
+    <img src="images/zai-1-home.png" alt="智谱首页" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">2</span>登录或注册账号</div>
+    <div class="step-desc">推荐用微信扫码登录（最快），也可以用手机号验证码登录。新用户注册即送免费额度。</div>
+    <img src="images/zai-2-login.png" alt="智谱登录" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">3</span>进入控制台</div>
+    <div class="step-desc">登录后，点击右上角「控制台」进入开发者后台。</div>
+    <img src="images/zai-3-console.png" alt="智谱控制台" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">4</span>打开 API Key 管理</div>
+    <div class="step-desc">在左侧菜单栏找到「API Key」并点击。</div>
+    <img src="images/zai-4-apikey-menu.png" alt="API Key菜单" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">5</span>新建 API Key</div>
+    <div class="step-desc">点击右上角蓝色「新建 API Key」按钮，名称随意填写（如"零号工具"），点击确定。</div>
+    <img src="images/zai-5-new-key.png" alt="新建API Key" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">6</span>复制 API Key</div>
+    <div class="step-desc">在列表中找到刚创建的 Key，点击复制按钮（📋）。复制后请妥善保管，不要泄露给他人。</div>
+    <img src="images/zai-6-copy.png" alt="复制API Key" class="step-img">
+  </div>
+
+  <div class="tip">
+    💡 智谱免费模型包含 GLM-4.7-Flash（文本对话）和 GLM-4V-Flash（图片理解），均永久免费，足够日常使用。高峰时段可能因厂商服务过载而报错，稍后重试即可。
+  </div>
+
+  <div class="final-section">
+    <h3>最后一步：填入零号工具</h3>
+    <p>把你刚才复制的 API Key 粘贴到下方输入框，点击按钮将自动跳转到 DSH 并完成填充。</p>
+    <input type="text" class="paste-input" id="keyInput" placeholder="请把刚才复制的 API Key 粘贴在这一栏">
+    <button class="confirm-btn" id="confirmBtn" onclick="goToDSH()">我已复制了智谱的 API Key</button>
+  </div>
+
+  <div class="footer">
+    <p>零号工具 dsh-0-tools · <a href="https://github.com/ai-yukin/dsh-0-tools" target="_blank">GitHub</a> · <a href="https://gitee.com/ai-yukin/dsh-0-tools" target="_blank">Gitee</a></p>
+  </div>
+</div>
+
+<script>
+function goToDSH() {
+  var key = document.getElementById('keyInput').value.trim();
+  if (!key) {
+    alert('请先粘贴 API Key');
+    return;
+  }
+  if (key.length < 16) {
+    alert('API Key 长度不正确，请检查是否复制完整');
+    return;
+  }
+  var url = 'http://127.0.0.1:3080/?autofill=' + encodeURIComponent(key);
+  window.location.href = url;
+}
+// 支持回车提交
+document.getElementById('keyInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') goToDSH();
+});
+</script>
+</body>
+</html>
