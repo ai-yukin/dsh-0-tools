@@ -56,7 +56,7 @@
       },
       "models": [
         {
-          "id": "openrouter/free",
+          "id": "openrouter/auto",
           "name": "OpenRouter 免费池（自动挑选）",
           "input": [
             "text",
