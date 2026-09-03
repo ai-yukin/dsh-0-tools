@@ -1,6 +1,6 @@
-{
-  "version": "2026-09-02.1",
-  "updatedAt": "2026-09-02",
+﻿{
+  "version": "2026-09-03.1",
+  "updatedAt": "2026-09-03",
   "official": [
     {
       "title": "DeepSeek Harness 官网",
@@ -82,7 +82,7 @@
       "baseURL": "https://qianfan.baidubce.com/v2",
       "models": [
         {
-          "id": "ernie-speed-8k",
+          "id": "ERNIE-Speed-8K",
           "name": "百度 ERNIE-Speed-8K（永久免费）",
           "input": [
             "text"
