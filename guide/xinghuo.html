@@ -31,6 +31,8 @@
   .confirm-btn:hover { background: #075985; }
   .footer { text-align: center; margin-top: 32px; font-size: 12px; color: #999; }
   .footer a { color: #0369a1; text-decoration: none; }
+  .key-format { background: #f0fdf4; border-left: 3px solid #22c55e; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; color: #166534; margin-bottom: 16px; }
+  .key-format code { background: #dcfce7; padding: 2px 6px; border-radius: 4px; font-family: Consolas, Monaco, monospace; font-size: 12px; }
 </style>
 </head>
 <body>
@@ -42,83 +44,107 @@
   </div>
 
   <div class="note">
-    讯飞星火是4个免费模型中注册流程最复杂的（需要实名认证 + 创建应用）。如果觉得麻烦，可以先配置智谱和百度千帆（流程更简单），讯飞以后再补。
+    讯飞星火是4个免费模型中注册流程最复杂的（需要实名认证 + 创建应用 + 领取礼包）。如果觉得麻烦，可以先配置智谱和硅基流动（流程更简单），讯飞以后再补。
   </div>
 
   <div class="step">
-    <div class="step-title"><span class="step-num">1</span>打开讯飞开放平台</div>
-    <div class="step-desc">访问 <a href="https://www.xfyun.cn/" target="_blank">https://www.xfyun.cn/</a>，点击右上角「立即注册」按钮。</div>
-    <img src="images/xh-1-home.png" alt="讯飞开放平台首页" class="step-img">
-  </div>
-
-  <div class="step">
-    <div class="step-title"><span class="step-num">2</span>注册账号</div>
+    <div class="step-title"><span class="step-num">1</span>注册账号并完成实名认证</div>
     <div class="step-desc">
-      推荐用微信扫码登录（最快），也可以用手机号注册：
+      访问 <a href="https://www.xfyun.cn/" target="_blank">https://www.xfyun.cn/</a>，推荐用微信扫码登录（最快）。登录后进入「用户认证中心」完成个人实名认证（需要填写真实姓名和身份证号，并完成人脸识别）。<br><br>
+      <strong>注意：</strong>实名认证需要人工审核，通常需要等待一段时间（几分钟到几小时不等）。审核通过后会收到站内消息通知。
+    </div>
+    <img src="images/xinghuo/02-实名认证完成.png" alt="实名认证完成" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">2</span>进入「我的应用」页面</div>
+    <div class="step-desc">
+      实名认证通过后，点击页面顶部「控制台」进入开发者后台，在左侧菜单找到「我的应用」，或直接访问 <a href="https://console.xfyun.cn/app/myapp" target="_blank">https://console.xfyun.cn/app/myapp</a>。
+    </div>
+    <img src="images/xinghuo/03-我的应用页面.png" alt="我的应用页面" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">3</span>创建新应用</div>
+    <div class="step-desc">
+      点击「创建新应用」按钮，进入创建应用表单。
+    </div>
+    <img src="images/xinghuo/04-创建应用表单.png" alt="创建应用表单" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">4</span>填写应用信息</div>
+    <div class="step-desc">
+      填写应用信息：
       <ol>
-        <li>输入手机号，点击「获取验证码」</li>
-        <li>输入收到的验证码</li>
-        <li>设置登录密码（数字+字母，6-20位）</li>
-        <li>再次输入密码确认</li>
-        <li>勾选「已阅读并接受协议」</li>
-        <li>点击「注册」</li>
+        <li><strong>应用名称：</strong>随意填写，如"零号工具-DSH免费模型"</li>
+        <li><strong>应用分类：</strong>选择「应用-教育学习-学习」（或其他分类都可以）</li>
+        <li><strong>功能描述：</strong>随意填写，如"用于DeepSeek Harness零号工具的免费模型测试"</li>
+      </ol>
+      填写完成后点击「提交」。
+    </div>
+    <img src="images/xinghuo/05-填写应用信息.png" alt="填写应用信息" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">5</span>应用创建成功</div>
+    <div class="step-desc">
+      提交后应用立即创建成功（不需要审核），页面会显示应用的 APPID。点击应用名称进入应用详情页。
+    </div>
+    <img src="images/xinghuo/06-应用创建成功.png" alt="应用创建成功" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">6</span>进入 Spark Lite 服务页面</div>
+    <div class="step-desc">
+      在应用详情页左侧菜单找到「星火认知大模型」→「Spark Lite」，点击进入 Spark Lite 服务页面。页面会显示：
+      <ol>
+        <li><strong>实时用量：</strong>token余量、并发数、有效期</li>
+        <li><strong>http服务接口认证信息：</strong>APIPassword</li>
+        <li><strong>Websocket服务接口认证信息：</strong>APPID、APISecret、APIKey</li>
       </ol>
     </div>
-    <img src="images/xh-2-register.png" alt="讯飞注册" class="step-img">
+    <img src="images/xinghuo/07-SparkLite服务页面.png" alt="Spark Lite服务页面" class="step-img">
   </div>
 
   <div class="step">
-    <div class="step-title"><span class="step-num">3</span>完成实名认证</div>
+    <div class="step-title"><span class="step-num">7</span>领取 Spark Lite 不限量礼包</div>
     <div class="step-desc">
-      这是最关键的一步，不完成实名认证无法正常调用 API。
+      在 Spark Lite 服务页面点击「领取无限量」按钮，弹出确认对话框后点击「确认」。领取成功后 token 余量显示为「无限」，有效期至 2036 年（永久免费）。
+    </div>
+    <img src="images/xinghuo/08-领取成功.png" alt="领取成功" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">8</span>获取 API 密钥</div>
+    <div class="step-desc">
+      在 Spark Lite 服务页面下方找到「Websocket服务接口认证信息」，这里有三个值：
       <ol>
-        <li>注册登录后，进入「用户认证中心」</li>
-        <li>选择「个人实名认证」标签页（不要选企业认证）</li>
-        <li>点击「立即认证」</li>
-        <li>填写真实姓名和身份证号</li>
-        <li>按提示完成人脸识别（用手机扫码即可）</li>
-        <li>提交后等待审核（系统自动审核，通常几分钟内通过）</li>
+        <li><strong>APPID：</strong>应用唯一标识符（如 c77d9ba4）</li>
+        <li><strong>APISecret：</strong>API 密钥（base64 编码，如 YzQ2YTcxMmEzOGFkZDI1ZGM0ODA4M2I5）</li>
+        <li><strong>APIKey：</strong>API 密钥（32位十六进制，如 8489885e9902a4f8b8c801828e9bb203）</li>
       </ol>
+      分别点击 APIKey 和 APISecret 旁边的「复制」按钮，把两个值都复制下来。
     </div>
-    <img src="images/xh-3-auth.png" alt="实名认证中心" class="step-img">
+    <img src="images/xinghuo/09-API密钥信息.png" alt="API密钥信息" class="step-img">
   </div>
 
-  <div class="step">
-    <div class="step-title"><span class="step-num">4</span>创建应用</div>
-    <div class="step-desc">
-      实名认证通过后，需要创建一个应用来绑定 API Key：
-      <ol>
-        <li>点击页面顶部「控制台」进入开发者后台</li>
-        <li>在左侧菜单找到「我的应用」，或直接访问 <a href="https://console.xfyun.cn/app/myapp" target="_blank">https://console.xfyun.cn/app/myapp</a></li>
-        <li>点击「创建新应用」</li>
-        <li>填写应用名称（如"零号工具"），应用分类选「其他」，功能描述随意填写</li>
-        <li>点击「提交」创建应用（等待后台审核，一般几分钟内通过）</li>
-      </ol>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-title"><span class="step-num">5</span>开通星火大模型服务</div>
-    <div class="step-desc">
-      <ol>
-        <li>进入刚创建的应用详情页</li>
-        <li>找到「在线服务」或「接口管理」板块</li>
-        <li>找到 Spark Lite（星火大模型轻量版）服务</li>
-        <li>点击「开通服务」（免费开通，不需要付费）</li>
-        <li>开通后页面会显示三个值：<strong>APPID</strong>、<strong>API Key</strong>、<strong>APISecret</strong></li>
-      </ol>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-title"><span class="step-num">6</span>复制 API Key</div>
-    <div class="step-desc">
-      在应用详情页找到「API Key」（注意：不是 APPID，也不是 APISecret）。讯飞的 API Key 是一串 32 位的字母数字组合。点击复制按钮复制。
-    </div>
+  <div class="key-format">
+    <strong>重要：讯飞需要两个密钥拼接！</strong><br>
+    零号工具需要的格式是 <code>APIKey:APISecret</code>（两个密钥用英文冒号拼接）。<br>
+    例如：<code>8489885e9902a4f8b8c801828e9bb203:YzQ2YTcxMmEzOGFkZDI1ZGM0ODA4M2I5</code><br>
+    请把你复制的 APIKey 和 APISecret 用冒号拼接后，粘贴到下方输入框。
   </div>
 
   <div class="warn">
-    常见问题：如果创建应用后找不到 API Key，或者调用时报「未授权」，通常是因为：没有完成实名认证、没有开通星火大模型服务、复制错了值（把 APPID 当成了 API Key）。请回到第3-5步检查。
+    <strong>常见问题：</strong>如果调用时报「401 未经授权」，通常是因为：
+    <ol>
+      <li>没有完成实名认证</li>
+      <li>没有领取 Spark Lite 不限量礼包</li>
+      <li>APIKey 和 APISecret 没有用冒号拼接（单独用 APIKey 会报错）</li>
+      <li>复制错了值（把 APPID 当成了 APIKey）</li>
+    </ol>
+    请回到第1、7、8步检查。
   </div>
 
   <div class="tip">
@@ -127,8 +153,8 @@
 
   <div class="final-section">
     <h3>最后一步：填入零号工具</h3>
-    <p>把你刚才复制的 API Key 粘贴到下方输入框，点击按钮将自动跳转到 DSH 并完成填充。</p>
-    <input type="text" class="paste-input" id="keyInput" placeholder="请把刚才复制的 API Key 粘贴在这一栏">
+    <p>把你刚才拼接好的 <code>APIKey:APISecret</code> 粘贴到下方输入框，点击按钮将自动跳转到 DSH 并完成填充。</p>
+    <input type="text" class="paste-input" id="keyInput" placeholder="请把 APIKey:APISecret 粘贴在这一栏（格式：APIKey:APISecret）">
     <button class="confirm-btn" onclick="goToDSH()">我已复制了讯飞的 API Key</button>
   </div>
 
@@ -140,8 +166,9 @@
 <script>
 function goToDSH() {
   var key = document.getElementById('keyInput').value.trim();
-  if (!key) { alert('请先粘贴 API Key'); return; }
+  if (!key) { alert('请先粘贴 API Key:APISecret'); return; }
   if (key.length < 16) { alert('API Key 长度不正确，请检查是否复制完整'); return; }
+  if (key.indexOf(':') === -1) { alert('讯飞需要 APIKey:APISecret 格式（两个密钥用冒号拼接），请检查格式'); return; }
   window.location.href = 'http://127.0.0.1:3080/?autofill=' + encodeURIComponent(key);
 }
 document.getElementById('keyInput').addEventListener('keypress', function(e) {
