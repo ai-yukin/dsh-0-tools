@@ -1,129 +1,154 @@
-# dsh-0-tools No.0 Tools
+# dsh-0-tools (No.0 Tools)
 
-[English](./README.en.md) · [简体中文](./README.md)
+[简体中文](./README.md) · [English](./README.en.md)
 
-## What Is No.0 Tools
+## What is dsh-0-tools
 
-No.0 Tools is designed for users with no programming background who are trying DeepSeek Harness (DSH) for the first time. It offers "Zero Threshold, Zero Cost, Zero Loss of Control" and aims to give zero-baseline users a better experience.
+dsh-0-tools is designed for users with zero programming experience who are using DeepSeek Harness (hereinafter referred to as DSH) for the first time. It features "Zero Barrier, Zero Cost, Zero Loss of Control, Zero Confusion", aiming to help beginners get a better user experience.
 
-## Key Features
+## Main Features
 
-1. **Zero Threshold** — One-click installation of DSH and this tool.
-2. **Zero Cost** — One-click configuration of free API models for DSH (as of v1.6.0: Zhipu GLM + the OpenRouter free model pool).
-3. **Zero Loss of Control** — When calling the DeepSeek model API, the DSH UI shows real-time pricing (full price or half price).
-4. **Zero Threshold** — A help center with curated, trustworthy sources to help beginners master DSH faster.
+1. **[Zero Barrier]** One-click installation of DSH and this tool, with automatic desktop shortcut creation;
+2. **[Zero Cost]** One-click access to multiple permanently free large models accessible in China (Zhipu AI / SiliconFlow / iFlytek Spark / OpenRouter / ...), with automatic health monitoring and intelligent timeout prompts after configuration;
+3. **[Zero Loss of Control]** If you choose to call the DeepSeek official model API, the DSH interface will display real-time reminders of whether it's peak hours (full price) or off-peak hours (half price);
+4. **[Zero Confusion]** The beginner help center aggregates DSH official documentation and community-selected resources for quick onboarding.
 
-> **New in v1.6.0**: an "OpenRouter Free Model Pool" card in the Config Center — paste one OpenRouter API key (free signup, no card required) to hook up OpenRouter's official free-models router (`openrouter/free`): every request auto-picks from the live free pool (~27 models, dynamically updated), automatically routing around retired ones, so a free model is always available. Note: conversations on the free channel may be retained by model vendors for training — do not feed it trade secrets or personal data; the free tier is rate-limited (roughly 50 requests/day at zero balance, community-measured).
+## Current Version & Compatibility
 
-## Version & Compatibility
+- Current version: **v1.8.5**
+- Compatible DSH version: **≥ `0.1.1`**
+- **System Requirements**: One-click installation scripts support **Windows 10 / Windows 11** (`install.bat`) and **macOS / Linux** (`install.sh`); the plugin core code itself is cross-platform. Users who have manually installed DSH can install the plugin manually via `dsh plugin --profile web add /path/to/dsh-0-tools`.
 
-- Current version: **v1.7.0**
-- **v1.7.0 new**: added macOS / Linux one-click installer `install.sh`, fully aligned with the Windows `install.bat` (auto-install Node.js / DSH, backup old plugin, install plugin to dsh web profile, start DSH, open browser, create desktop shortcut). The plugin core (lib/index.js + lib/client.js) is pure JavaScript and platform-agnostic; macOS/Linux was previously unsupported only due to the lack of a one-click installer.
-- **v1.6.1 fix**: corrected the visibility logic of the footer "Click Here to Configure Free API Models" hint — the old logic only checked whether Zhipu was configured, so the hint wrongly stayed visible when only the OpenRouter free model pool was connected. It now checks whether any free model is connected (Zhipu / OpenRouter / any future model).
-- Compatible DSH versions: **≥ `0.1.1`** (v1.5.0 switched to DSH's official config channel, raising the minimum supported version — see the compatibility notice below)
-- **System requirements**: one-click installers support **Windows 10 / Windows 11** (`install.bat`) and **macOS / Linux** (`install.sh`); the plugin core itself is cross-platform, and users who already have DSH installed can manually install via `dsh plugin --profile web add /path/to/dsh-0-tools`.
+## Free Model List
 
-## Installation & Usage
+dsh-0-tools currently integrates 4 permanently free large models. We recommend configuring all of them — when one model is busy or reporting errors, you'll have more faster and more stable free models to choose from, achieving "the more models, the more switching options":
 
-### Step 1: Run the one-click installer
+| Model | Provider | Features |
+|-------|----------|----------|
+| GLM-4.7-Flash + GLM-4V-Flash | Zhipu AI | Text + image understanding, permanently free |
+| Qwen3-8B (15+ models under 9B) | SiliconFlow | Permanently free, direct access in China, 128K context, supports tool calling |
+| Spark Lite | iFlytek Spark | Permanently free, strong Chinese understanding |
+| OpenRouter Free Pool | OpenRouter | Automatically routes dozens of free models, automatically bypasses when one is delisted |
 
-- **Windows users**: double-click `install.bat`
-- **macOS / Linux users**: run `chmod +x install.sh && ./install.sh` in terminal
+> Each model provides a dedicated illustrated tutorial page. Click "Guide Tutorial" in "① Zero Cost · Free Model Manager Center" to view step-by-step registration instructions.
 
-#### Windows (install.bat)
+## Installation & Usage (Illustrated Steps)
 
-- If **DSH is already installed**: the script detects it and skips installation, then installs this tool directly.
-- If **DSH is not installed**: the script scans the environment, installs any missing prerequisites, then installs DSH automatically.
-- After a successful install, a **"DeepSeek Harness" desktop shortcut** is created automatically.
+### Step 1: Run the One-Click Installation Script
 
-> Note: install.bat is a plain-text script — right-click it and choose "Open with → Notepad" to review its full content before running. Scripts downloaded from the internet are unsigned, so Windows may show a SmartScreen warning ("Windows protected your PC"); click "More info → Run anyway". This is a standard Windows prompt for unsigned scripts, not a virus warning.
+- **Windows users**: Double-click to run `install.bat`
+- **macOS / Linux users**: Run `chmod +x install.sh && ./install.sh` in the terminal
 
-### Step 2: Open the DSH interface
+#### Windows Version (install.bat)
 
-Double-click the "DeepSeek Harness" desktop shortcut. The browser opens the DSH web UI, where you'll see the "Click Here to Configure Free API Models" button at the bottom left.
+- If **DSH is already installed** on your computer: the script will automatically detect and skip the installation, directly completing the installation of this tool;
+- If **DSH is not installed** yet: the script will automatically scan the runtime environment, fill in missing dependencies, and then automatically install DSH;
+- After successful installation, the script will automatically **create a "DeepSeek Harness" shortcut on your desktop**.
 
-![DSH main UI](screenshots/1.png)
+> Tip: `install.bat` is a plain text script. You can right-click → "Open with → Notepad" to view all content before running (content is transparent and auditable). Scripts downloaded from the internet don't have digital signatures, and Windows may pop up a SmartScreen prompt ("Windows protected your PC"). Click "More info → Run anyway" — this is Windows' unified prompt for unsigned scripts, not a virus warning.
 
-### Step 3: Enter the Zero-Cost API Config Center
+### Step 2: Open the DSH Interface
 
-Click the button to open the **Zero-Cost API Config Center**, which lists the free models currently available.
+Double-click the "DeepSeek Harness" shortcut on your desktop, and the browser will automatically open the DSH web interface. When you haven't configured any free models yet, a popup will automatically guide you through configuration; you can also click the "Configure Free Model" button in the bottom-left corner of the DSH interface to enter the same configuration interface.
 
-![Zero-Cost API Config Center](screenshots/2.png)
+![DSH Main Interface - Popup guiding free model configuration](screenshots/1.png)
 
-### Step 4: Apply for and fill in your API Key
+### Step 3: Get and Install API Key
 
-Follow the guide in the Zero-Cost API Config Center to register on the corresponding platform and obtain a free model API Key. Fill it in and enable it. You can install one or more free models.
+We recommend configuring all the following free models — the more free models, the more switching options! Click the "Guide Tutorial" button on each model card below, follow the steps to register and copy the API Key (for iFlytek, you need to copy both APIKey and APISecret, concatenated with an English colon), and paste it into the "Paste any model API Key here for automatic recognition" box, then click "Auto-recognize API Key and install free model with one click" to automatically install the free model.
 
-![Model picker dropdown](screenshots/3.png)
+![Free Model Configuration Center - Four model cards + large paste box](screenshots/2.png)
 
-### Step 5: Switch to a free model and use DSH at zero cost
+> Configured models will show a ✅ mark and provide "One-click uninstall model" (with secondary confirmation); unconfigured models show "Guide Tutorial →" link.
 
-Once configured, return to the DSH UI and select your free model in the model picker to start using DSH for free.
+### Step 4: Intelligent Health Monitoring + Timeout Prompts, Zero Cost More Transparent
 
-### Step 6: Use the paid DeepSeek model
+After configuring 2 or more free models, dsh-0-tools' "Free Model Manager Center" will automatically start health monitoring:
 
-If you decide to go paid and have already applied for a DeepSeek model API, click "Settings" at the bottom left of the DSH UI, find "Models", click "Edit" on DeepSeek, and enter your DeepSeek API key.
+- **Automatic health monitoring**: Every 60 seconds in the background, sends a minimal `max_tokens=1` request to all configured free models for health checks, records the last 5 response times and averages them;
+- **Timeout prompt**: When the current model times out, the bottom of the sidebar displays "Zhipu🔴Timeout, recommend switching to iFlytek" (automatically finds the fastest available model), helping users stay informed about model health;
+- **Status prompt**: The bottom of the sidebar displays the current model status in real-time (Zhipu🟢Normal / Zhipu🟡Slow / Zhipu🔴Timeout, recommend switching to XX). The status bar is for display only and cannot be clicked;
+- **Status criteria**: <8 seconds = Normal (🟢), 8-15 seconds = Slow (🟡), >15 seconds or timeout = Timeout (🔴).
 
-### Step 7: DeepSeek pricing reminder
+![Free Model Manager Center - Status Indicator](screenshots/3.png)
 
-When you switch to a DeepSeek model in the DSH UI, a real-time reminder appears at the bottom left. Based on DeepSeek's official API peak/off-peak schedule, it shows either "API is charged at full price during peak hours" or "API is charged at half price during off-peak hours", providing "Zero Loss of Control" fee protection.
 
-![Peak hours: full price](screenshots/4.png)
+### Step 5: Using Paid DeepSeek Models
 
-![Off-peak hours: half price](screenshots/5.png)
+If you decide to use paid services and have already applied for and purchased a DeepSeek model API, you can click "Settings" in the bottom-left corner of the DSH interface, find "Models", click "Edit" next to DeepSeek, and enter your DeepSeek model API key.
 
-## Domestic Mirror (Gitee)
+![DeepSeek Model API Key Configuration](screenshots/5.png)
 
-A Gitee mirror is provided for users in mainland China and is now live:
+### Step 6: DeepSeek Billing Reminder
 
+When you switch to and select a DeepSeek official model in the DSH interface, the bottom-left corner of the interface will display a real-time billing reminder. Based on the peak/off-peak hours of DeepSeek official API calls, it will prompt "Current peak hours, API at full price" or "Current off-peak hours, API at half price", providing you with "Zero Loss of Control" cost protection.
+
+![DeepSeek Billing Reminder - Peak hours full price](screenshots/4.png)
+
+> DeepSeek official billing rules (effective from 2026-08-23): Weekends (Saturday/Sunday) are uniformly off-peak pricing all day, no longer distinguishing peak/valley; only weekdays (Monday-Friday) implement peak/valley tiered billing — peak hours (9:00-12:00, 14:00-18:00) at full price, remaining off-peak hours at half price.
+
+## China Mirror Download Address
+
+This repository provides a Gitee mirror for users in mainland China, now available:
+
+- **GitHub main repository**: `https://github.com/ai-yukin/dsh-0-tools`
 - **Gitee mirror**: `https://gitee.com/ai-yukin/dsh-0-tools`
 
 Notes:
 
-- This repository uses **GitHub as the primary source** (`https://github.com/ai-yukin/dsh-0-tools`); Gitee is a domestic mirror kept consistent with the primary repository.
-- The mirror is maintained by manual sync. Updates to the primary repository will be reflected on the mirror shortly after. For the latest version, please refer to the GitHub primary repository.
-- For issues or suggestions, please file them in the Issues section of the GitHub primary repository.
+- This repository uses **GitHub as the main source repository**, with Gitee as the domestic mirror. Automatic sync has been configured (Gitee repository "Management" → "Repository Sync Management" enables GitHub sync), keeping content consistent with the main repository;
+- Domestic users are recommended to download from Gitee for more stable access speed;
+- If you need to report issues or suggestions, please submit them in the Issues of the GitHub main repository.
 
 ## Compatibility
 
-This plugin is developed and verified against the following DSH versions:
+This plugin has been developed and verified against the following DSH versions:
 
 | DSH Version | Status |
-|------|------|
-| `0.1.1-rc.2` | Tested & verified (page load / pricing bar / model picker / settings tab / official config channel) |
+|-------------|--------|
+| `0.1.1-rc.2` | Verified and adapted (page loading / pricing bar / model selector / settings tab / official configuration channel) |
 
-> **v1.5.0 compatibility notice**: This version uses DSH's official same-origin config channel (`/api` RPC), relying on its atomic writes, input validation and revision fencing. The minimum supported DSH version is therefore **raised to `0.1.1`**. The previously declared `0.1.0-rc.7` baseline was never really verified and is no longer promised. If your DSH is older than `0.1.1`, upgrade DSH first before installing this plugin (check your version with `dsh --version`; check the latest with `npm view @deepseek-ai/dsh versions`). If DSH releases a new major version (e.g., `0.2.x`), check this plugin's Release notes for compatibility before upgrading.
 
-## Project Structure
+## Directory Structure
 
 ```
 dsh-0-tools/
 ├── lib/
-│   ├── index.js     # host side: no-op stub since v1.5.0 (config I/O moved to the browser half via the official channel)
-│   └── client.js    # browser side: bottom-left toolbar + "No.0 Tools" settings tab + config read/write via official /api
+│   ├── index.js     # host side: local health monitoring proxy server (127.0.0.1:3095), bypasses browser CORS
+│   └── client.js    # browser side: bottom-left toolbar + settings tab "dsh-0-tools" + read/write config via official /api
+├── guide/           # v1.8.0 added: 4 dedicated illustrated tutorial pages for free models
+│   ├── zai.html              # Zhipu AI tutorial
+│   ├── openrouter-free.html  # OpenRouter tutorial
+│   ├── siliconflow.html       # SiliconFlow tutorial
+│   ├── xinghuo.html          # iFlytek Spark tutorial
+│   └── images/               # tutorial screenshots
+├── screenshots/     # README screenshots
 ├── cordis.patch.yml # web profile injection declaration
 ├── package.json
-├── help.json        # online data source for the help center (hosted on GitHub Pages)
-├── install.bat      # Windows one-click install + launch + verify
-└── install.sh       # macOS / Linux one-click install + launch + verify
+├── help.json        # help center online data source (hosted on GitHub Pages, supports remote hot-update model list)
+├── install.bat      # Windows one-click install + start + verify
+└── install.sh       # macOS / Linux one-click install + start + verify
 ```
 
-## How It Works
+## Mechanism Explanation
 
-> **v1.5.0 architecture change**: Earlier versions (≤ v1.4.x) had the host side open a local `127.0.0.1:3090~3099` service and rewrite config files with regexes. That self-hosted service had no origin check (any local web page could trigger writes — proven exploitable in the security audit), and raw regex writes raced DSH's own atomic writes and silently dropped unknown fields. Since v1.5.0 all of it goes through **DSH's official same-origin config channel**, eliminating those security and data risks; the host side is now just an empty stub.
 
-- **Config status detection**: The browser side calls the official `settings.describe` + `credentials.describe` to check whether `llm-pi-ai.providers.zai` exists and whether its credential is configured, as the source of truth; it polls every 5 seconds to refresh the UI.
-- **One-click config**: Via the official channel in sequence — `credentials.set` writes the `ZAI_API_KEY` credential, `settings.mutate` writes the `llm-pi-ai.providers.zai` provider block, and `settings.update` switches the default model to Zhipu `glm-4.7-flash` using merge semantics (so user-set fields like `reasoningEffort` are preserved, not wiped).
-- **One-click uninstall**: Removes the zai provider block and its credential via the official channel; only if the default model previously pointed at zai does it restore the original default recorded before configuration, otherwise it leaves your current selection untouched.
-- **Stale-config cleanup**: The Config Center detects locally retained providers that have been retired/removed (dynamically reading each provider's `apiKeyEnv` instead of relying on a static local list), shows a "stale residue" notice, and offers one-click cleanup so orphaned configs can always be removed.
-- **Settings tab**: Injected via the `settings.section` slot (the same mechanism official plugins use), id `dsh-0-tools`, tab name "No.0 Tools".
-- **Help center**: Fetches `https://ai-yukin.github.io/dsh-0-tools/help.json` and runs it through a unified `filterRemotePayload` sanitizer (URLs forced to https, text fields reject control chars/newlines, model ids and credential names pass character whitelists) before it reaches the UI or the config chain; falls back to bundled data on failure or non-compliant entries. Both the installable model list and the retired model list are driven by this remote data, so adding or retiring models requires no plugin reinstall.
+- **Configuration status determination**: The browser side calls official `settings.describe` + `credentials.describe` to determine whether `llm-pi-ai.providers.{provider}` exists and whether its credentials are configured, as the authoritative source; polls every 5 seconds to refresh the interface.
+- **One-click configuration**: Sequentially writes credentials via official `credentials.set`, writes provider configuration section via `settings.mutate`, and switches the default model to the corresponding free model via `settings.update` with merge semantics (merge semantics ensure user-set fields like `reasoningEffort` are not erased).
+- **One-click uninstall**: Clears the provider configuration section and corresponding credentials via official channels; only when the default model previously pointed to that provider, restores to the original default model recorded before configuration, otherwise keeps the user's current selection unchanged.
+- **API Key auto-recognition**: Automatically identifies which model a Key belongs to based on prefix/format (`sk-or-v1-` → OpenRouter, `sk-` (non-sk-or-v1-) → SiliconFlow, `APIKey:APISecret` format or 32-bit hex → iFlytek Spark, long string with dots → Zhipu AI), and automatically invokes the one-click configuration process after recognition.
+- **Free Model Manager Center**: Every 60 seconds in the background, sends `max_tokens=1` minimal requests to all configured free models for health checks, records the last 5 response times and averages them; when the current model times out, intelligently prompts to recommend switching to the fastest available model; sidebar displays status in real-time (for display only, cannot be clicked).
+- **Invalid residual cleanup**: The configuration center detects whether there are residual delisted/invalid model providers locally (dynamically reads their `apiKeyEnv`, no longer relying on local static lists), provides an "invalid residual" prompt in the interface and offers one-click cleanup, avoiding orphan configurations that cannot be deleted.
+- **Settings tab**: Injected via `settings.section` slot (same mechanism as official plugins), id is `dsh-0-tools`, tab name is "dsh-0-tools".
+- **Help Center**: Fetches `https://ai-yukin.github.io/dsh-0-tools/help.json`, passes through a unified filter `filterRemotePayload` for field-by-field security checks (URL enforces https, text rejects control characters/newlines, model id and credential name use character whitelist) before entering the interface and configuration chain; falls back to built-in data on failure or non-compliance; both the configurable model list and delisted model list are driven by this remote data, allowing adding or delisting models without reinstalling the plugin.
+- **Tutorial page hosting**: Tutorial pages are uniformly hosted on GitHub Pages (`https://ai-yukin.github.io/dsh-0-tools/guide/`). Domestic users can download the source code from the Gitee mirror repository and view tutorials locally.
 
 ## Disclaimer
 
-- This plugin is a **third-party community plugin**, not affiliated with DeepSeek or Zhipu AI; the official vendors do not provide support for it.
-- When using this plugin to connect to third-party model services, please comply with the respective platform's terms of service and pricing policies.
-- This project is open-sourced under the MIT License. Users assume all risk of usage.
+- This plugin is a **third-party community plugin**, not affiliated with DeepSeek, Zhipu AI, SiliconFlow, iFlytek, or OpenRouter in any way. Officials do not provide support for it.
+- When using this plugin to access third-party model services, please comply with the corresponding platform's terms of service and fee policies on your own.
+- Conversation content through free model channels may be retained by model vendors for training. Do not enter sensitive content such as business secrets or personal privacy through these channels.
+- This project is open source under the MIT license, and users assume usage risks at their own discretion.
 
 ## License
 
