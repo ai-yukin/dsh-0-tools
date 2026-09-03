@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>硅基流动 API Key 配置引导 - 零号工具</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #fafafa; color: #333; line-height: 1.6; }
+  .container { max-width: 720px; margin: 0 auto; padding: 24px 16px 60px; }
+  .header { text-align: center; margin-bottom: 32px; }
+  .header .badge { display: inline-block; background: #f3e8ff; color: #7c3aed; font-size: 12px; padding: 4px 12px; border-radius: 12px; margin-bottom: 12px; }
+  .header h1 { font-size: 24px; font-weight: 700; color: #111; margin-bottom: 8px; }
+  .header p { font-size: 14px; color: #666; }
+  .step { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .step-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: #7c3aed; color: #fff; border-radius: 50%; font-size: 14px; font-weight: 700; margin-right: 10px; }
+  .step-title { font-size: 16px; font-weight: 600; color: #111; margin-bottom: 8px; display: flex; align-items: center; }
+  .step-desc { font-size: 14px; color: #555; margin-bottom: 12px; padding-left: 38px; }
+  .step-img { width: 100%; border-radius: 8px; border: 1px solid #eee; margin-top: 8px; }
+  .tip { background: #fff8e1; border-left: 3px solid #f5a623; padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 13px; color: #7a5c00; margin-bottom: 16px; }
+  .final-section { background: #fff; border-radius: 12px; padding: 24px; margin-top: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); text-align: center; }
+  .final-section h3 { font-size: 18px; font-weight: 600; color: #111; margin-bottom: 12px; }
+  .final-section p { font-size: 14px; color: #666; margin-bottom: 16px; }
+  .paste-input { width: 100%; padding: 12px 16px; font-size: 14px; border: 2px solid #ddd; border-radius: 8px; margin-bottom: 12px; outline: none; transition: border-color 0.2s; }
+  .paste-input:focus { border-color: #7c3aed; }
+  .confirm-btn { width: 100%; padding: 14px; font-size: 16px; font-weight: 600; color: #fff; background: #7c3aed; border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s; }
+  .confirm-btn:hover { background: #6d28d9; }
+  .confirm-btn:disabled { background: #ccc; cursor: not-allowed; }
+  .footer { text-align: center; margin-top: 32px; font-size: 12px; color: #999; }
+  .footer a { color: #7c3aed; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <span class="badge">零号工具 · 免费模型配置引导</span>
+    <h1>硅基流动 API Key 配置</h1>
+    <p>Qwen3-8B 等 15+ 款 9B 以下小模型永久免费，国内直连</p>
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">1</span>打开硅基流动官网</div>
+    <div class="step-desc">访问 <a href="https://siliconflow.cn/" target="_blank">https://siliconflow.cn/</a>，点击右上角「登录/注册」按钮。</div>
+    <img src="images/siliconflow/01-官网首页.png" alt="硅基流动首页" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">2</span>登录或注册账号</div>
+    <div class="step-desc">使用手机号验证码登录/注册（一体化页面），输入手机号获取验证码即可完成登录。新用户注册即送 ¥14 余额。</div>
+    <img src="images/siliconflow/02-登录注册页面.png" alt="登录注册页面" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">3</span>登录成功，进入模型广场</div>
+    <div class="step-desc">登录后自动进入控制台模型广场，可以浏览所有可用模型。左侧菜单包含模型广场、API 密钥、费用明细等功能。</div>
+    <img src="images/siliconflow/03-登录成功-模型广场.png" alt="模型广场" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">4</span>确认免费模型（可选）</div>
+    <div class="step-desc">在模型广场搜索 "Qwen3-8B"，点击查看详情，可以看到价格为 ¥0.000000/K Tokens（完全免费）。硅基流动官方承诺 9B 以下模型永久免费调用。</div>
+    <img src="images/siliconflow/04-Qwen3-8B价格确认-免费.png" alt="Qwen3-8B免费价格确认" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">5</span>进入 API 密钥页面</div>
+    <div class="step-desc">点击左侧菜单「账户管理」→「API 密钥」，进入密钥管理页面。</div>
+    <img src="images/siliconflow/05-API密钥页面.png" alt="API密钥页面" class="step-img">
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">6</span>新建并复制 API 密钥</div>
+    <div class="step-desc">点击左上角紫色「新建 API 密钥」按钮，描述随意填写（如"零号工具"），点击「新建密钥」。创建成功后，点击密钥即可复制完整 API Key（sk- 开头）。复制后请妥善保管，不要泄露给他人。</div>
+    <img src="images/siliconflow/06-API密钥创建成功.png" alt="API密钥创建成功" class="step-img">
+  </div>
+
+  <div class="tip">
+    💡 硅基流动提供 15+ 款 9B 以下永久免费模型（Qwen3-8B、DeepSeek-R1-7B、GLM-4-9B 等），国内直连速度快，OpenAI 兼容接口，默认接入 Qwen/Qwen3-8B（128K 上下文，支持工具调用）。新用户注册即送 ¥14 余额，可用于付费模型。
+  </div>
+
+  <div class="final-section">
+    <h3>最后一步：填入零号工具</h3>
+    <p>把你刚才复制的 API Key 粘贴到下方输入框，点击按钮将自动跳转到 DSH 并完成填充。</p>
+    <input type="text" class="paste-input" id="keyInput" placeholder="请把刚才复制的 API Key 粘贴在这一栏">
+    <button class="confirm-btn" id="confirmBtn" onclick="goToDSH()">我已复制了硅基流动的 API Key</button>
+  </div>
+
+  <div class="footer">
+    <p>零号工具 dsh-0-tools · <a href="https://github.com/ai-yukin/dsh-0-tools" target="_blank">GitHub</a> · <a href="https://gitee.com/ai-yukin/dsh-0-tools" target="_blank">Gitee</a></p>
+  </div>
+</div>
+
+<script>
+function goToDSH() {
+  var key = document.getElementById('keyInput').value.trim();
+  if (!key) {
+    alert('请先粘贴 API Key');
+    return;
+  }
+  if (key.length < 16) {
+    alert('API Key 长度不正确，请检查是否复制完整');
+    return;
+  }
+  var url = 'http://127.0.0.1:3080/?autofill=' + encodeURIComponent(key);
+  window.location.href = url;
+}
+// 支持回车提交
+document.getElementById('keyInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') goToDSH();
+});
+</script>
+</body>
+</html>
