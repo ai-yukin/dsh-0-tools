@@ -1,36 +1,36 @@
-{
-  "name": "dsh-0-tools",
-  "version": "1.8.6",
-  "description": "DeepSeek Harness 小白零门槛零费用套件：4个永久免费模型一键接入（智谱/硅基流动/讯飞星火/OpenRouter）、免费模型智能路由（自动测速优选最快）、DeepSeek 计价时段提醒、在线帮助中心。",
-  "license": "MIT",
-  "type": "module",
-  "main": "lib/index.js",
-  "dshOrigin": "0.1.7",
-  "exports": {
-    ".": "./lib/index.js",
-    "./client": "./lib/client.js",
-    "./package.json": "./package.json"
-  },
-  "files": [
-    "lib/index.js",
-    "lib/client.js",
-    "cordis.patch.yml"
-  ],
-  "dsh": {
-    "bundle": {
-      "patch": "./cordis.patch.yml"
-    },
-    "client": {
-      "inject": [
-        "@deepseek-ai/dsh-client-runtime"
-      ],
-      "platform": "web",
-      "immediately": true
-    }
-  },
-  "peerDependencies": {
-    "react": "^18.2.0",
-    "@deepseek-ai/cordis": "^4.0.1",
-    "@deepseek-ai/dsh-client-runtime": ">=0.1.1 <0.2"
-  }
+﻿{
+    "name":  "dsh-0-tools",
+    "version":  "1.8.7",
+    "description":  "DeepSeek Harness 小白零门槛零费用套件：4个永久免费模型一键接入（智谱/硅基流动/讯飞星火/OpenRouter）、免费模型智能路由（自动测速优选最快）、DeepSeek 计价时段提醒、在线帮助中心。",
+    "license":  "MIT",
+    "type":  "module",
+    "main":  "lib/index.js",
+    "dshOrigin":  "0.1.7",
+    "exports":  {
+                    ".":  "./lib/index.js",
+                    "./client":  "./lib/client.js",
+                    "./package.json":  "./package.json"
+                },
+    "files":  [
+                  "lib/index.js",
+                  "lib/client.js",
+                  "cordis.patch.yml"
+              ],
+    "dsh":  {
+                "bundle":  {
+                               "patch":  "./cordis.patch.yml"
+                           },
+                "client":  {
+                               "inject":  [
+                                              "@deepseek-ai/dsh-client-runtime"
+                                          ],
+                               "platform":  "web",
+                               "immediately":  true
+                           }
+            },
+    "peerDependencies":  {
+                             "react":  "^18.2.0",
+                             "@deepseek-ai/cordis":  "^4.0.1",
+                             "@deepseek-ai/dsh-client-runtime":  "\u003e=0.1.1 \u003c0.2"
+                         }
 }
