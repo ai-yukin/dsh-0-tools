@@ -15,8 +15,8 @@ dsh-0-tools is designed for users with zero programming experience who are using
 
 ## Current Version & Compatibility
 
-- Current version: **v1.8.5**
-- Compatible DSH version: **≥ `0.1.1`**
+- Current version: **v1.8.6**
+- Compatible DSH version: **≥ `0.1.7`** (verified with `0.1.7-rc.2`)
 - **System Requirements**: One-click installation scripts support **Windows 10 / Windows 11** (`install.bat`) and **macOS / Linux** (`install.sh`); the plugin core code itself is cross-platform. Users who have manually installed DSH can install the plugin manually via `dsh plugin --profile web add /path/to/dsh-0-tools`.
 
 ## Free Model List
@@ -106,6 +106,7 @@ This plugin has been developed and verified against the following DSH versions:
 
 | DSH Version | Status |
 |-------------|--------|
+| `0.1.7-rc.2` | Verified and adapted (page loading / pricing bar / model selector / settings tab / official configuration channel / web authentication) |
 | `0.1.1-rc.2` | Verified and adapted (page loading / pricing bar / model selector / settings tab / official configuration channel) |
 
 
