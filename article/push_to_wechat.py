@@ -10,8 +10,16 @@ import os
 import sys
 
 # ========== 配置 ==========
-APP_ID = "***REMOVED***"
-APP_SECRET = "***REMOVED***"
+# 安全提示：请勿将 AppID/AppSecret 硬编码在脚本中！
+# 使用前请先设置环境变量：
+#   export WECHAT_APPID="你的AppID"
+#   export WECHAT_APPSECRET="你的AppSecret"
+APP_ID = os.environ.get("WECHAT_APPID")
+APP_SECRET = os.environ.get("WECHAT_APPSECRET")
+if not APP_ID or not APP_SECRET:
+    print("错误：请先设置环境变量 WECHAT_APPID 和 WECHAT_APPSECRET")
+    print('示例：export WECHAT_APPID="wx..."')
+    sys.exit(1)
 
 BASE_DIR = r"E:\WorkBuddy工作空间\DeepSeek-Harness\插件\dsh-0-tools-fix"
 HTML_FILE = os.path.join(BASE_DIR, "article", "零号工具推荐文章.html")

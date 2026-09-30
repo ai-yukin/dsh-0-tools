@@ -4,8 +4,17 @@
 $ErrorActionPreference = "Stop"
 
 # ========== 配置 ==========
-$AppID = "***REMOVED***"
-$AppSecret = "***REMOVED***"
+# 安全提示：请勿将 AppID/AppSecret 硬编码在脚本中！
+# 使用前请先设置环境变量：
+#   $env:WECHAT_APPID = "你的AppID"
+#   $env:WECHAT_APPSECRET = "你的AppSecret"
+$AppID = $env:WECHAT_APPID
+$AppSecret = $env:WECHAT_APPSECRET
+if (-not $AppID -or -not $AppSecret) {
+    Write-Host "错误：请先设置环境变量 WECHAT_APPID 和 WECHAT_APPSECRET" -ForegroundColor Red
+    Write-Host "示例：`$env:WECHAT_APPID = `"wx...`"" -ForegroundColor Yellow
+    exit 1
+}
 $baseDir = "E:\WorkBuddy工作空间\DeepSeek-Harness\插件\dsh-0-tools-fix"
 $htmlFile = "$baseDir\article\零号工具推荐文章.html"
 $coverFile = "$baseDir\article\cover.jpg"
