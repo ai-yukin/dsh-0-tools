@@ -14,3 +14,12 @@ node_modules/
 draft_*/
 *.draft.xml
 
+# 环境变量与敏感凭证（绝对不能提交）
+.env
+.env.*
+!.env.example
+
+# git-filter-repo 临时文件
+replace.txt
+filter-repo/
+
