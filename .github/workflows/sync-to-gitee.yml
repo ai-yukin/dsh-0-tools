@@ -15,26 +15,57 @@ jobs:
         with:
           fetch-depth: 0  # 获取完整历史，用于同步所有分支和tag
 
-      - name: Sync to Gitee
+      - name: Sync to Gitee (with retry)
         env:
           GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
         run: |
+          if [ -z "$GITEE_TOKEN" ]; then
+            echo "::error::GITEE_TOKEN 未配置！请在 GitHub Settings → Secrets and variables → Actions 中添加 GITEE_TOKEN"
+            exit 1
+          fi
+
           git config --global user.name "ai-yukin"
           git config --global user.email "ai-yukin@users.noreply.github.com"
 
-          # 添加 Gitee 远程仓库（使用令牌认证）
+          # 添加 Gitee 远程仓库
           git remote add gitee "https://ai-yukin:${GITEE_TOKEN}@gitee.com/ai-yukin/dsh-0-tools.git"
 
-          # 推送 main 分支
-          echo "=== 推送 main 分支 ==="
-          git push gitee main:main --force
+          # 带重试的推送函数（最多3次，每次间隔10秒）
+          push_with_retry() {
+            local desc="$1"
+            local args="$2"
+            local max_attempts=3
+            local attempt=1
 
-          # 推送 master 分支（Gitee 默认分支是 master，保持同步）
-          echo "=== 推送 master 分支 ==="
-          git push gitee main:master --force
+            while [ $attempt -le $max_attempts ]; do
+              echo "=== [尝试 $attempt/$max_attempts] $desc ==="
+              if git push gitee $args; then
+                echo "✅ $desc 成功"
+                return 0
+              else
+                echo "⚠️  $desc 失败（尝试 $attempt/$max_attempts）"
+                if [ $attempt -lt $max_attempts ]; then
+                  echo "等待10秒后重试..."
+                  sleep 10
+                fi
+                attempt=$((attempt + 1))
+              fi
+            done
+            echo "::error::$desc 在 $max_attempts 次尝试后仍然失败"
+            return 1
+          }
+
+          # 推送 main 分支（force 覆盖，确保历史一致）
+          push_with_retry "推送 main 分支" "main:main --force" || exit 1
+
+          # 推送 master 分支（Gitee 默认分支，保持同步）
+          push_with_retry "推送 master 分支" "main:master --force" || exit 1
 
           # 推送所有 tag
-          echo "=== 推送所有 tags ==="
-          git push gitee --tags --force
+          push_with_retry "推送所有 tags" "--tags --force" || exit 1
 
-          echo "=== 同步完成 ==="
+          echo ""
+          echo "========================================"
+          echo "  ✅ Gitee 同步全部完成！"
+          echo "  仓库地址: https://gitee.com/ai-yukin/dsh-0-tools"
+          echo "========================================"
