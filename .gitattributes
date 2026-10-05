@@ -1,0 +1,13 @@
+# v1.10.0 新增：统一行尾，避免 Windows/macOS 混编污染
+#背景：仓库中 client.js 曾因 Windows 编辑器 + core.autocrlf=true
+# 被转成 CRLF 提交，diff 出现整文件噪声。
+# 约定：仓库内一律存 LF，检出时由各平台自行处理。
+* text=auto eol=lf
+
+# 二进制文件不做行尾转换
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.zip binary

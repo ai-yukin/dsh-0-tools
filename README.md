@@ -15,7 +15,7 @@
 
 ## 当前版本与兼容范围
 
-- 当前版本：**v1.9.0**
+- 当前版本：**v1.10.0**
 - 兼容 DSH 版本：**≥ `0.1.7`**（已实测适配 `0.1.7-rc.2`）
 - **系统要求**：一键安装脚本支持 **Windows 10 / Windows 11**（`install.bat`）和 **macOS / Linux**（`install.sh`）；插件核心代码本身跨平台，已手动装好 DSH 的用户可通过 `dsh plugin --profile web add /path/to/dsh-0-tools` 手动安装。
 
