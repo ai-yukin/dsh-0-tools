@@ -20,6 +20,39 @@ echo.
 echo ===== dsh-0-tools 一键安装 =====
 echo.
 
+rem ---------- 版本检查：装之前先告诉用户这是不是最新版 ----------
+rem 解决"用户装到旧版"的核心问题：脚本本身不下载任何东西，
+rem 它装的是"脚本自己所在目录"的版本，所以先本地报出实际版本。
+rem 用 PowerShell 而非 for/findstr 解析JSON —— 后者遇中文路径与引号易出错。
+set "LOCAL_VER=unknown"
+for /f "usebackq delims=" %%v in (`powershell -NoProfile -Command "$ErrorActionPreference='SilentlyContinue'; if (Test-Path '%~dp0package.json') { (Get-Content '%~dp0package.json' -Raw | ConvertFrom-Json).version }"`) do set "LOCAL_VER=%%v"
+if "!LOCAL_VER!"=="" set "LOCAL_VER=unknown"
+echo [版本] 本地源码版本：v!LOCAL_VER!
+echo.
+
+rem 尝试获取远程最新版（GitHub 优先，不通则回落 Gitee；均失败不影响安装）
+set "REMOTE_VER="
+for /f "usebackq delims=" %%v in (`powershell -NoProfile -Command "$ErrorActionPreference='SilentlyContinue'; foreach ($u in @('https://raw.githubusercontent.com/ai-yukin/dsh-0-tools/main/package.json','https://gitee.com/ai-yukin/dsh-0-tools/raw/main/package.json')) { try { $c=(Invoke-WebRequest -Uri $u -UseBasicParsing -TimeoutSec 8).Content; $j=$c|ConvertFrom-Json; if ($j.version) { $j.version; break } } catch {} }"`) do if not defined REMOTE_VER set "REMOTE_VER=%%v"
+
+if defined REMOTE_VER (
+    if "!LOCAL_VER!"=="!REMOTE_VER!" (
+        echo [版本] ✅ 你安装的是最新版 v!LOCAL_VER!
+    ) else (
+        echo [版本] ⚠️  本地是 v!LOCAL_VER!，但远程最新是 v!REMOTE_VER!
+        echo.
+        echo        你的版本不是最新。建议先更新源码再重新运行本脚本：
+        echo          cd /d "%~dp0"
+        echo          git pull origin main
+        echo.
+        echo        （国内网络可改用镜像：git pull gitee main）
+        echo.
+    )
+) else (
+    echo [版本] 未能获取远程版本号（网络不通），跳过版本比对。
+    echo        若怀疑版本过旧，可到 GitHub/Gitee 仓库页确认最新版本号。
+)
+echo.
+
 rem ---------- 前置检查：DSH 本体是否已安装（未装则自动安装） ----------
 where dsh >nul 2>nul
 if errorlevel 1 (
@@ -146,16 +179,27 @@ echo [3/5] 启动 dsh web（新窗口，保留日志）...
 start "dsh web" cmd /c "dsh web"
 
 echo.
-echo [4/5] 等待 6 秒后打开浏览器...
-timeout /T 6 /NOBREAK >nul
-start http://127.0.0.1:3080/
+echo [4/5] 等待 DSH 启动并打开浏览器...
+rem v1.10.0修正：DSH 0.1.7 起启用 web 认证，直接开 http://127.0.0.1:3080/
+rem 会返回 401 打不开页面。dsh web 启动时会在新窗口打印带 ?token= 的
+rem 真实可访问地址，由 DSH 自己负责打开。
+rem 这里改为等待并提示，不再强开无 token 的裸地址。
+timeout /T 8 /NOBREAK >nul
+echo.
+echo   DSH 已在���窗口启动。若浏览器没有自动打开，请在该窗口中
+echo   复制打印出来的、含 ?token= 的完整地址到浏览器打开。
+echo   （DSH 0.1.7 起需要这个 token 才能访问，直接开 127.0.0.1:3080 会显示 401）
+echo.
 
 echo.
 echo [5/5] 创建桌面快捷方式「DeepSeek Harness」...
 set "DESKTOP=%USERPROFILE%\Desktop"
 if not exist "%DESKTOP%" if exist "%USERPROFILE%\OneDrive\Desktop" set "DESKTOP=%USERPROFILE%\OneDrive\Desktop"
 if not exist "%DESKTOP%" set "DESKTOP=%PUBLIC%\Desktop"
-powershell -NoProfile -Command "$ws=New-Object -ComObject WScript.Shell; $s=$ws.CreateShortcut('%DESKTOP%\DeepSeek Harness.lnk'); $s.TargetPath='%SystemRoot%\System32\cmd.exe'; $s.Arguments='/k ""dsh web & timeout /t 6 /NOBREAK >nul & start http://127.0.0.1:3080/""'; $s.WorkingDirectory='%USERPROFILE%'; $s.IconLocation='%SystemRoot%\System32\shell32.dll,220'; $s.Description='启动 DeepSeek Harness (dsh web)'; $s.Save()"
+rem v1.10.0：去掉原来的 start http://127.0.0.1:3080/ ——
+rem DSH 0.1.7 起该地址返回 401，改为只启动 dsh web，由它自己打开
+rem 带 ?token= 的可访问地址。
+powershell -NoProfile -Command "$ws=New-Object -ComObject WScript.Shell; $s=$ws.CreateShortcut('%DESKTOP%\DeepSeek Harness.lnk'); $s.TargetPath='%SystemRoot%\System32\cmd.exe'; $s.Arguments='/k ""dsh web""'; $s.WorkingDirectory='%USERPROFILE%'; $s.IconLocation='%SystemRoot%\System32\shell32.dll,220'; $s.Description='启动 DeepSeek Harness (dsh web)'; $s.Save()"
 if exist "%DESKTOP%\DeepSeek Harness.lnk" (
     echo      已创建桌面快捷方式：「%DESKTOP%\DeepSeek Harness.lnk」
 ) else (
@@ -170,6 +214,9 @@ echo   2. 选中 DeepSeek 系列大模型时，左下角应出现高峰/空闲�
 echo   3. 选中智谱免费模型时，左下角计价条自动隐藏。
 echo   4. 「帮助」按钮常驻左下角，点击弹出官方资料/精选资料。
 echo   5. 设置页配置中心：未配置时显示配置表单；已配置时显示状态 + 一键卸载。
+echo.
+echo ⚠️ DSH 0.1.7 起网页需要认证：若浏览器打开后显示 401 或空白页，
+echo    请到「dsh web」启动窗口复制含 ?token= 的完整地址重新打开。
 echo.
 echo 如需卸载：
 echo   dsh plugin --profile web remove dsh-0-tools

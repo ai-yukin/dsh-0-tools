@@ -43,6 +43,48 @@ else
     OPEN_CMD="xdg-open"
 fi
 
+# ---------- 版本检查：装之前先告诉用户这是不是最新版 ----------
+# 解决"用户装到旧版"的核心问题：脚本本身不下载任何东西，
+# 它装的是"脚本自己所在目录"的版本，所以先本地报出实际版本。
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LOCAL_VER="unknown"
+if [ -f "$SCRIPT_DIR/package.json" ]; then
+    LOCAL_VER=$(grep '"version"' "$SCRIPT_DIR/package.json" | head -1 | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/')
+fi
+echo ""
+echo -e "${BLUE}[版本] 本地源码版本：v${LOCAL_VER}${NC}"
+
+# 尝试获取远程最新版（GitHub 优先，不通则回落 Gitee；均失败不影响安装）
+REMOTE_VER=""
+for U in \
+    "https://raw.githubusercontent.com/ai-yukin/dsh-0-tools/main/package.json" \
+    "https://gitee.com/ai-yukin/dsh-0-tools/raw/main/package.json" ; do
+    if [ -z "$REMOTE_VER" ]; then
+        REMOTE_VER=$(curl -fsSL --max-time 8 "$U" 2>/dev/null \
+            | grep '"version"' | head -1 \
+            | sed 's/.*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/') || true
+    fi
+done
+
+if [ -n "$REMOTE_VER" ]; then
+    if [ "$LOCAL_VER" = "$REMOTE_VER" ]; then
+        echo -e "${GREEN}[版本] ✅ 你安装的是最新版 v${LOCAL_VER}${NC}"
+    else
+        echo -e "${YELLOW}[版本] ⚠️  本地是 v${LOCAL_VER}，但远程最新是 v${REMOTE_VER}${NC}"
+        echo ""
+        echo "       你的版本不是最新。建议先更新源码再重新运行本脚本："
+        echo "         cd \"$SCRIPT_DIR\""
+        echo "         git pull origin main"
+        echo ""
+        echo "       （国内网络可改用镜像：git pull gitee main）"
+        echo ""
+    fi
+else
+    echo -e "${YELLOW}[版本] 未能获取远程版本号（网络不通），跳过版本比对。${NC}"
+    echo "       若怀疑版本过旧，可到 GitHub/Gitee 仓库页确认最新版本号。"
+fi
+echo ""
+
 # ---------- 前置检查：DSH 本体是否已安装（未装则自动安装） ----------
 if ! command -v dsh &> /dev/null; then
     echo ""
@@ -212,9 +254,17 @@ fi
 
 # ---------- [4/5] 等待后打开浏览器 ----------
 echo ""
-echo -e "${BLUE}[4/5] 等待 6 秒后打开浏览器...${NC}"
+echo -e "${BLUE}[4/5] 等待 DSH 启动...${NC}"
+# v1.10.0 修正：DSH 0.1.7 起启用 web 认证，直接开 http://127.0.0.1:3080/
+# 会返回 401。dsh web 启动时会打印带 ?token= 的真实可访问地址，
+# 由 DSH 自己负责打开，这里不再强开无 token 的裸地址。
 sleep 6
-$OPEN_CMD "http://127.0.0.1:3080/" 2>/dev/null || echo "     请手动打开 http://127.0.0.1:3080/"
+echo ""
+echo "  DSH 已在后台启动（日志：/tmp/dsh-web.log）。"
+echo "  若浏览器未自动打开，请从日志中复制含 ?token= 的完整地址打开："
+echo "    grep -o 'http://127.0.0.1:[0-9]*/?token=[^ ]*' /tmp/dsh-web.log | head -1"
+echo "  （DSH 0.1.7 起需要这个 token，直接开 127.0.0.1:3080 会显示 401）"
+echo ""
 
 # ---------- [5/5] 创建桌面快捷方式 ----------
 echo ""
@@ -230,12 +280,11 @@ cat > "$SHORTCUT" << 'EOF'
 #!/bin/bash
 # DeepSeek Harness 启动快捷方式
 echo "正在启动 DeepSeek Harness (dsh web)..."
-dsh web &
-DSH_PID=$!
-sleep 6
-open "http://127.0.0.1:3080/" 2>/dev/null || xdg-open "http://127.0.0.1:3080/" 2>/dev/null
-echo "DSH 已启动，浏览器已打开。按 Ctrl+C 停止服务。"
-wait $DSH_PID
+# v1.10.0：不再自动打开 http://127.0.0.1:3080/ ——
+# DSH 0.1.7 起该地址返回 401，dsh web 会自己打开带 ?token= 的地址。
+dsh web
+echo ""
+echo "按 Ctrl+C 停止服务。"
 EOF
 
 chmod +x "$SHORTCUT"

@@ -34,6 +34,36 @@ dsh-0-tools currently integrates 4 permanently free large models. We recommend c
 
 ## Installation & Usage (Illustrated Steps)
 
+### Step 0: Get the Source Code (Important — Don't Skip)
+
+`install.bat` / `install.sh` **do not download anything by themselves** — they simply install
+"the folder where the script itself lives" into DSH. So you must have the complete plugin
+source directory before running either script.
+
+**Recommended (gets the latest version)**:
+
+```bash
+# 1. Clone the repository (recommended — always the latest version)
+git clone https://github.com/ai-yukin/dsh-0-tools.git
+
+# 2. Enter the directory and confirm you can see lib/ and install.bat
+cd dsh-0-tools
+```
+
+You can also click **Code → Download ZIP** on the GitHub page and unzip it.
+
+> **If GitHub is unstable from mainland China**, use the Gitee mirror (synced with GitHub):
+> ```bash
+> git clone https://gitee.com/ai-yukin/dsh-0-tools.git
+> ```
+
+**To check whether you have the latest version**: open `package.json` in that directory and
+look at the `"version"` field. The current latest version is stated at the top of this document
+under "Current Version & Compatibility".
+
+> ⚠️ **Do not download `install.bat` alone.** It requires `lib/`, `cordis.patch.yml`,
+> `help.json` and other files in the same directory; a missing file breaks the installation.
+
 ### Step 1: Run the One-Click Installation Script
 
 - **Windows users**: Double-click to run `install.bat`

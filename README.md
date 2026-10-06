@@ -34,6 +34,34 @@
 
 ## 安装与使用（图文步骤）
 
+### 第 0 步：先获取源码（重要，别跳过）
+
+`install.bat` / `install.sh` **不会自动下载任何东西** —— 它们只是把「脚本自己所在的这个文件夹」安装进 DSH。
+所以在运行脚本之前，你必须先有完整的插件源码目录。
+
+**推荐方式（拿最新版）**：
+
+```bash
+# 1. 克隆仓库（推荐，会自动拿到最新版本）
+git clone https://github.com/ai-yukin/dsh-0-tools.git
+
+# 2. 进入目录，确认能看到 lib/ 和 install.bat
+cd dsh-0-tools
+```
+
+也可以在 GitHub 页面点 **Code → Download ZIP** 下载后解压。
+
+> **国内网络访问 GitHub 不稳时**，可改用 Gitee 镜像（内容与 GitHub 同步）：
+> ```bash
+> git clone https://gitee.com/ai-yukin/dsh-0-tools.git
+> ```
+
+**判断你拿到的版本是不是最新**：打开目录下的 `package.json`，看 `"version"` 字段。
+当前最新版本见本文开头的「当前版本与兼容范围」。
+
+> ⚠️ **不要只单独下载 install.bat**。它依赖同目录下的 `lib/`、`cordis.patch.yml`、`help.json`
+> 等文件才能工作，缺任一项都会安装失败。
+
 ### 第 1 步：运行一键安装脚本
 
 - **Windows 用户**：双击运行 `install.bat`
