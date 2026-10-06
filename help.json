@@ -1,6 +1,6 @@
 {
-  "version": "2026-09-03.1",
-  "updatedAt": "2026-09-03",
+  "version": "2026-10-06.1",
+  "updatedAt": "2026-10-06",
   "official": [
     {
       "title": "DeepSeek Harness 官网",
@@ -106,13 +106,13 @@
       "baseURL": "https://spark-api-open.xf-yun.com/v1",
       "models": [
         {
-          "id": "spark-lite",
-          "name": "讯飞星火 Spark Lite（永久免费）",
+          "id": "lite",
+          "name": "讯飞星火 Lite（永久免费）",
           "input": [
             "text"
           ],
-          "contextWindow": 8192,
-          "maxTokens": 4096
+          "contextWindow": 8000,
+          "maxTokens": 2048
         }
       ],
       "shortName": "讯飞"
