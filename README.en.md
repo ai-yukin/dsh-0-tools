@@ -50,7 +50,9 @@ git clone https://github.com/ai-yukin/dsh-0-tools.git
 cd dsh-0-tools
 ```
 
-You can also click **Code → Download ZIP** on the GitHub page and unzip it.
+You can also click **Code → Download ZIP** on the GitHub page and unzip it,
+or grab the prebuilt archive from **Releases → `dsh-0-tools-vX.Y.Z.zip`** (generated
+automatically by GitHub Actions on every `v*` tag).
 
 > **If GitHub is unstable from mainland China**, use the Gitee mirror (synced with GitHub):
 > ```bash
@@ -129,9 +131,21 @@ This repository provides a Gitee mirror for users in mainland China, now availab
 
 Notes:
 
-- This repository uses **GitHub as the main source repository**, with Gitee as the domestic mirror. Automatic sync has been configured (Gitee repository "Management" → "Repository Sync Management" enables GitHub sync), keeping content consistent with the main repository;
+- This repository uses **GitHub as the main source repository**, with Gitee as the domestic mirror. The mirror is synced automatically by GitHub Actions (triggered by any push to `main`), keeping content consistent with the main repository;
+- Gitee now uses `main` as its **only** branch — the legacy `master` branch has been deleted — so the README shown on its landing page is always the latest;
 - Domestic users are recommended to download from Gitee for more stable access speed;
 - If you need to report issues or suggestions, please submit them in the Issues of the GitHub main repository.
+
+> **Three ways to get the source code** (all deliver the same latest version):
+>
+> | Method | Command / Location | Best for |
+> |---|---|---|
+> | Git clone | `git clone https://github.com/ai-yukin/dsh-0-tools.git` | You want to upgrade later with `git pull` |
+> | Release archive | **Releases** on the right of the GitHub repo → download `dsh-0-tools-vX.Y.Z.zip` | One-off install, no Git needed |
+> | Gitee mirror | `git clone https://gitee.com/ai-yukin/dsh-0-tools.git` | GitHub is slow/unstable from mainland China |
+>
+> The Release archive is generated automatically by GitHub Actions when a `v*` tag is pushed.
+> It contains a top-level `dsh-0-tools-vX.Y.Z/` directory — **run the install script from inside the extracted directory**.
 
 ## Compatibility
 

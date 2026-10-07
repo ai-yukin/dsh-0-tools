@@ -25,16 +25,24 @@
 
 ## 四、Git 标签与推送
 
-> **v1.7.0 起已配置 GitHub Actions 自动同步到 Gitee**（`.github/workflows/sync-to-gitee.yml`）。每次 push 到 GitHub main 分支，会自动同步到 Gitee 的 main + master 分支 + 所有 tags。**无需再手动推 Gitee**，只需推 GitHub 即可。
+> **v1.7.0 起已配置 GitHub Actions 自动同步到 Gitee**（`.github/workflows/sync-to-gitee.yml`）。每次 push 到 GitHub main 分支，会自动同步到 Gitee 的 main 分支 + 所有 tags。**无需再手动推 Gitee**，只需推 GitHub 即可。
 >
 > 自动同步依赖 GitHub Secrets 中的 `GITEE_TOKEN`（Gitee 私人令牌）。如自动同步失败，先检查 Secret 是否存在、令牌是否过期。
+>
+> **v1.10.0 起不再同步 master。** Gitee 建仓默认分支名为 master，而本仓库主线一直是main，
+> 长期靠 `main:master` 强推维持首页展示，属历史遗留 —— 首页README 因此长期落后于主线。
+> 已整改：Gitee `default_branch` 改为 `main`，远端 `master` 已删除，Gitee 现仅有 `main` 一个分支。
 
 | # | 操作 | 说明 |
 |---|------|------|
 | 6 | `git tag -a vx.x.x -m "..."` | 打版本标签 |
-| 7 | `git push origin main --tags` | 推送到 GitHub（main 分支 + tag）→ **触发自动同步到 Gitee** |
+| 7 | `git push origin main --tags` | 推送到 GitHub（main 分支 + tag）→ **触发①自动同步到 Gitee ②自动打包发 Release** |
 | ~~8~~ | ~~`git push gitee main --tags`~~ | ~~已废弃，由 GitHub Actions 自动同步~~ |
-| ~~9~~ | ~~`git push gitee main:master --tags`~~ | ~~已废弃，由 GitHub Actions 自动同步~~ |
+| ~~9~~ | ~~`git push gitee main:master --tags`~~ | ~~已废弃，master 分支已于 v1.10.0 删除~~ |
+
+> ⚠️ **第 7 步的 tag 是关键**：`release.yml` 只在推送 `v*` 标签时触发，会自动校验
+> 标签版本与 `package.json` 的 `version` 是否一致（不一致直接拒绝发布，防止发错版本号），
+> 然后打包 zip 并创建 GitHub Release。**只推 main 不打 tag，Release 不会生成。**
 
 ## 四（附）、Gitee 自动同步配置说明
 
@@ -42,7 +50,7 @@
 |------|------|
 | 工作流文件 | `.github/workflows/sync-to-gitee.yml` |
 | 触发条件 | push 到 main 分支 / 手动触发（workflow_dispatch） |
-| 同步内容 | Gitee main 分支 + Gitee master 分支 + 所有 tags |
+| 同步内容 | Gitee main 分支 + 所有 tags（**不再同步 master**） |
 | 依赖 Secret | `GITEE_TOKEN`（Gitee 私人令牌，在 GitHub Settings → Secrets and variables → Actions 中配置） |
 | 已配置项目 | dsh-0-tools、awesome-dsh-plugin |
 | 首次验证方式 | 推送后打开 GitHub Actions 页面，确认「Sync to Gitee」工作流状态为 Success |
@@ -59,7 +67,8 @@
 | # | 验证项 | 验证方式 |
 |---|--------|----------|
 | 11 | GitHub 页面版本号 | 打开 https://github.com/ai-yukin/dsh-0-tools ，确认 README 显示新版本 |
-| 12 | Gitee 页面版本号 | 打开 https://gitee.com/ai-yukin/dsh-0-tools ，确认 README 显示新版本（注意 Gitee 默认分支是 master） |
+| 12 | Gitee 页面版本号 | 打开 https://gitee.com/ai-yukin/dsh-0-tools ，确认 README 显示新版本（Gitee 默认分支已统一为 main，首页即最新版） |
+| 13 | GitHub Release 包 | 打开 https://github.com/ai-yukin/dsh-0-tools/releases ，确认 `vX.Y.Z` 的 zip 资产已自动生成并可下载 |
 | 13 | Tag 存在 | `git ls-remote --tags origin` 和 `git ls-remote --tags gitee` 确认新版本 tag |
 | 14 | 帮助中心版本 | 启动 DSH，打开帮助中心，确认「当前零号工具版本」显示新版本 |
 | 15 | 全局搜索旧版本号 | `grep -r "旧版本号" --include="*.{js,json,md,yml}" .` 确认无遗漏 |

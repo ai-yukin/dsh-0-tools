@@ -55,8 +55,8 @@ jobs:
         run: |
           set -euo pipefail
           NAME="dsh-0-tools-v${{ steps.version.outputs.version }}"
-          STAGE="_stage/$NAME"
-          mkdir -p "$STAGE"
+          rm -rf _stage
+          mkdir -p "_stage/$NAME"
 
           # 只打包用户安装与运行真正需要的文件。
           # 刻意排除：.github/（CI 自身）、article/（推文草稿，非安装必需）、
@@ -64,19 +64,30 @@ jobs:
           for item in lib guide screenshots cordis.patch.yml package.json help.json \
                      install.bat install.sh README.md README.en.md LICENSE; do
             if [ -e "$item" ]; then
-              cp -r "$item" "$STAGE/"
+              cp -r "$item" "_stage/$NAME/"
             else
               echo "::warning::缺少 $item，跳过"
             fi
           done
 
+          # 打包前自检：核心文件缺一不可，缺了直接失败（不能发出装不上的包）
+          for must in lib/index.js lib/client.js cordis.patch.yml package.json \
+                      install.bat install.sh; do
+            if [ ! -e "_stage/$NAME/$must" ]; then
+              echo "::error::核心文件缺失：$must，拒绝打包"
+              exit 1
+            fi
+          done
+
           command -v zip >/dev/null 2>&1 || { sudo apt-get update && sudo apt-get install -y zip; }
-          zip -r "$NAME.zip" "$STAGE/../$NAME" -x '.*' >/dev/null
-          # 规范结构：zip 内顶层就是 dsh-0-tools-vX.Y.Z 目录，解压即用
-          mv "$NAME.zip" "_stage/$NAME.zip"
+
+          # 在 _stage 目录内执行，保证 zip 内顶层是 dsh-0-tools-vX.Y.Z/，解压即用。
+          # -r 递归；-x '*/.*' 排除隐藏文件；-9 最高压缩。
+          ( cd _stage && zip -r9 "$NAME.zip" "$NAME" -x '*/.*' >/dev/null )
+
           echo "asset=$NAME.zip" >> "$GITHUB_OUTPUT"
           echo "已打包 $NAME.zip"
-          unzip -l "_stage/$NAME.zip" | head -20
+          unzip -l "_stage/$NAME.zip"
 
       - name: 发布 Release
         uses: softprops/action-gh-release@v2
@@ -96,15 +107,7 @@ jobs:
 
             确认版本是否是最新的：解压后打开 `package.json`，看 `"version"` 字段。
 
-      - name: 同步 Release 资源到 Gitee 镜像
-        if: ${{ success() && secrets.GITEE_TOKEN != '' }}
-        env:
-          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
-          VERSION: ${{ steps.version.outputs.version }}
-          ASSET: ${{ steps.package.outputs.asset }}
-        run: |
-          set -euo pipefail
-          # Gitee 的 Release 接口与 GitHub 不兼容，走上传到 Release 直链的降级方案：
-          # 仅打印提示，不让整个发布流程失败（GitHub Release 已成功才是主线）。
-          echo "Gitee 镜像仓库：https://gitee.com/ai-yukin/dsh-0-tools"
-          echo "如需在 Gitee侧也挂载 Release 包，可手动上传 $ASSET。"
+      # 说明：Gitee 侧不挂 Release 包。
+      # Gitee 的 Release 接口与 GitHub 不兼容，且 Gitee 仓库默认分支已统一为 main，
+      # 用户从 Gitee 走 git clone 即可拿到与 GitHub 完全一致的代码（由
+      # sync-to-gitee.yml 保证）。Release 分发只以 GitHub 为唯一真源，避免两处版本漂移。

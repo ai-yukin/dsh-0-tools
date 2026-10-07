@@ -59,11 +59,21 @@ jobs:
           push_with_retry "推送 main 分支" "main:main --force" || exit 1
 
           # v1.10.0 起不再推送 master。
-          # 原因：Gitee 建仓时默认分支名为 master，本仓库主线实际是 main，
-          # 长期靠 force push main:master 维持首页展示，属于历史遗留的兼容负担。
-          # Gitee 仓库默认分支已在仓库设置中改为 main，故此处不再同步 master。
-          # 若仓库设置尚未改过，请先在 Gitee「管理 → 仓库设置 → 默认分支」改为 main，
-          # 再手动删除远端 master 分支。
+          # 背景：Gitee 建仓时默认分支名为 master，而本仓库主线一直是 main，
+          # 于是长期靠force push main:master 维持首页展示，属于历史遗留的兼容负担
+          # —— 读者在首页看到的 README 可能落后于 main，历史上就因此误判过版本。
+          #
+          # 已完成的整改（2026-10-07，经 Gitee API 核实生效）：
+          #   1. Gitee 仓库default_branch 由 master 改为 main
+          #   2.远端 master 分支已删除，Gitee 现仅有 main 一个分支
+          # 因此本工作流只同步 main + tags。
+          #
+          # 若日后Gitee 侧被重置、默认分支又被改回 master，
+          # 重新执行一次整改即可（不需要改本文件）：
+          #   curl -X PATCH https://gitee.com/api/v5/repos/<owner>/<repo> \
+          #     -H "Content-Type: application/json" \
+          #     -d '{"name":"<repo>","default_branch":"main"}' -u <user>:<token>
+          #   git push gitee --delete master
 
           # 推送所有 tag
           push_with_retry "推送所有 tags" "--tags --force" || exit 1

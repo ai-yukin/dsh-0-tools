@@ -9,7 +9,7 @@
 ## 主要功能
 
 1. **【零门槛】** 一键安装 DSH 及本工具，桌面自动生成快捷方式；
-2. **【零费用】** 一键接入多款国内可访问的永久免费大模型（智谱 / 硅基流动 / 讯飞星火 / OpenRouter / ……），配置后自动测速、超时智能提示；
+2. **【零费用】** 一键接入多款国内可访问的永久免费大模型（智谱 / 硅基流动 / 讯飞星火 / OpenRouter / ……），配置后在关键时刻自动测速、超时智能提示，且**不烧免费额度**；
 3. **【零失控】** 若选择调用 DeepSeek 官方模型 API，将在 DSH 界面实时提示当前是高峰时段（原价）还是空闲时段（半价）；
 4. **【零困惑】** 小白帮助中心汇总 DSH 官方资料与社区精选资源，新手快速上手。
 
@@ -127,9 +127,20 @@ cd dsh-0-tools
 
 说明：
 
-- 本仓库以 **GitHub 为主源仓库**，Gitee 为国内镜像，已配置自动同步（Gitee 仓库「管理」→「仓库同步管理」开启 GitHub 同步），内容与主仓库保持一致；
+- 本仓库以 **GitHub 为主源仓库**，Gitee 为国内镜像。镜像由 GitHub Actions 自动同步（推送到 `main` 即触发），内容与主仓库保持一致；
+- Gitee 现已统一使用 `main` 作为唯一分支，早期遗留的 `master` 分支已删除，因此首页展示的 README 就是最新版；
 - 国内用户推荐从 Gitee 下载，访问速度更稳定；
 - 如需反馈问题或建议，请在 GitHub 主仓库的 Issues 中提交。
+
+> **获取源码的三种方式**（都拿到同一份最新版）：
+> | 方式 | 命令 / 位置 | 适合 |
+> |---|---|---|
+> | Git 克隆 | `git clone https://github.com/ai-yukin/dsh-0-tools.git` | 想要后续能`git pull` 升级 |
+> | Release 压缩包 | GitHub 仓库右侧 **Releases** → 下载 `dsh-0-tools-vX.Y.Z.zip` | 只想一次性安装，不想用 Git |
+> | Gitee 镜像 | `git clone https://gitee.com/ai-yukin/dsh-0-tools.git` | 国内网络访问 GitHub 慢 |
+>
+> Release 压缩包由 GitHub Actions 在推送 `v*` 标签时自动生成，
+> 内含顶层目录 `dsh-0-tools-vX.Y.Z/`，**解压后在解压出的目录里**运行安装脚本即可。
 
 ## 兼容性
 
@@ -166,7 +177,7 @@ dsh-0-tools/
 └── LICENSE
 ```
 
-> 打zip 发Release 时会包含 `lib/`、`guide/`、`screenshots/`、`cordis.patch.yml`、`package.json`、`help.json`、安装脚本与 README。
+> 打 zip 发 Release 时会包含 `lib/`、`guide/`、`screenshots/`、`cordis.patch.yml`、`package.json`、`help.json`、安装脚本与 README。
 > `.github/`、`article/`、`draft_*/`、调试残留文件不打包。
 
 ## 机制说明
