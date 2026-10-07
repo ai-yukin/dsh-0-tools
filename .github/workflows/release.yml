@@ -1,0 +1,110 @@
+name: Release
+
+# 触发条件：推送 v* 标签（如 v1.10.0）时自动打包并发布 Release
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '要发布的标签，如 v1.10.0（留空则用当前 HEAD）'
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 解析版本号与标签
+        id: version
+        run: |
+          set -euo pipefail
+          # workflow_dispatch 时优先用手动输入的标签
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.tag }}" ]; then
+            TAG="${{ inputs.tag }}"
+          else
+            TAG="${GITHUB_REF#refs/tags/}"
+          fi
+          VERSION="${TAG#v}"
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          echo "tag=$TAG"      >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "仓库 package.json 版本: $PKG_VERSION"
+          if [ "$VERSION" != "$PKG_VERSION" ]; then
+            echo "::error::标签版本 v$VERSION 与 package.json 版本 $PKG_VERSION 不一致，拒绝发布（发版前请先同步版本号）"
+            exit 1
+          fi
+
+      - name: 语法自检
+        run: |
+          node --check lib/index.js
+          node --check lib/client.js
+          bash -n install.sh
+          echo "语法自检通过"
+
+      - name: 打包 zip
+        id: package
+        run: |
+          set -euo pipefail
+          NAME="dsh-0-tools-v${{ steps.version.outputs.version }}"
+          STAGE="_stage/$NAME"
+          mkdir -p "$STAGE"
+
+          # 只打包用户安装与运行真正需要的文件。
+          # 刻意排除：.github/（CI 自身）、article/（推文草稿，非安装必需）、
+          # draft_*/（本地工作区）、replace.txt（清密钥审计记录）、.git*、各类调试残留。
+          for item in lib guide screenshots cordis.patch.yml package.json help.json \
+                     install.bat install.sh README.md README.en.md LICENSE; do
+            if [ -e "$item" ]; then
+              cp -r "$item" "$STAGE/"
+            else
+              echo "::warning::缺少 $item，跳过"
+            fi
+          done
+
+          command -v zip >/dev/null 2>&1 || { sudo apt-get update && sudo apt-get install -y zip; }
+          zip -r "$NAME.zip" "$STAGE/../$NAME" -x '.*' >/dev/null
+          # 规范结构：zip 内顶层就是 dsh-0-tools-vX.Y.Z 目录，解压即用
+          mv "$NAME.zip" "_stage/$NAME.zip"
+          echo "asset=$NAME.zip" >> "$GITHUB_OUTPUT"
+          echo "已打包 $NAME.zip"
+          unzip -l "_stage/$NAME.zip" | head -20
+
+      - name: 发布 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: v${{ steps.version.outputs.version }}
+          files: _stage/${{ steps.package.outputs.asset }}
+          generate_release_notes: true
+          body: |
+            ## dsh-0-tools v${{ steps.version.outputs.version }}
+
+            安装方式：下载 `dsh-0-tools-v${{ steps.version.outputs.version }}.zip` 解压，
+            **在解压后的目录里**运行 `install.bat`（Windows）或 `./install.sh`（macOS / Linux）。
+
+            > 注意：安装脚本只把「脚本自己所在的目录」装进 DSH，不会联网下载任何东西。
+            > 所以必须解压完整目录，不能只单独下载 `install.bat`。
+
+            确认版本是否是最新的：解压后打开 `package.json`，看 `"version"` 字段。
+
+      - name: 同步 Release 资源到 Gitee 镜像
+        if: ${{ success() && secrets.GITEE_TOKEN != '' }}
+        env:
+          GITEE_TOKEN: ${{ secrets.GITEE_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+          ASSET: ${{ steps.package.outputs.asset }}
+        run: |
+          set -euo pipefail
+          # Gitee 的 Release 接口与 GitHub 不兼容，走上传到 Release 直链的降级方案：
+          # 仅打印提示，不让整个发布流程失败（GitHub Release 已成功才是主线）。
+          echo "Gitee 镜像仓库：https://gitee.com/ai-yukin/dsh-0-tools"
+          echo "如需在 Gitee侧也挂载 Release 包，可手动上传 $ASSET。"

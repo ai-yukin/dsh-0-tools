@@ -93,12 +93,15 @@ We recommend configuring all the following free models — the more free models,
 
 ### Step 4: Intelligent Health Monitoring + Timeout Prompts, Zero Cost More Transparent
 
-After configuring 2 or more free models, dsh-0-tools' "Free Model Manager Center" will automatically start health monitoring:
+After configuring free models, dsh-0-tools' "Free Model Manager Center" helps you pick a faster, more reliable available model:
 
-- **Automatic health monitoring**: Every 60 seconds in the background, sends a minimal `max_tokens=1` request to all configured free models for health checks, records the last 5 response times and averages them;
-- **Timeout prompt**: When the current model times out, the bottom of the sidebar displays "Zhipu🔴Timeout, recommend switching to iFlytek" (automatically finds the fastest available model), helping users stay informed about model health;
-- **Status prompt**: The bottom of the sidebar displays the current model status in real-time (Zhipu🟢Normal / Zhipu🟡Slow / Zhipu🔴Timeout, recommend switching to XX). The status bar is for display only and cannot be clicked;
-- **Status criteria**: <8 seconds = Normal (🟢), 8-15 seconds = Slow (🟡), >15 seconds or timeout = Timeout (🔴).
+- **Quota-friendly triggering (changed to on-demand in v1.10)**: A minimal `max_tokens=1` health-check request is sent only at three key moments — ① when you open DSH; ② when you resume activity after being idle for more than 30 minutes; ③ when you manually click "Re-test". **No longer runs every minute automatically**, saving about 99% of your free model quota compared with the old version;
+- **Median-based judgment**: Records the last 5 response times and takes the **median after discarding the highest and lowest values**, so an occasional hiccup won't drag the overall status into "Timeout";
+- **Status criteria**: median < 8 seconds = Normal (🟢), 8-15 seconds = Slow (🟡), > 15 seconds or timeout = Timeout (🔴);
+- **Smart recommendation (not just speed)**: Ranks by a composite score of speed × 40% + model capability × 60%, avoiding recommending a model that is "fast but weak";
+- **Timeout prompt**: When the current model times out, the bottom of the sidebar displays "Zhipu🔴Timeout, recommend switching to iFlytek". The status bar is for display only and cannot be clicked;
+- **Quota exhaustion is now detected directly** (new in v1.10): When the free quota runs out (HTTP 402) or the API key becomes invalid, the plugin **immediately** marks that model as unavailable and shows the reason, instead of misreporting "out of credit" as "available";
+- **Optional auto-switching** (new in v1.10): Enable "Auto-switch" in the settings tab, and when the current model is unavailable 2 consecutive times, the plugin switches to the highest-scoring available model and clearly tells you which one it switched to; a 5-minute cooldown prevents ping-pong. **Disabled by default** — you decide whether to hand over control.
 
 ![Free Model Manager Center - Status Indicator](screenshots/3.png)
 
@@ -147,28 +150,37 @@ dsh-0-tools/
 ├── lib/
 │   ├── index.js     # host side: local health monitoring proxy server (127.0.0.1:3095), bypasses browser CORS
 │   └── client.js    # browser side: bottom-left toolbar + settings tab "dsh-0-tools" + read/write config via official /api
-├── guide/           # v1.8.0 added: 4 dedicated illustrated tutorial pages for free models
+├── guide/                # v1.8.0 added: 4 dedicated illustrated tutorial pages for free models
 │   ├── zai.html              # Zhipu AI tutorial
 │   ├── openrouter-free.html  # OpenRouter tutorial
 │   ├── siliconflow.html       # SiliconFlow tutorial
 │   ├── xinghuo.html          # iFlytek Spark tutorial
 │   └── images/               # tutorial screenshots
-├── screenshots/     # README screenshots
-├── cordis.patch.yml # web profile injection declaration
+├── screenshots/           # README screenshots
+├── cordis.patch.yml       # web profile injection declaration
 ├── package.json
-├── help.json        # help center online data source (hosted on GitHub Pages, supports remote hot-update model list)
-├── install.bat      # Windows one-click install + start + verify
-└── install.sh       # macOS / Linux one-click install + start + verify
+├── help.json              # help center online data source (hosted on GitHub Pages, supports remote hot-update model list)
+├── install.bat            # Windows one-click install + start + verify
+├── install.sh             # macOS / Linux one-click install + start + verify
+├── .github/workflows/     # CI: Gitee mirror sync + Release auto-packaging
+├── VERSION_UPDATE_CHECKLIST.md  # release checklist (version sync points, regression items)
+├── CONTRIBUTING.md
+└── LICENSE
 ```
+
+> The zip attached to Releases contains `lib/`, `guide/`, `screenshots/`, `cordis.patch.yml`, `package.json`, `help.json`, the install scripts and the READMEs.
+> `.github/`, `article/`, `draft_*/` and leftover debug files are not packaged.
 
 ## Mechanism Explanation
 
 
-- **Configuration status determination**: The browser side calls official `settings.describe` + `credentials.describe` to determine whether `llm-pi-ai.providers.{provider}` exists and whether its credentials are configured, as the authoritative source; polls every 5 seconds to refresh the interface.
+- **Configuration status determination**: The browser side calls official `settings.describe` + `credentials.describe` to determine whether `llm-pi-ai.providers.{provider}` exists and whether its credentials are configured, as the authoritative source; polls every 5 seconds to refresh the interface. When the credential service is temporarily unavailable, status is treated as "unknown" rather than "configured", preventing the UI from falsely showing all-green (fixed in v1.10).
 - **One-click configuration**: Sequentially writes credentials via official `credentials.set`, writes provider configuration section via `settings.mutate`, and switches the default model to the corresponding free model via `settings.update` with merge semantics (merge semantics ensure user-set fields like `reasoningEffort` are not erased).
 - **One-click uninstall**: Clears the provider configuration section and corresponding credentials via official channels; only when the default model previously pointed to that provider, restores to the original default model recorded before configuration, otherwise keeps the user's current selection unchanged.
 - **API Key auto-recognition**: Automatically identifies which model a Key belongs to based on prefix/format (`sk-or-v1-` → OpenRouter, `sk-` (non-sk-or-v1-) → SiliconFlow, `APIKey:APISecret` format or 32-bit hex → iFlytek Spark, long string with dots → Zhipu AI), and automatically invokes the one-click configuration process after recognition.
-- **Free Model Manager Center**: Every 60 seconds in the background, sends `max_tokens=1` minimal requests to all configured free models for health checks, records the last 5 response times and averages them; when the current model times out, intelligently prompts to recommend switching to the fastest available model; sidebar displays status in real-time (for display only, cannot be clicked).
+- **Free Model Manager Center (on-demand health checks)**: Health checks run only at three moments — "open DSH / resume activity after 30+ minutes idle / manually click Re-test" — no longer every 60 seconds in the background, saving about 99% of free quota. Records the last 5 response times and takes the **median after discarding the highest and lowest** as the judgment basis; single-check timeout is 15 seconds.
+- **Health-check error classification**: The host side classifies errors by HTTP status code + response body patterns into `quota_exhausted` (402 / insufficient balance / quota used up), `auth_failed` (401/403), `rate_limited` (429), `model_unavailable` (404), `server_error` (5xx), `timeout`. **Definitive failures (quota exhausted / auth failed / model unavailable) are marked unavailable immediately**, with no wasted retries (fixed in v1.10 — the old version lumped 402 into `unknown` and misreported it as "available").
+- **Smart recommendation and auto-switching**: Composite score = speed score × 40% + capability score × 60% (capability score can be overridden by remote `help.json`'s `capabilityScore`). Auto-switching is an **opt-in, disabled-by-default** feature; when enabled, it switches to the highest-scoring available model only after the current model is unavailable 2 consecutive times, with a 5-minute cooldown and an explicit notification to the user.
 - **Invalid residual cleanup**: The configuration center detects whether there are residual delisted/invalid model providers locally (dynamically reads their `apiKeyEnv`, no longer relying on local static lists), provides an "invalid residual" prompt in the interface and offers one-click cleanup, avoiding orphan configurations that cannot be deleted.
 - **Settings tab**: Injected via `settings.section` slot (same mechanism as official plugins), id is `dsh-0-tools`, tab name is "dsh-0-tools".
 - **Help Center**: Fetches `https://ai-yukin.github.io/dsh-0-tools/help.json`, passes through a unified filter `filterRemotePayload` for field-by-field security checks (URL enforces https, text rejects control characters/newlines, model id and credential name use character whitelist) before entering the interface and configuration chain; falls back to built-in data on failure or non-compliance; both the configurable model list and delisted model list are driven by this remote data, allowing adding or delisting models without reinstalling the plugin.
