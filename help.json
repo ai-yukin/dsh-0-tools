@@ -2,11 +2,11 @@
   "version": "2026-10-08.1",
   "updatedAt": "2026-10-08",
   "plugin": {
-    "latestVersion": "1.12.0",
+    "latestVersion": "1.13.0",
     "minDsh": "0.1.5",
     "maxDsh": "0.2.99",
     "releaseUrl": "https://github.com/ai-yukin/dsh-0-tools/releases/latest",
-    "notes": "新增：自动检查新版本并提示升级；测速记录重启不丢；DSH 版本号展示。"
+    "notes": "新增：自动路由默认开启并可一键关闭；模型不可用时告知原因并自动切换；自动切换记录跨重启保留。"
   },
   "official": [
     {

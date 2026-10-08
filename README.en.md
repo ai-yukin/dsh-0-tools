@@ -4,18 +4,28 @@
 
 ## What is dsh-0-tools
 
-dsh-0-tools is designed for users with zero programming experience who are using DeepSeek Harness (hereinafter referred to as DSH) for the first time. It features "Zero Barrier, Zero Cost, Zero Loss of Control, Zero Confusion", aiming to help beginners get a better user experience.
+dsh-0-tools is designed for users with zero programming experience who are using DeepSeek Harness (hereinafter referred to as DSH) for the first time. It features "Zero Barrier, Zero Cost, Zero Loss of Control, Zero Confusion, Zero Interruption, Zero Forgetting", aiming to help beginners get a better user experience.
 
 ## Main Features
 
-1. **[Zero Barrier]** One-click installation of DSH and this tool, with automatic desktop shortcut creation;
+**The first four zeros (the original promise since v1.0)**
+
+1. **[Zero Barrier]** One-click installation of DSH and this tool, with automatic desktop shortcut creation, on Windows / macOS / Linux;
 2. **[Zero Cost]** One-click access to multiple permanently free large models accessible in China (Zhipu AI / SiliconFlow / iFlytek Spark / OpenRouter / ...), with automatic health monitoring and intelligent timeout prompts after configuration;
 3. **[Zero Loss of Control]** If you choose to call the DeepSeek official model API, the DSH interface will display real-time reminders of whether it's peak hours (full price) or off-peak hours (half price);
 4. **[Zero Confusion]** The beginner help center aggregates DSH official documentation and community-selected resources for quick onboarding.
 
+**The two later zeros (added in v1.13.0)**
+
+5. **[Zero Interruption]** What beginners actually hit is not "the model is slow" — it is **suddenly getting no answer at all**: quota spent, key rejected, timeout, rate limited. dsh-0-tools switches to the best available model in that situation and **tells you which one you were on, why it stopped working, and what you are on now**. The conversation keeps going, with no blank screen and no raw error dumped on the user.
+6. **[Zero Forgetting]** All three kinds of silent loss that a beginner cannot see but will trip over are now made explicit:
+   - **Latency history survives restarts** — samples are persisted, and expire after 24 hours (free quota changes day to day, so yesterday's conclusion is worthless);
+   - **Switch history survives restarts** — the last 10 automatic switches are recorded and viewable for a week, answering "why was it so fast / so slow today", which used to be unanswerable;
+   - **Your choice survives** — if you explicitly chose manual switching, the default never overrides it. **Defaults only apply to users who never made a choice.**
+
 ## Current Version & Compatibility
 
-- Current version: **v1.12.0**
+- Current version: **v1.13.0**
 - Compatible DSH version: **`0.1.5` through `0.2.x`** (verified with `0.1.7-rc.2` and `0.2.0-rc.2`)
   - Since `v1.11.0` a single package covers both DSH generations: `0.1.x` and `0.2.x` work with the
     same plugin release, no version switching needed.
@@ -27,6 +37,20 @@ dsh-0-tools is designed for users with zero programming experience who are using
     we make no promise before testing it. On `0.3+` the installer detects the version, stops, and
     points you at a verified release.
 - **System Requirements**: One-click installation scripts support **Windows 10 / Windows 11** (`install.bat`) and **macOS / Linux** (`install.sh`); the plugin core code itself is cross-platform. Users who have manually installed DSH can install the plugin manually via `dsh plugin --profile web add /path/to/dsh-0-tools`.
+
+## What's New in v1.13.0
+
+Built around two ideas: **no interruption** and **no forgetting**.
+
+| Capability | Details |
+|------|------|
+| **No interruption: switches now say why** | When the current model runs out of quota, gets its key rejected, times out, hits a rate limit, or returns a server error, the plugin switches to the best available model and tells you **which one you were on, why it stopped working, and what you are on now**. The notice stays up for 60 seconds instead of 10 — the old 10-second window was too short to actually notice. |
+| **No forgetting: switch log survives restarts** | Every automatic switch is recorded with time, reason, and direction. The config center shows the last 10 entries for up to a week. Free models commonly "work in the morning, run out by afternoon" — you need to see **how many times you were switched today and which channel needs more quota**, not a toast that vanishes. |
+| **No forgetting: automatic routing on by default** | Previously you had to go turn it on in settings. Now it is on for new installs, with a one-time note explaining why it is on and how to turn it off. **If you explicitly chose manual switching, you stay on manual** — your choice is never overridden by a default. |
+| **No forgetting: errors stop being silent** | After a switch, the plugin points at the next actionable step (re-test in the config center) instead of just reporting a fait accompli. |
+
+> v1.13.0 does not change the DSH compatibility range (still `0.1.5` through `0.2.x`) or the health-check criteria.
+> All five v1.12.0 capabilities (version check, latency persistence, config rollback, error guard, DSH version display) are retained.
 
 ## What's New in v1.12.0
 
@@ -126,7 +150,7 @@ After configuring free models, dsh-0-tools' "Free Model Manager Center" helps yo
 - **Smart recommendation (not just speed)**: Ranks by a composite score of speed × 40% + model capability × 60%, avoiding recommending a model that is "fast but weak";
 - **Timeout prompt**: When the current model times out, the bottom of the sidebar displays "Zhipu🔴Timeout, recommend switching to iFlytek". The status bar is for display only and cannot be clicked;
 - **Quota exhaustion is now detected directly** (new in v1.10): When the free quota runs out (HTTP 402) or the API key becomes invalid, the plugin **immediately** marks that model as unavailable and shows the reason, instead of misreporting "out of credit" as "available";
-- **Optional auto-switching** (new in v1.10): Enable "Auto-switch" in the settings tab, and when the current model is unavailable 2 consecutive times, the plugin switches to the highest-scoring available model and clearly tells you which one it switched to; a 5-minute cooldown prevents ping-pong. **Disabled by default** — you decide whether to hand over control.
+- **Automatic switching** (new in v1.10, on by default since v1.13.0): when the current model is unavailable 2 consecutive times (quota spent / key rejected / timeout), the plugin switches to the highest-scoring available model and tells you **which one you were on, why it failed, and what you are on now**; a 5-minute cooldown prevents ping-pong. **On by default, one click to disable** — choosing "Manual" turns it off permanently; users who had already switched to manual before v1.13.0 stay on manual, your choice is never overridden by a default. The last 10 switches are kept and viewable in the config center.
 
 ![Free Model Manager Center - Status Indicator](screenshots/3.png)
 
@@ -217,7 +241,7 @@ dsh-0-tools/
 - **API Key auto-recognition**: Automatically identifies which model a Key belongs to based on prefix/format (`sk-or-v1-` → OpenRouter, `sk-` (non-sk-or-v1-) → SiliconFlow, `APIKey:APISecret` format or 32-bit hex → iFlytek Spark, long string with dots → Zhipu AI), and automatically invokes the one-click configuration process after recognition.
 - **Free Model Manager Center (on-demand health checks)**: Health checks run only at three moments — "open DSH / resume activity after 30+ minutes idle / manually click Re-test" — no longer every 60 seconds in the background, saving about 99% of free quota. Records the last 5 response times and takes the **median after discarding the highest and lowest** as the judgment basis; single-check timeout is 15 seconds.
 - **Health-check error classification**: The host side classifies errors by HTTP status code + response body patterns into `quota_exhausted` (402 / insufficient balance / quota used up), `auth_failed` (401/403), `rate_limited` (429), `model_unavailable` (404), `server_error` (5xx), `timeout`. **Definitive failures (quota exhausted / auth failed / model unavailable) are marked unavailable immediately**, with no wasted retries (fixed in v1.10 — the old version lumped 402 into `unknown` and misreported it as "available").
-- **Smart recommendation and auto-switching**: Composite score = speed score × 40% + capability score × 60% (capability score can be overridden by remote `help.json`'s `capabilityScore`). Auto-switching is an **opt-in, disabled-by-default** feature; when enabled, it switches to the highest-scoring available model only after the current model is unavailable 2 consecutive times, with a 5-minute cooldown and an explicit notification to the user.
+- **Smart recommendation and auto-switching**: Composite score = speed score × 40% + capability score × 60% (capability score can be overridden by remote `help.json`'s `capabilityScore`). Since v1.13.0 auto-switching is **on by default** (users who explicitly chose manual stay on manual); it switches to the highest-scoring available model only after the current model is unavailable 2 consecutive times, with a 5-minute cooldown and an explicit notification telling the user the reason and direction. Switch records are persisted (last 10 entries, one week) and viewable in the config center.
 - **Invalid residual cleanup**: The configuration center detects whether there are residual delisted/invalid model providers locally (dynamically reads their `apiKeyEnv`, no longer relying on local static lists), provides an "invalid residual" prompt in the interface and offers one-click cleanup, avoiding orphan configurations that cannot be deleted.
 - **Settings tab**: Injected via `settings.section` slot (same mechanism as official plugins), id is `dsh-0-tools`, tab name is "dsh-0-tools".
 - **Help Center**: Fetches `https://ai-yukin.github.io/dsh-0-tools/help.json`, passes through a unified filter `filterRemotePayload` for field-by-field security checks (URL enforces https, text rejects control characters/newlines, model id and credential name use character whitelist) before entering the interface and configuration chain; falls back to built-in data on failure or non-compliance; both the configurable model list and delisted model list are driven by this remote data, allowing adding or delisting models without reinstalling the plugin.
