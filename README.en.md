@@ -15,7 +15,7 @@ dsh-0-tools is designed for users with zero programming experience who are using
 
 ## Current Version & Compatibility
 
-- Current version: **v1.11.0**
+- Current version: **v1.12.0**
 - Compatible DSH version: **`0.1.5` through `0.2.x`** (verified with `0.1.7-rc.2` and `0.2.0-rc.2`)
   - Since `v1.11.0` a single package covers both DSH generations: `0.1.x` and `0.2.x` work with the
     same plugin release, no version switching needed.
@@ -27,6 +27,20 @@ dsh-0-tools is designed for users with zero programming experience who are using
     we make no promise before testing it. On `0.3+` the installer detects the version, stops, and
     points you at a verified release.
 - **System Requirements**: One-click installation scripts support **Windows 10 / Windows 11** (`install.bat`) and **macOS / Linux** (`install.sh`); the plugin core code itself is cross-platform. Users who have manually installed DSH can install the plugin manually via `dsh plugin --profile web add /path/to/dsh-0-tools`.
+
+## What's New in v1.12.0
+
+| Capability | Details |
+|---|---|
+| **Automatic update check** | The plugin compares its version against the published one remotely. When a new release exists, a `⬆ 有新版 vX.X.X` badge appears in the footer, links straight to the Release page, and lists what changed. Click `✕` to stop being reminded about that version — a newer release will remind you again. No forced pop-ups; upgrading is your call. |
+| **Speed-check history survives restarts** | The last five latency samples per model are persisted, so reopening DSH reuses them instead of starting from scratch. They expire after 24 hours — free-model quota state changes daily, so yesterday's verdict is worthless. |
+| **Automatic rollback on failed writes** | Adding a free model takes three writes (credential → provider config → default model). If a later step fails, the earlier ones are rolled back automatically and you get a clear message, instead of a half-applied configuration. |
+| **Global error guard** | Any error inside the plugin is captured, rate-limited to once per 60 seconds, logged to the console under an `[dsh-0-tools]` prefix, and stored locally with context. It does **not** swallow errors — DSH's own error reporting is unaffected. |
+| **DSH version display** | The About card now shows the DSH version actually running alongside the verified support range, saving a round-trip when diagnosing compatibility. |
+
+> **On "upgrade your DSH"**: this plugin only announces new releases of **itself**.
+> DSH is DeepSeek's upstream software — a plugin has no standing to ask you to upgrade it.
+> `v1.12.0` supports both DSH `0.1.x` and `0.2.x`, so **you do not need to upgrade DSH to use this plugin**.
 
 ## Free Model List
 
