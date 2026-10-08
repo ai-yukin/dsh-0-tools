@@ -166,27 +166,28 @@ else
 fi
 
 # ---------- 版本兼容性闸门 ----------
-# 本插件依赖 dsh-client-runtime（仅存在于 DSH 0.1.x），且 peerDependencies 显式排除 0.2。
-# DSH 0.2.0 起强制校验该范围，不匹配时直接拒绝加载插件，所以必须在这里拦住。
+# v1.11.0 起本插件同时支持 DSH 0.1.5 ~ 0.1.x 与 0.2.x
+# （peerDependencies 声明为 "@deepseek-ai/dsh": ">=0.1.5 <0.3"）。
+# 这里只拦 0.3 及以上 —— 那一代尚未验证，装上去大概率加载不了。
 DSH_VER="$(dsh --version 2>/dev/null | head -n1 | tr -d '\r')"
 if [ -z "$DSH_VER" ]; then
     echo -e "${YELLOW}     未能读取 DSH 版本（可能 PATH 未刷新），跳过版本校验。${NC}"
     echo ""
-elif echo "$DSH_VER" | grep -qE '^0\.(2|[3-9])\.|^1\.'; then
-    echo -e "${RED}     [错误] 你安装的是 DSH $DSH_VER，本插件暂不支持 DSH 0.2 及以上版本。${NC}"
+elif echo "$DSH_VER" | grep -qE '^0\.[3-9]\.|^[1-9]\.'; then
+    echo -e "${RED}     [错误] 你安装的是 DSH $DSH_VER，本插件尚未验证支持该版本。${NC}"
     echo ""
-    echo "       原因：DSH 0.2 起强制校验插件 peerDependencies，而本插件依赖的"
-    echo "             dsh-client-runtime 在 0.2 中已移除（DSH 会直接拒绝加载本插件）。"
+    echo "       本插件当前支持范围：DSH 0.1.5 ~ 0.2.x"
+    echo "       DSH 0.3 起可能存在不兼容改动，本插件暂不承诺支持。"
     echo ""
     echo "       解决办法（二选一）："
-    echo "         [推荐] 降级到兼容版本："
+    echo "         [推荐] 改用已验证的版本："
     echo "             npm install -g @deepseek-ai/dsh@0.1.7-rc.2"
-    echo "         [或] 等待本插件发布支持 0.2 的版本。"
+    echo "         [或] 等待本插件发布支持新版本的更新。"
     echo ""
     read -p "按回车键退出..."
     exit 1
 else
-    echo -e "${GREEN}     ✅ DSH 版本兼容（$DSH_VER），继续安装插件...${NC}"
+    echo -e "${GREEN}     ✅ DSH 版本兼容（支持 0.1.5 ~ 0.2.x），继续安装插件...${NC}"
     echo ""
 fi
 

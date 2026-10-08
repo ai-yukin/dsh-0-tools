@@ -1,6 +1,6 @@
 {
     "name":  "dsh-0-tools",
-    "version":  "1.10.1",
+    "version":  "1.11.0",
     "description":  "DeepSeek Harness 小白零门槛零费用套件：4个永久免费模型一键接入（智谱/硅基流动/讯飞星火/OpenRouter）、免费模型智能路由（自动测速优选最快）、DeepSeek 计价时段提醒、在线帮助中心。",
     "license":  "MIT",
     "type":  "module",
@@ -22,7 +22,7 @@
                            },
                 "client":  {
                                "inject":  [
-                                              "@deepseek-ai/dsh-client-runtime"
+                                              "@deepseek-ai/dsh-client-modules"
                                           ],
                                "platform":  "web",
                                "immediately":  true
@@ -30,7 +30,7 @@
             },
     "peerDependencies":  {
                              "react":  "^18.2.0",
-                             "@deepseek-ai/cordis":  "^4.0.1",
-                             "@deepseek-ai/dsh-client-runtime":  "\u003e=0.1.1 \u003c0.2"
+                             "@deepseek-ai/cordis":  "~4.0.4",
+                             "@deepseek-ai/dsh":  ">=0.1.5 <0.3"
                          }
 }
