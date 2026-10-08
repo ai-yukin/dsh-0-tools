@@ -16,7 +16,11 @@ dsh-0-tools is designed for users with zero programming experience who are using
 ## Current Version & Compatibility
 
 - Current version: **v1.10.1**
-- Compatible DSH version: **≥ `0.1.7`** (verified with `0.1.7-rc.2`)
+- Compatible DSH version: **`0.1.5` through `0.1.x`** (verified with `0.1.7-rc.2`)
+  - ⚠️ **DSH `0.2.x` is not supported yet.** Starting with DSH `0.2.0`, the runtime enforces each
+    plugin's declared `peerDependencies` range. The `@deepseek-ai/dsh-client-runtime` package this
+    plugin injects is no longer shipped in `0.2`, so the declared range excludes it.
+    Installing on `0.2` is rejected by DSH as incompatible. `0.2` support is on the roadmap.
 - **System Requirements**: One-click installation scripts support **Windows 10 / Windows 11** (`install.bat`) and **macOS / Linux** (`install.sh`); the plugin core code itself is cross-platform. Users who have manually installed DSH can install the plugin manually via `dsh plugin --profile web add /path/to/dsh-0-tools`.
 
 ## Free Model List

@@ -122,6 +122,44 @@ if errorlevel 1 (
     echo.
 )
 
+rem ============================================================
+rem 版本兼容性闸门
+rem 本插件依赖 @deepseek-ai/dsh-client-runtime（仅存在于 DSH 0.1.x），
+rem 且 package.json 的 peerDependencies 显式排除 0.2。
+rem DSH 0.2.0 起会强制校验该范围 —— 不匹配时直接拒绝加载插件。
+rem 因此这里必须拦住 0.2+，否则用户会装完才发现插件根本不被加载。
+rem ============================================================
+set "DSH_VER_OK="
+for /f "delims=" %%v in ('dsh --version 2^>nul') do (
+    if not defined DSH_VER_OK set "DSH_VER_OK=%%v"
+)
+if not defined DSH_VER_OK (
+    echo [3/5] 未能读取 DSH 版本（可能 PATH 未刷新），跳过版本校验。
+    echo.
+) else (
+    echo [3/5] 检测到 DSH 版本：%DSH_VER_OK%
+    echo %DSH_VER_OK% | findstr /r /c:"^0\.2\." /c:"^0\.[3-9]\." /c:"^1\." >nul
+    if not errorlevel 1 (
+        echo.
+        echo [错误] 你安装的是 DSH %DSH_VER_OK%，本插件暂不支持 DSH 0.2 及以上版本。
+        echo.
+        echo   原因：DSH 0.2 起强制校验插件 peerDependencies，而本插件依赖的
+        echo         dsh-client-runtime 在 0.2 中已移除（DSH 会直接拒绝加载本插件）。
+        echo.
+        echo   解决办法（二选一）：
+        echo     [推荐] 降级到兼容版本：
+        echo             npm install -g @deepseek-ai/dsh@0.1.7-rc.2
+        echo       国内网络慢可用镜像：
+        echo             npm install -g @deepseek-ai/dsh@0.1.7-rc.2 --registry=https://registry.npmmirror.com
+        echo     [或] 等待本插件发布支持 0.2 的版本。
+        echo.
+        pause
+        exit /b 1
+    )
+    echo       ✅ 版本兼容，继续安装插件...
+    echo.
+)
+
 set "PLUGIN_SRC=%~dp0"
 if "%PLUGIN_SRC:~-1%"=="\" set "PLUGIN_SRC=%PLUGIN_SRC:~0,-1%"
 set "PROFILE_DIR=%USERPROFILE%\.dsh\profiles\web"
