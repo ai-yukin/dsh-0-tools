@@ -25,7 +25,7 @@ dsh-0-tools is designed for users with zero programming experience who are using
 
 ## Current Version & Compatibility
 
-- Current version: **v1.15.0**
+- Current version: **v1.16.0**
 - Compatible DSH version: **`0.1.5` through `0.2.x`** (verified with `0.1.7-rc.2` and `0.2.0-rc.2`)
   - Since `v1.11.0` a single package covers both DSH generations: `0.1.x` and `0.2.x` work with the
     same plugin release, no version switching needed.
@@ -38,6 +38,38 @@ dsh-0-tools is designed for users with zero programming experience who are using
     points you at a verified release.
 - **System Requirements**: One-click installation scripts support **Windows 10 / Windows 11** (`install.bat`) and **macOS / Linux** (`install.sh`); the plugin core code itself is cross-platform. Users who have manually installed DSH can install the plugin manually via `dsh plugin --profile web add /path/to/dsh-0-tools`.
 
+## What's New in v1.16.0
+
+**Fixing the existing-user upgrade path — v1.15.0 pointed at the wrong button.**
+
+The owner ran the real workflow as both a new and an existing user, and found that
+steps 2 and 3 of the v1.15.0 existing-user guide **both pointed at a button that isn't
+the one you need**. Rewritten against the actual screenshots.
+
+| | v1.15.0 said (wrong) | v1.16.0 actual (verified by hand) |
+|---|---|---|
+| Entry point | Model square → the "API 调用" dialog | **Left sidebar 「模型服务」 → 「API Key 管理」** |
+| Button to click | 「开通服务」 | **「授权管理」** |
+| Then do | Tick the agreement → activate service | **Tick `Spark-X2.5-1.7B` in the list → 确认授权** |
+
+**Why it was wrong**: an existing key's service was **activated long ago** — it simply
+lacks permission for the new model. 「开通服务」 is the first step for a **newly created
+key**; an existing key never needs it again. Following v1.15.0 left the user staring at
+a screen that doesn't match the instructions.
+
+Three connected fixes came with it:
+
+- **Update badge and red-box wording** — changed from 「去官网点『开通服务』」 to 「点『授权管理』勾上新模型」.
+  This text is hot-updatable remotely, so existing users see the corrected pointer without
+  waiting for an install.
+- **The existing-user guide page** — 5 steps compressed to 4 (authorizing needs no activation),
+  plus a warning not to tick the **paid** Spark-X2.5 (293B) instead.
+- **A concrete way to tell the two pages apart** — if you see "暂未开通模型服务" you have a
+  **new** key (use the new-user page); if you only see a key list with 「授权管理」 you have an
+  **existing** key (use the existing-user page).
+
+> v1.16.0 does not change the DSH compatibility range (still `0.1.5` through `0.2.x`); all v1.15.0 and earlier capabilities are retained.
+
 ## What's New in v1.15.0
 
 **Making sure "you need a new key" is no longer silently skipped.**
@@ -48,9 +80,9 @@ and everything "looked fine." This release says it out loud, and gives you a sho
 
 | Capability | Details |
 |------|------|
-| **The update badge states the reason** | The footer "new version" badge no longer shows only a version number — it says "iFlytek Spark needs a new key: Spark Lite is delisted, click 「开通服务」 on the official site." If the text is too long it scrolls horizontally instead of breaking the layout. That sentence is **hot-updatable remotely**, so rewording it later never needs a new release. |
+| **The update badge states the reason** | The footer "new version" badge no longer shows only a version number — it says "iFlytek Spark needs a new key." If the text is too long it scrolls horizontally instead of breaking the layout. That sentence is **hot-updatable remotely**, so rewording it later never needs a new release. |
 | **A red prompt box in the config center** | If you still have iFlytek configured, a red box explains why and offers a **「去看更新教程」** button straight to the guide. It deliberately **does not push you to delete your key** — you have to visit the official site anyway, so copying the new key adds zero extra work. |
-| **The guide is now two pages** | Following the actual workflow: **new users** (6 steps: register → create key → activate service) and **existing users** (5 steps: pick your existing key → activate service). Existing users do not re-register or recreate an application — about 2 minutes. |
+| **The guide is now two pages** | Following the actual workflow: **new users** (6 steps: register → create key → activate service) and **existing users** (authorize the new model on the key you already have). Existing users do not re-register or recreate a key — about 2 minutes. |
 
 > v1.15.0 does not change the DSH compatibility range (still `0.1.5` through `0.2.x`); all v1.14.0 and earlier capabilities are retained.
 

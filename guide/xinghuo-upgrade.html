@@ -50,13 +50,13 @@
   <div class="header">
     <span class="badge">零号工具 · 老用户更新指南</span>
     <h1>讯飞星火 · 更新 API Key</h1>
-    <p>你已经创建过讯飞的 API Key 了 —— 只需重新开通并复制，约 2 分钟</p>
+    <p>你已经创建过讯飞的 API Key 了 —— 只需给那个 Key 授权新模型并复制，约 2 分钟</p>
   </div>
 
   <div class="note">
-    <strong>已经创建过 API Key？走这一页就够了，全程约 2 分钟。</strong><br>
-    你<strong>不需要</strong>注册账号、不需要创建新应用、不需要重新填任何信息 ——
-    只需要回到那个 API Key，点一下「开通服务」，然后把新格式的 Key 复制出来。<br>
+    <strong>已经创建过讯飞的 API Key？走这一页就够了，全程约 2 分钟。</strong><br>
+    你<strong>不需要</strong>注册账号、不需要创建新 Key、<strong>不需要点「开通服务」</strong> ——
+    只要给原来那个 Key<strong>授权一下新模型</strong>，再复制出来就行。<br>
     <span style="color:#64748b">（还没有 API Key / 从没用过讯飞？请看
       <a href="xinghuo.html">新用户申请教程</a>）</span>
   </div>
@@ -72,73 +72,93 @@
   </div>
 
   <div class="step">
-    <div class="step-title"><span class="step-num">1</span>打开模型广场，找到 Spark-X2.5-1.7B</div>
+    <div class="step-title"><span class="step-num">1</span>登录讯飞星辰 MaaS 平台</div>
     <div class="step-desc">
-      访问 <a href="https://maas.xfyun.cn/modelSquare" target="_blank">https://maas.xfyun.cn/modelSquare</a>
-      并用你原来的讯飞账号登录（微信扫码即可）。<br><br>
-      在模型列表里找到 <strong>Spark-X2.5-1.7B</strong>（卡片上标注「1M」上下文、
-      <strong>0 元/百万 tokens</strong>），点击进入详情页，然后点<strong>「API 调用」</strong>。
-    </div>
-    <div class="shot-pending">
-      <span class="shot-name">images/xinghuo-upgrade/01-模型详情页API调用按钮.png</span>
-      <div class="shot-what">待补截图：Spark-X2.5-1.7B 模型详情页，需拍到「API 调用」按钮，以及卡片上的「0 元/百万 tokens」标注。</div>
-    </div>
-  </div>
-
-  <div class="step">
-    <div class="step-title"><span class="step-num">2</span>在弹窗里选中你原来的那个 Key</div>
-    <div class="step-desc">
-      点「API 调用」后会弹出<strong>「第一步：选择 API Key」</strong>窗口，里面会列出你已有的 Key。
-      找到你之前用的那一个（名字可能是你自己起的，比如「零号工具-DSH」），<strong>点击选中它</strong>。
+      访问 <a href="https://maas.xfyun.cn/" target="_blank">https://maas.xfyun.cn/</a>，
+      用你<strong>原来那个讯飞账号</strong>登录（微信扫码即可）。
       <br><br>
-      <strong>选中后你会看到这句话：</strong>
-      <br>
-      <span style="display:inline-block;background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:6px 10px;margin:6px 0;font-size:13px;color:#92400e">
-        「该 API Key 暂未开通模型服务，点击下方「开通服务」按钮即可开通并正常调用。」
-      </span>
-      <br>
-      <strong>这句话是正常的，不是出错。</strong>它只是说：你这个 Key 还没开通 Spark-X2.5-1.7B 这个模型，
-      下一步点「开通服务」就行。<br><br>
-      如果列表里一个 Key 都没有，才需要点「+创建 API Key」新建一个 —— 但那说明你其实还没配置过，
-      请改看<a href="xinghuo.html">新用户申请教程</a>。
+      登录后先确认一件事：<strong>你要用的是哪个 Key？</strong>
+      如果你当年在 Spark Lite 时代建过 Key，它可能也在这个平台里（模型广场换平台了，账号是同一个），
+      那就继续用<strong>它</strong> —— 不用新建。
     </div>
     <div class="shot-pending">
-      <span class="shot-name">images/xinghuo-upgrade/02-选择APIKey弹窗.png</span>
-      <div class="shot-what">待补截图：「第一步：选择 API Key」弹窗，需拍到已有 Key 列表（名字 + 脱敏后的 Key）、以及那句「该 API Key 暂未开通模型服务」提示。<strong>这是本页最关键的一张图</strong>。</div>
+      <span class="shot-name">images/xinghuo-upgrade/01-讯飞开放平台登录页.png</span>
+      <div class="shot-what">待补截图：讯飞开放平台登录页，需拍到微信扫码登录入口。</div>
     </div>
   </div>
 
   <div class="step">
-    <div class="step-title"><span class="step-num">3</span>勾选协议，点「开通服务」</div>
+    <div class="step-title"><span class="step-num">2</span>左侧「模型服务」→「API Key 管理」</div>
     <div class="step-desc">
-      在同一个弹窗里，勾选「<strong>我已阅读并同意计费说明、服务协议及《用户使用须知》</strong>」，
-      然后点击 <strong>「开通服务」</strong>按钮。
+      登录后在<strong>左侧边栏</strong>找到<strong>「模型服务」</strong>，点开后选
+      <strong>「API Key 管理」</strong>。
       <br><br>
-      Spark-X2.5-1.7B 的定价是 <strong>0 元/百万 tokens</strong>，开通本身不产生费用。
+      这个页面会列出你账号下<strong>所有</strong>的 API Key，每行显示：
+      <ul>
+        <li><strong>名称</strong>（你自己起的那个名字，比如「零号工具-DSH免费模型」）</li>
+        <li>API Key（<code>***********</code> 形式，平台已脱敏）</li>
+        <li>创建时间</li>
+        <li>操作：<strong>「授权管理」</strong>、「重命名」</li>
+      </ul>
+      <br>
+      <strong>找到你之前用的那一行</strong>，点它右侧的<strong>「授权管理」</strong>。
+      <br><br>
+      ⚠️ <strong>不要点「创建 API Key」</strong> —— 你已经有 Key 了，重建一个反而要重新走开通流程。
     </div>
     <div class="shot-pending">
-      <span class="shot-name">images/xinghuo-upgrade/03-开通服务.png</span>
-      <div class="shot-what">待补截图：勾选协议复选框 + 「开通服务」按钮。</div>
+      <span class="shot-name">images/xinghuo-upgrade/02-APIKey管理列表.png</span>
+      <div class="shot-what">待补截图：左侧边栏「模型服务」展开后的「API Key 管理」入口，以及 Key 列表页（名称 /脱敏 Key / 创建时间 / 「授权管理」按钮）。<strong>这是本页最关键的一张图</strong></div>
     </div>
   </div>
 
   <div class="step">
-    <div class="step-title"><span class="step-num">4</span>复制 API Key</div>
+    <div class="step-title"><span class="step-num">3</span>在「授权管理」里勾选 Spark-X2.5-1.7B，点「确认授权」</div>
     <div class="step-desc">
-      开通成功后，弹窗会进入<strong>「第二步：调用示例」</strong>，同时自动生成完整的调用示例。
-      页面下方会显示这个 Key 的信息：
-      <ol>
-        <li><strong>API Key：</strong>以 <code>ak-</code> 开头的长字符串 —— <strong>这就是要填进零号工具的东西</strong></li>
-        <li><strong>Model ID：</strong>形如 <code>spark-x2.5-1.7b</code></li>
-        <li><strong>接口地址：</strong>形如 <code>https://maas-api.cn-huabei-1.xf-yun.com/v2</code></li>
-      </ol>
-      点击 API Key 旁边的<strong>「复制」</strong>按钮。<br><br>
-      <strong>注意区分：</strong>页面上可能还有 AppID、APISecret 等字段，那些<strong>都不是</strong>要填进零号工具的东西，
-      只要<strong>以 <code>ak-</code> 开头的那一个 API Key</strong>。
+      点「授权管理」后会弹出一个<strong>模型勾选窗口</strong>，标题是你那个 Key 的名字，
+      里面是一列模型复选框（共 40 个）。
+      <br><br>
+      <strong>只需要勾一个：</strong><code>✓ Spark-X2.5-1.7B</code>
+      <br>
+      <strong>特别小心，别勾错这两个：</strong>
+      <ul>
+        <li><strong>Spark-X2.5</strong>（293B）—— <strong>要收费</strong>，输入 0.96 元 / 输出 3.6 元每百万 tokens</li>
+        <li><strong>Spark-X2.5-4B</strong> —— 不是我们要的那个</li>
+      </ul>
+      认准名字里的 <strong>「-1.7B」</strong>。勾好后点<strong>「确认授权」</strong>。
+      <br><br>
+      <strong>为什么老用户是「授权」而不是「开通服务」？</strong>
+      因为你的 Key 早就开通过服务了，它只是<strong>没有这个新模型的调用权限</strong>。
+      「开通服务」是给<strong>刚创建的新 Key</strong>用的第一步，老 Key 不需要重走那一步。
     </div>
     <div class="shot-pending">
-      <span class="shot-name">images/xinghuo-upgrade/04-调用示例与APIKey.png</span>
-      <div class="shot-what">待补截图：第二步调用示例区，需拍到 API Key（ak- 开头）、Model ID、接口地址，以及「复制」按钮。</div>
+      <span class="shot-name">images/xinghuo-upgrade/03-授权管理勾选.png</span>
+      <div class="shot-what">待补截图：「授权管理」弹窗，需拍到模型复选框列表，<strong>并且要能看清 Spark-X2.5-1.7B 那一行已被勾上</strong>，同时能看清上面的 Spark-X2.5（293B）以便对比警示。</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-title"><span class="step-num">4</span>回到列表，点「复制」拿到 API Key</div>
+    <div class="step-desc">
+      确认授权后自动回到刚才的 <strong>API Key 管理</strong>列表页。
+      在你那一行最右侧点<strong>「复制」</strong>按钮，即可复制完整 Key。
+      <br><br>
+      <strong>注意：</strong>列表里显示的是 <code>***********</code>（平台脱敏），
+      <strong>不能直接复制</strong> —— 必须点那一行的<strong>复制按钮</strong>才能拿到完整的
+      <code>ak-</code> 开头的字符串。
+      <br><br>
+      <strong>顺便核对这三项：</strong>
+      <table class="verify-table">
+        <tr><th>项目</th><th>应显示为</th></tr>
+        <tr><td>接口地址</td><td><code>https://maas-api.cn-huabei-1.xf-yun.com/v2</code></td></tr>
+        <tr><td>Model ID</td><td><code>spark-x2.5-1.7b</code></td></tr>
+        <tr><td>API Key</td><td>以 <code>ak-</code> 开头的长字符串</td></tr>
+      </table>
+      接口地址和 Model ID 零号工具<strong>已内置，你不需要手动填</strong>，
+      只需要把 Key 粘进去。<strong>有一项对不上就会调用失败</strong>，而报错往往看不出是哪一项错了。
+    </div>
+    <div class="shot-pending">
+      <span class="shot-name">images/xinghuo-upgrade/04-复制APIKey.png</span>
+      <div class="shot-what">待补截图：API Key 列表里的「复制」按钮那一列。平台显示的是 ********** 脱敏值，<strong>这张图天然不含真实 Key，可以直接拍</strong>。</div>
     </div>
   </div>
 
@@ -148,36 +168,21 @@
     现在只要 <code>ak-</code> 开头的<strong>单个字符串</strong>，直接粘贴，不要拼接、不要加引号。
   </div>
 
-  <div class="step">
-    <div class="step-title"><span class="step-num">5</span>核对三项信息</div>
-    <div class="step-desc">
-      把页面上显示的三项值和下表逐项比对。<strong>有一项对不上，调用就会失败</strong>，
-      而报错信息往往看不出是哪一项错了 —— 先核对能省掉一轮试错。
-      <table class="verify-table">
-        <tr><th>项目</th><th>应显示为</th></tr>
-        <tr><td>接口地址</td><td><code>https://maas-api.cn-huabei-1.xf-yun.com/v2</code></td></tr>
-        <tr><td>Model ID</td><td><code>spark-x2.5-1.7b</code></td></tr>
-        <tr><td>API Key</td><td>以 <code>ak-</code> 开头的长字符串</td></tr>
-      </table>
-      <br>
-      接口地址和 Model ID 零号工具已内置，你<strong>不需要</strong>手动填。
-    </div>
-  </div>
-
   <div class="good">
     <strong>⚠️ 最后一步别忘了：</strong>回到零号工具的配置中心，
     找到讯飞星火卡片，<strong>粘贴新 Key 覆盖掉旧的</strong>。
-    <br>只开通服务而不回零号工具粘贴新 Key 的话，插件里存的还是那个调不动的旧配置。
+    <br>只在官网授权而不回零号工具粘贴新 Key 的话，插件里存的还是那个调不动的旧配置。
   </div>
 
   <div class="warn">
     <strong>常见问题：</strong>
     <ol>
-      <li><strong>提示「该 API Key 暂未开通模型服务」</strong> —— 这是正常提示，点「开通服务」即可（第 3 步）。</li>
+      <li><strong>左侧边栏找不到「API Key 管理」</strong> —— 在<strong>「模型服务」</strong>下面，不是「模型广场」里面。平台改版后入口换了位置。</li>
+      <li><strong>授权时勾了 Spark-X2.5（没勾 -1.7B）</strong> —— 那个要<strong>收费</strong>。取消勾选，改勾 <code>Spark-X2.5-1.7B</code>。</li>
       <li><strong>报 401 / 「apikey not found」</strong> —— 多半是把 Model ID 或接口地址当 Key 填了，或复制时带了引号/空格。只填 <code>ak-</code> 开头那一段。</li>
-      <li><strong>报「model not found」</strong> —— 开通的不是 Spark-X2.5-1.7B，回第 1 步确认选的是 1.7B。</li>
-      <li><strong>提示额度不足</strong> —— 「限时免费」有到期时间，到期后需重新开通或改用其他免费模型。</li>
-      <li><strong>找不到「开通服务」按钮</strong> —— 需要先勾选下方的协议复选框，勾上按钮才可点。</li>
+      <li><strong>报「model not found」</strong> —— 授权的不是 Spark-X2.5-1.7B，回第 3 步重新勾一次。</li>
+      <li><strong>提示额度不足</strong> —— 「限时免费」有到期时间，到期后需重新确认授权或改用其他免费模型。</li>
+      <li><strong>提示「该API Key 暂未开通模型服务」</strong> —— 说明你这个 Key <strong>是刚建的、还没开通过服务</strong>。那就改看<a href="xinghuo.html">新用户申请教程</a>，走「开通服务」那一步。</li>
     </ol>
   </div>
 

@@ -168,7 +168,7 @@ check("README 中文有 v1.14.0 更新段", "## v1.14.0 更新内容" in README_
 check("README 英文有 v1.14.0 更新段", "## What's New in v1.14.0" in README_EN, True)
 check("README 中文标注了 Issue #2 来源", "issues/2" in README_CN, True)
 
-# ---- v1.15.0 新增：教程拆两页 + 提醒链路 ----
+# ---- v1.15.0 新增：教程拆两页 + 提醒链路（版本断言已随v1.16.0 上调）----
 GUIDE_NEW = (ROOT / "guide" / "xinghuo.html").read_text(encoding="utf-8")
 GUIDE_UPG = (ROOT / "guide" / "xinghuo-upgrade.html").read_text(encoding="utf-8")
 
@@ -224,13 +224,14 @@ check("客户端 · 有引导时按钮改为「清理旧配置」", 'uninstallLa
 # --------------------------------------------------------- 5. 版本号同步
 print("\n=== 5. 版本号三处同步 ===")
 pkg = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
-check("package.json", pkg["version"], "1.15.0")
-check("client.js PLUGIN_VERSION", re.search(r'PLUGIN_VERSION = "([\d.]+)"', CLIENT).group(1), "1.15.0")
-check("help.json latestVersion", HP_PLUGIN["latestVersion"], "1.15.0")
-check("README 中文当前版本", "- 当前版本：**v1.15.0**" in README_CN, True)
-check("README 英文当前版本", "- Current version: **v1.15.0**" in README_EN, True)
-check("README 中文有 v1.15.0 更新段", "## v1.15.0 更新内容" in README_CN, True)
-check("README 英文有 v1.15.0 更新段", "## What's New in v1.15.0" in README_EN, True)
+check("package.json", pkg["version"], "1.16.0")
+check("client.js PLUGIN_VERSION", re.search(r'PLUGIN_VERSION = "([\d.]+)"', CLIENT).group(1), "1.16.0")
+check("help.json latestVersion", HP_PLUGIN["latestVersion"], "1.16.0")
+check("README 中文当前版本", "- 当前版本：**v1.16.0**" in README_CN, True)
+check("README 英文当前版本", "- Current version: **v1.16.0**" in README_EN, True)
+check("README 中文有 v1.16.0 更新段", "## v1.16.0 更新内容" in README_CN, True)
+check("README 英文有 v1.16.0 更新段", "## What's New in v1.16.0" in README_EN, True)
+check("README 中文保留 v1.15.0 更新段", "## v1.15.0 更新内容" in README_CN, True)
 
 # ⭐ 这条是老教训：help.json 通告版本必须 == 代码版本，否则老用户永远看不到更新提示
 check("help.json 通告版本 == 代码版本",
@@ -239,5 +240,29 @@ check("help.json 通告版本 == 代码版本",
 
 print("\n" + "=" * 52)
 print(f"通过 {passed} / 失败 {failed}")
+# ---- v1.16.0 新增：老用户流程按实操修正为「授权管理」 ----
+GUIDE_UP = (ROOT / "guide" / "xinghuo-upgrade.html").read_text(encoding="utf8")
+GUIDE_NEW = (ROOT / "guide" / "xinghuo.html").read_text(encoding="utf8")
+
+check("v1.16.0 老用户页走「API Key 管理」入口", "API Key 管理" in GUIDE_UP, True)
+check("v1.16.0 老用户页走「授权管理」按钮", "授权管理" in GUIDE_UP, True)
+check("v1.16.0 老用户页有「确认授权」动作", "确认授权" in GUIDE_UP, True)
+check("v1.16.0 老用户页警示别勾 293B（防误收费）", "293B" in GUIDE_UP, True)
+check("v1.16.0 老用户页已无「第二步：调用示例」旧错流程", "第二步：调用示例" in GUIDE_UP, False)
+check("v1.16.0 老用户页步骤数为 4", len(re.findall(r'class="step-num"', GUIDE_UP)), 4)
+check("v1.16.0 老用户页占位框为 4", GUIDE_UP.count('<div class="shot-pending"'), 4)
+check("v1.16.0 老用户页声明无需开通服务", "不需要点「开通服务」" in GUIDE_UP, True)
+check("v1.16.0 新用户页仍保留「开通服务」（流程未被污染）", "开通服务" in GUIDE_NEW, True)
+check("v1.16.0 新用户页有分流判据", "本页（新用户）" in GUIDE_NEW and "老用户页" in GUIDE_NEW, True)
+check("v1.16.0 badgeText 已改指「授权管理」", "授权管理" in HP_PLUGIN["badgeText"], True)
+check("v1.16.0 badgeText 不再指向「开通服务」", "开通服务" in HP_PLUGIN["badgeText"], False)
+_xh = [r for r in HELP["retired"] if r["type"] == "xinghuo"][0]
+check("v1.16.0 retired.reason 已改指「授权管理」", "授权管理" in _xh["reason"], True)
+# reason 里出现「开通服务」是对的 —— 那句是「也不用点『开通服务』」，
+# 属于反向提醒。真正要防的是把它当指引动作，所以断言改查指引句本身。
+check("v1.16.0 retired.reason 把「开通服务」标为不需要做", "也不用点「开通服务」" in _xh["reason"], True)
+check("v1.16.0 retired.reason 未把开通服务当指引动作", "点一下「开通服务」" in _xh["reason"], False)
+
+
 print("=" * 52)
 sys.exit(1 if failed else 0)

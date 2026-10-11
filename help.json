@@ -1,13 +1,13 @@
 {
-  "version": "2026-10-11.1",
+  "version": "2026-10-11.2",
   "updatedAt": "2026-10-11",
   "plugin": {
-    "latestVersion": "1.15.0",
+    "latestVersion": "1.16.0",
     "minDsh": "0.1.5",
     "maxDsh": "0.2.99",
     "releaseUrl": "https://github.com/ai-yukin/dsh-0-tools/releases/latest",
-    "badgeText": "⬆ v1.15.0 讯飞星火要换新 Key：Spark Lite 已下架，去官网点「开通服务」即可",
-    "notes": "讯飞星火换新模型：Spark Lite 已下架，改用 Spark-X2.5-1.7B（1M 上下文）。已配置讯飞的老用户需去官网「开通服务」并把 ak- 开头的 Key 重新粘贴一次，约 2 分钟。"
+    "badgeText": "⬆ v1.16.0 讯飞星火要换新 Key：Spark Lite 已下架，去官网点「授权管理」勾上新模型即可",
+    "notes": "讯飞星火换新模型：Spark Lite 已下架，改用 Spark-X2.5-1.7B（1M 上下文）。已配置讯飞的老用户请去官网「模型服务 → API Key 管理 → 授权管理」，勾选 Spark-X2.5-1.7B（注意不是收费的 293B 大模型），复制 ak- 开头的 Key 重新粘贴一次，约 2 分钟。"
   },
   "official": [
     {
@@ -141,7 +141,7 @@
     {
       "type": "xinghuo",
       "title": "讯飞星火",
-      "reason": "你配置的 Spark Lite 已被讯飞官方下架，现在要用 Spark-X2.5-1.7B。你的旧 Key 调不动了 —— 去官网点一下「开通服务」就能拿到新 Key，约 2 分钟，不用重新注册。",
+      "reason": "你配置的 Spark Lite 已被讯飞官方下架，现在要用 Spark-X2.5-1.7B。你的旧 Key 调不动了 —— 去官网「模型服务 → API Key 管理 → 授权管理」勾一下新模型（约 2 分钟，不用重新注册，也不用点「开通服务」）。注意别勾成收费的 Spark-X2.5（293B）。",
       "guideUrl": "https://ai-yukin.github.io/dsh-0-tools/guide/xinghuo-upgrade.html",
       "actionLabel": "去看更新教程 →"
     }
