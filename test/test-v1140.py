@@ -20,6 +20,8 @@ HELP = json.loads((ROOT / "help.json").read_text(encoding="utf-8"))
 HP_PLUGIN = HELP["plugin"]
 README_CN = (ROOT / "README.md").read_text(encoding="utf-8")
 README_EN = (ROOT / "README.en.md").read_text(encoding="utf-8")
+CHANGELOG_CN = (ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
+CHANGELOG_EN = (ROOT / "CHANGELOG.en.md").read_text(encoding="utf-8")
 
 passed = failed = 0
 
@@ -172,9 +174,16 @@ check("README 英文模型表格那行已换成 Spark-X2.5-1.7B",
       bool(en_row) and "Spark-X2.5-1.7B" in en_row and "Spark Lite" not in en_row, True)
 check("README 中文含 Spark-X2.5-1.7B", "Spark-X2.5-1.7B" in README_CN, True)
 check("README 英文含 Spark-X2.5-1.7B", "Spark-X2.5-1.7B" in README_EN, True)
-check("README 中文有 v1.14.0 更新段", "## v1.14.0 更新内容" in README_CN, True)
-check("README 英文有 v1.14.0 更新段", "## What's New in v1.14.0" in README_EN, True)
-check("README 中文标注了 Issue #2 来源", "issues/2" in README_CN, True)
+# ⭐ README 只描述「现在是什么样」，版本演进搬去了 CHANGELOG
+# （用户判断：这些更新段对新用户没意义，且会随版本无限膨胀）
+check("README 不再堆版本更新段", "## v1.1" in README_CN and "## v1.1" in README_EN, False)
+check("README 中文只有「当前版本」一处版本号叙述", README_CN.count("v1.") <= 2, True)
+check("README 英文只有「当前版本」一处版本号叙述", README_EN.count("v1.") <= 2, True)
+check("CHANGELOG 中文存在且含 v1.14.0", "## v1.14.0" in CHANGELOG_CN, True)
+check("CHANGELOG 英文存在且含 v1.14.0", "v1.14.0" in CHANGELOG_EN, True)
+check("CHANGELOG 标注了 Issue #2 来源", "issues/2" in CHANGELOG_CN, True)
+check("README 顶部有CHANGELOG 入口", "CHANGELOG" in README_CN, True)
+check("README.en.md 顶部有 CHANGELOG 入口", "CHANGELOG" in README_EN, True)
 
 # ---- v1.15.0 新增：教程拆两页 + 提醒链路（版本断言已随v1.16.0 上调）----
 GUIDE_NEW = (ROOT / "guide" / "xinghuo.html").read_text(encoding="utf-8")
@@ -237,9 +246,11 @@ check("client.js PLUGIN_VERSION", re.search(r'PLUGIN_VERSION = "([\d.]+)"', CLIE
 check("help.json latestVersion", HP_PLUGIN["latestVersion"], "1.16.2")
 check("README 中文当前版本", "- 当前版本：**v1.16.2**" in README_CN, True)
 check("README 英文当前版本", "- Current version: **v1.16.2**" in README_EN, True)
-check("README 中文有 v1.16.0 更新段", "## v1.16.0 更新内容" in README_CN, True)
-check("README 英文有 v1.16.0 更新段", "## What's New in v1.16.0" in README_EN, True)
-check("README 中文保留 v1.15.0 更新段", "## v1.15.0 更新内容" in README_CN, True)
+check("CHANGELOG 保留了 v1.16.0 段", "## v1.16.0" in CHANGELOG_CN, True)
+check("CHANGELOG 英文保留了 v1.16.0 段", "v1.16.0" in CHANGELOG_EN, True)
+check("CHANGELOG 保留了 v1.15.0 段", "## v1.15.0" in CHANGELOG_CN, True)
+# 老用户升级指引不能随更新段一起消失—— 必须仍在README 可达的地方
+check("README 仍能查到讯飞老用户换 Key 的指引", "xinghuo-upgrade" in README_CN + CHANGELOG_CN, True)
 
 # ⭐ 这条是老教训：help.json 通告版本必须 == 代码版本，否则老用户永远看不到更新提示
 check("help.json 通告版本 == 代码版本",
