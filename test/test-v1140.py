@@ -125,8 +125,16 @@ check("排序：智谱 > OpenRouter > 硅基流动 > 讯飞",
 # 状态指示器文案要同步，否则卡片上还写着旧模型
 check("状态指示器文案已改为 Spark X2.5-1.7B",
       '"Spark X2.5-1.7B，1M 上下文"' in CLIENT, True)
-check("卡片描述已改为 Spark-X2.5-1.7B",
-      'desc: "讯飞星火 Spark-X2.5-1.7B"' in CLIENT, True)
+# 只断言关键片段在前，不写死整串 —— v1.16.0 给 desc 补了
+# 「星火是模型系列名，托管在星辰 MaaS 平台」的说明后缀，
+# 整串全等会误报（这正是「旧断言写死整串」的又一次复现）。
+check("卡片描述含模型名 Spark-X2.5-1.7B",
+      'desc: "讯飞星火 Spark-X2.5-1.7B' in CLIENT, True)
+# v1.16.0 新增：两个名字必须在界面上说清楚（用户曾因此以为「星火」过时了）
+check("卡片 desc 已说明星火/星辰两个名字",
+      "星辰 MaaS 平台" in CLIENT, True)
+check("取 Key 按钮已标注讯飞现平台名",
+      "星辰 MaaS 平台获取 API Key（讯飞现平台名）" in CLIENT, True)
 
 # ------------------------------------------------------------- 4. 对外文档
 print("\n=== 4. help.json / README 同步 ===")
@@ -224,11 +232,11 @@ check("客户端 · 有引导时按钮改为「清理旧配置」", 'uninstallLa
 # --------------------------------------------------------- 5. 版本号同步
 print("\n=== 5. 版本号三处同步 ===")
 pkg = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
-check("package.json", pkg["version"], "1.16.0")
-check("client.js PLUGIN_VERSION", re.search(r'PLUGIN_VERSION = "([\d.]+)"', CLIENT).group(1), "1.16.0")
-check("help.json latestVersion", HP_PLUGIN["latestVersion"], "1.16.0")
-check("README 中文当前版本", "- 当前版本：**v1.16.0**" in README_CN, True)
-check("README 英文当前版本", "- Current version: **v1.16.0**" in README_EN, True)
+check("package.json", pkg["version"], "1.16.1")
+check("client.js PLUGIN_VERSION", re.search(r'PLUGIN_VERSION = "([\d.]+)"', CLIENT).group(1), "1.16.1")
+check("help.json latestVersion", HP_PLUGIN["latestVersion"], "1.16.1")
+check("README 中文当前版本", "- 当前版本：**v1.16.1**" in README_CN, True)
+check("README 英文当前版本", "- Current version: **v1.16.1**" in README_EN, True)
 check("README 中文有 v1.16.0 更新段", "## v1.16.0 更新内容" in README_CN, True)
 check("README 英文有 v1.16.0 更新段", "## What's New in v1.16.0" in README_EN, True)
 check("README 中文保留 v1.15.0 更新段", "## v1.15.0 更新内容" in README_CN, True)
@@ -262,6 +270,20 @@ check("v1.16.0 retired.reason 已改指「授权管理」", "授权管理" in _x
 # 属于反向提醒。真正要防的是把它当指引动作，所以断言改查指引句本身。
 check("v1.16.0 retired.reason 把「开通服务」标为不需要做", "也不用点「开通服务」" in _xh["reason"], True)
 check("v1.16.0 retired.reason 未把开通服务当指引动作", "点一下「开通服务」" in _xh["reason"], False)
+
+
+# ---- v1.16.1 新增：星火 / 星辰两个名字必须在界面上说清楚 ----
+# 起因：用户看到平台已改名「星辰 MaaS 平台」，质疑「叫讯飞星火是否不合适」。
+# 查证结论：星火 Spark 是模型系列名（官方公告标题即「星火 Spark-X2.5」），
+# 星辰 MaaS 是平台名 —— 模型叫星火、托管在星辰上，两个都是官方的。
+# → 模型名不动，只补一句区分，避免用户以为「星火」过时了。
+for _g, _lbl in ((GUIDE_NEW, "新用户页"), (GUIDE_UP, "老用户页")):
+    check(f"{_lbl}已说明「星火」是模型系列名", "星火 Spark" in _g, True)
+    check(f"{_lbl}已说明「星辰 MaaS 平台」是现API 平台名", "星辰 MaaS 平台" in _g, True)
+    check(f"{_lbl}点明模型叫星火、托管在星辰", "模型叫星火，托管在星辰上" in _g, True)
+check("模型显示名仍为「讯飞星火」（官方模型系列名，不改）",
+      'displayName: "讯飞星火"' in CLIENT, True)
+check("未把模型名误改成「讯飞星辰」", 'displayName: "讯飞星辰"' in CLIENT, False)
 
 
 print("=" * 52)
