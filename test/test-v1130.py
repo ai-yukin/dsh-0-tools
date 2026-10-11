@@ -95,7 +95,14 @@ m = re.search(r'const PLUGIN_VERSION = "([^"]+)"', CLIENT)
 check("client.js PLUGIN_VERSION 存在", bool(m), True)
 ver = m.group(1)
 check("package.json 版本 == 代码版本", pkg["version"], ver)
-check("版本已升到 1.13.0", ver, "1.13.0")
+# 断言「不低于 1.13.0」而不是「等于 1.13.0」——
+# 这个文件测的是 v1.13.0 引入的能力，那些能力必须在后续版本里一直保留；
+# 若把版本号写死，每发一版新版本这个文件都会假报失败（v1.14.0 时踩过一次）。
+def _at_least(v, floor):
+    return tuple(int(x) for x in v.split(".")) >= tuple(int(x) for x in floor.split("."))
+
+
+check("版本不低于 1.13.0（本版引入的能力不得回退）", _at_least(ver, "1.13.0"), True)
 m2 = re.search(r'const SUPPORTED_DSH_RANGE = \{ min: "([^"]+)", max: "([^"]+)" \}', CLIENT)
 check("DSH 支持区间未被动过", (m2.group(1), m2.group(2)), ("0.1.5", "0.2.99"))
 

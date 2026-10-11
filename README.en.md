@@ -25,7 +25,7 @@ dsh-0-tools is designed for users with zero programming experience who are using
 
 ## Current Version & Compatibility
 
-- Current version: **v1.13.0**
+- Current version: **v1.14.0**
 - Compatible DSH version: **`0.1.5` through `0.2.x`** (verified with `0.1.7-rc.2` and `0.2.0-rc.2`)
   - Since `v1.11.0` a single package covers both DSH generations: `0.1.x` and `0.2.x` work with the
     same plugin release, no version switching needed.
@@ -37,6 +37,24 @@ dsh-0-tools is designed for users with zero programming experience who are using
     we make no promise before testing it. On `0.3+` the installer detects the version, stops, and
     points you at a verified release.
 - **System Requirements**: One-click installation scripts support **Windows 10 / Windows 11** (`install.bat`) and **macOS / Linux** (`install.sh`); the plugin core code itself is cross-platform. Users who have manually installed DSH can install the plugin manually via `dsh plugin --profile web add /path/to/dsh-0-tools`.
+
+## What's New in v1.14.0
+
+Fixes the iFlytek Spark free model becoming unusable after it was **delisted** (thanks to the report in [Issue #2](https://github.com/ai-yukin/dsh-0-tools/issues/2)).
+
+| Problem | Details |
+|------|------|
+| **Spark Lite is delisted** | The previously configured free model `Spark Lite` has been removed by iFlytek, and the "unlimited" package can no longer be claimed even after real-name verification — meaning **every old configuration is now guaranteed to fail**. The plugin now uses the currently-free **Spark-X2.5-1.7B** (iFlytek's MaaS platform, 1M native context, 0 CNY per million tokens). |
+| **Endpoint changed** | From `https://spark-api-open.xf-yun.com/v1` to `https://maas-api.cn-huabei-1.xf-yun.com/v2`, with model ID `spark-x2.5-1.7b`. |
+| **Credential format changed** | The new key is a single `ak-`-prefixed string from the MaaS platform (no longer `APIKey:APISecret`). The plugin now auto-detects the new format — **just paste the new key**. The old format is still recognized, so existing users don't have to reconfigure immediately. |
+| **Capability ranking corrected** | A 1.7B model is far smaller than GLM-4.7-Flash, so the previous ordering (inherited from the old model) was inaccurate. Spark now ranks below Zhipu and above SiliconFlow, and SiliconFlow (Qwen3-8B) moves up — **automatic switching now picks models in this new order**. |
+
+> ⚠️ **If you configured iFlytek Spark before v1.14.0**: the plugin **will not rewrite your local configuration automatically**,
+> because the old and new credential systems are unrelated (an old `APIKey:APISecret` pair does not work on the new endpoint),
+> and a half-migrated setup would fail worse — looking configured but erroring on every call.
+> Until you replace the key, automatic switching routes around the unusable Spark provider — **everything looks fine in the UI, but you have not actually been using iFlytek**.
+> To keep using it, paste a new `ak-`-prefixed key in the config center (about 3 minutes: phone registration on the new platform, no real-name verification required).
+> v1.14.0 does not change the DSH compatibility range (still `0.1.5` through `0.2.x`); all v1.13.0 and v1.12.0 capabilities are retained.
 
 ## What's New in v1.13.0
 
@@ -74,7 +92,7 @@ dsh-0-tools currently integrates 4 permanently free large models. We recommend c
 |-------|----------|----------|
 | GLM-4.7-Flash + GLM-4V-Flash | Zhipu AI | Text + image understanding, permanently free |
 | Qwen3-8B (15+ models under 9B) | SiliconFlow | Permanently free, direct access in China, 128K context, supports tool calling |
-| Spark Lite | iFlytek Spark | Permanently free, strong Chinese understanding |
+| Spark-X2.5-1.7B | iFlytek Spark | Permanently free, 1M context, direct access in China |
 | OpenRouter Free Pool | OpenRouter | Automatically routes dozens of free models, automatically bypasses when one is delisted |
 
 > Each model provides a dedicated illustrated tutorial page. Click "Guide Tutorial" in "① Zero Cost · Free Model Manager Center" to view step-by-step registration instructions.

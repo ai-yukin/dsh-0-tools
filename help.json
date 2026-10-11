@@ -1,12 +1,12 @@
 {
-  "version": "2026-10-08.1",
-  "updatedAt": "2026-10-08",
+  "version": "2026-10-10.1",
+  "updatedAt": "2026-10-10",
   "plugin": {
-    "latestVersion": "1.13.0",
+    "latestVersion": "1.14.0",
     "minDsh": "0.1.5",
     "maxDsh": "0.2.99",
     "releaseUrl": "https://github.com/ai-yukin/dsh-0-tools/releases/latest",
-    "notes": "新增：自动路由默认开启并可一键关闭；模型不可用时告知原因并自动切换；自动切换记录跨重启保留。"
+    "notes": "修复：讯飞星火免费模型已下架 Spark Lite，切换为 Spark-X2.5-1.7B（1M 上下文），并适配星辰 MaaS 平台的新凭证格式。"
   },
   "official": [
     {
@@ -103,23 +103,24 @@
     {
       "type": "xinghuo",
       "title": "讯飞",
-      "desc": "讯飞星火 Spark Lite",
-      "keysLabel": "讯飞星火控制台获取 API Key ↗",
-      "keysUrl": "https://console.xfyun.cn/services/cbm",
-      "keyPlaceholder": "粘贴你的讯飞星火 API Key",
+      "desc": "讯飞星火 Spark-X2.5-1.7B",
+      "keysLabel": "星辰 MaaS 平台获取 API Key ↗",
+      "keysUrl": "https://maas.xfyun.cn/modelSquare",
+      "keyPlaceholder": "粘贴你的讯飞星火 API Key（ak- 开头）",
       "credentialRef": "XINGHUO_API_KEY",
       "displayName": "讯飞星火",
       "api": "openai-completions",
-      "baseURL": "https://spark-api-open.xf-yun.com/v1",
+      "baseURL": "https://maas-api.cn-huabei-1.xf-yun.com/v2",
+      "capabilityScore": 60,
       "models": [
         {
-          "id": "lite",
-          "name": "讯飞星火 Lite（永久免费）",
+          "id": "spark-x2.5-1.7b",
+          "name": "讯飞星火 X2.5-1.7B（永久免费）",
           "input": [
             "text"
           ],
-          "contextWindow": 8000,
-          "maxTokens": 2048
+          "contextWindow": 1000000,
+          "maxTokens": 4096
         }
       ],
       "shortName": "讯飞"
