@@ -40,68 +40,69 @@ dsh-0-tools is designed for users with zero programming experience who are using
 
 ## What's New in v1.16.0
 
-**Fixing the existing-user upgrade path — v1.15.0 pointed at the wrong button.**
+**iFlytek Spark has a new model — existing users need to authorize their current key once (about 2 minutes).**
 
-The owner ran the real workflow as both a new and an existing user, and found that
-steps 2 and 3 of the v1.15.0 existing-user guide **both pointed at a button that isn't
-the one you need**. Rewritten against the actual screenshots.
+iFlytek delisted the previous free model (Spark Lite). The currently-free model is
+**Spark-X2.5-1.7B** (1M context, 0 CNY per million tokens).
+**The old and new credential systems are unrelated**, and the plugin cannot rewrite your
+config automatically — you need to authorize on the official site and paste the new key back.
 
-| | v1.15.0 said (wrong) | v1.16.0 actual (verified by hand) |
-|---|---|---|
-| Entry point | Model square → the "API 调用" dialog | **Left sidebar 「模型服务」 → 「API Key 管理」** |
-| Button to click | 「开通服务」 | **「授权管理」** |
-| Then do | Tick the agreement → activate service | **Tick `Spark-X2.5-1.7B` in the list → 确认授权** |
+**Full illustrated guide (with a way to tell which page you need)**:
+[Existing users](https://ai-yukin.github.io/dsh-0-tools/guide/xinghuo-upgrade.html) ·
+[New users](https://ai-yukin.github.io/dsh-0-tools/guide/xinghuo.html)
 
-**Why it was wrong**: an existing key's service was **activated long ago** — it simply
-lacks permission for the new model. 「开通服务」 is the first step for a **newly created
-key**; an existing key never needs it again. Following v1.15.0 left the user staring at
-a screen that doesn't match the instructions.
+**Three steps (existing users)**:
 
-Three connected fixes came with it:
+| Step | What to do |
+|---|---|
+| 1 | Log in, open the left sidebar **「模型服务」→「API Key 管理」**, find the key you already have, click **「授权管理」** |
+| 2 | Tick **`Spark-X2.5-1.7B`** in the dialog, then click **「确认授权」** |
+| 3 | Back on the list, click **「复制」** for that row, and paste the `ak-`-prefixed key into the config center |
 
-- **Update badge and red-box wording** — changed from 「去官网点『开通服务』」 to 「点『授权管理』勾上新模型」.
-  This text is hot-updatable remotely, so existing users see the corrected pointer without
-  waiting for an install.
-- **The existing-user guide page** — 5 steps compressed to 4 (authorizing needs no activation),
-  plus a warning not to tick the **paid** Spark-X2.5 (293B) instead.
-- **A concrete way to tell the two pages apart** — if you see "暂未开通模型服务" you have a
-  **new** key (use the new-user page); if you only see a key list with 「授权管理」 you have an
-  **existing** key (use the existing-user page).
+⚠️ **Do not tick `Spark-X2.5` (293B)** — that one **costs money** (0.96 CNY per million input
+tokens). The free one is `Spark-X2.5-1.7B`; the two sit right next to each other in the list,
+so it's easy to click the wrong one.
+
+> If you already followed the earlier guide, no need to undo anything — authorizing an extra
+> model does no harm; just tick it.
 
 > v1.16.0 does not change the DSH compatibility range (still `0.1.5` through `0.2.x`); all v1.15.0 and earlier capabilities are retained.
 
 ## What's New in v1.15.0
 
-**Making sure "you need a new key" is no longer silently skipped.**
+**Saying out loud that you need a new key.**
 
-v1.14.0 switched the iFlytek model — and then stopped there. Existing users **saw no notice at all**,
-the plugin can't rewrite their config, so automatic routing quietly routed around Spark
-and everything "looked fine." This release says it out loud, and gives you a shortcut.
+If you still had iFlytek configured after it was delisted, nothing told you so — the plugin
+can't rewrite your config, and automatic routing quietly routed around it. Everything
+"looked fine" while you were actually not using that model at all.
 
-| Capability | Details |
-|------|------|
-| **The update badge states the reason** | The footer "new version" badge no longer shows only a version number — it says "iFlytek Spark needs a new key." If the text is too long it scrolls horizontally instead of breaking the layout. That sentence is **hot-updatable remotely**, so rewording it later never needs a new release. |
-| **A red prompt box in the config center** | If you still have iFlytek configured, a red box explains why and offers a **「去看更新教程」** button straight to the guide. It deliberately **does not push you to delete your key** — you have to visit the official site anyway, so copying the new key adds zero extra work. |
-| **The guide is now two pages** | Following the actual workflow: **new users** (6 steps: register → create key → activate service) and **existing users** (authorize the new model on the key you already have). Existing users do not re-register or recreate a key — about 2 minutes. |
+This release adds three layers of notice: the footer's new-version badge now **states the
+reason** (not just a version number); the config center shows a **red box** for anyone still
+configured with iFlytek, with a button straight to the guide; and the guide is split into
+**two pages** (new users / existing users) so you can pick the right one — existing users take
+about 2 minutes, with no re-registration and no new key.
 
 > v1.15.0 does not change the DSH compatibility range (still `0.1.5` through `0.2.x`); all v1.14.0 and earlier capabilities are retained.
 
 ## What's New in v1.14.0
 
-Fixes the iFlytek Spark free model becoming unusable after it was **delisted** (thanks to the report in [Issue #2](https://github.com/ai-yukin/dsh-0-tools/issues/2)).
+iFlytek's free model `Spark Lite` has been **delisted** (thanks to the report in
+[Issue #2](https://github.com/ai-yukin/dsh-0-tools/issues/2)). The plugin now uses the
+currently-free **Spark-X2.5-1.7B** (1M native context, 0 CNY per million tokens).
 
-| Problem | Details |
-|------|------|
-| **Spark Lite is delisted** | The previously configured free model `Spark Lite` has been removed by iFlytek, and the "unlimited" package can no longer be claimed even after real-name verification — meaning **every old configuration is now guaranteed to fail**. The plugin now uses the currently-free **Spark-X2.5-1.7B** (iFlytek's MaaS platform, 1M native context, 0 CNY per million tokens). |
-| **Endpoint changed** | From `https://spark-api-open.xf-yun.com/v1` to `https://maas-api.cn-huabei-1.xf-yun.com/v2`, with model ID `spark-x2.5-1.7b`. |
-| **Credential format changed** | The new key is a single `ak-`-prefixed string from the MaaS platform (no longer `APIKey:APISecret`). The plugin now auto-detects the new format — **just paste the new key**. The old format is still recognized, so existing users don't have to reconfigure immediately. |
-| **Capability ranking corrected** | A 1.7B model is far smaller than GLM-4.7-Flash, so the previous ordering (inherited from the old model) was inaccurate. Spark now ranks below Zhipu and above SiliconFlow, and SiliconFlow (Qwen3-8B) moves up — **automatic switching now picks models in this new order**. |
+| Change | To |
+|---|---|
+| **Model** | `Spark Lite` (delisted) → **`Spark-X2.5-1.7B`** |
+| **Endpoint** | → `https://maas-api.cn-huabei-1.xf-yun.com/v2` |
+| **Model ID** | → `spark-x2.5-1.7b` |
+| **Key format** | → a single `ak-`-prefixed string (no longer an `APIKey:APISecret` pair). The plugin auto-detects it — **just paste the new key** |
+| **Capability ranking** | Re-ordered to match the new model's real ability, so **automatic switching picks models in the right order** |
 
-> ⚠️ **If you configured iFlytek Spark before v1.14.0**: the plugin **will not rewrite your local configuration automatically**,
-> because the old and new credential systems are unrelated (an old `APIKey:APISecret` pair does not work on the new endpoint),
-> and a half-migrated setup would fail worse — looking configured but erroring on every call.
-> Until you replace the key, automatic switching routes around the unusable Spark provider — **everything looks fine in the UI, but you have not actually been using iFlytek**.
-> To keep using it, paste a new `ak-`-prefixed key in the config center (about 3 minutes: phone registration on the new platform, no real-name verification required).
+⚠️ **If you configured iFlytek Spark before v1.14.0**: the plugin **will not rewrite your local
+configuration automatically**, because the old and new credential systems are unrelated — you need
+to replace the key manually (about 2 minutes). Until you do, automatic switching routes around the
+unusable Spark provider — **everything looks fine in the UI, but you have not actually been using iFlytek**.
+
 > v1.14.0 does not change the DSH compatibility range (still `0.1.5` through `0.2.x`); all v1.13.0 and v1.12.0 capabilities are retained.
 
 ## What's New in v1.13.0
@@ -200,7 +201,9 @@ Double-click the "DeepSeek Harness" shortcut on your desktop, and the browser wi
 
 ### Step 3: Get and Install API Key
 
-We recommend configuring all the following free models — the more free models, the more switching options! Click the "Guide Tutorial" button on each model card below, follow the steps to register and copy the API Key (for iFlytek, you need to copy both APIKey and APISecret, concatenated with an English colon), and paste it into the "Paste any model API Key here for automatic recognition" box, then click "Auto-recognize API Key and install free model with one click" to automatically install the free model.
+We recommend configuring all the following free models — the more free models, the more switching options! Click the "Guide Tutorial" button on each model card below, follow the steps to register and copy the API Key, then paste it into the "Paste any model API Key here for automatic recognition" box, and click "Auto-recognize API Key and install free model with one click".
+
+> Key formats differ per provider (iFlytek's is a single `ak-`-prefixed string) — **copy it exactly as the guide shows; don't assemble it yourself**.
 
 ![Free Model Configuration Center - Four model cards + large paste box](screenshots/2.png)
 
@@ -266,6 +269,8 @@ This plugin has been developed and verified against the following DSH versions:
 
 | DSH Version | Status |
 |-------------|--------|
+| `0.2.0-rc.2` | Verified and adapted (`--dump-config` lists the plugin; the official compatibility checker passes) |
+| `0.2.1-alpha.1` | Covered by the version declaration; not run on real hardware yet |
 | `0.1.7-rc.2` | Verified and adapted (page loading / pricing bar / model selector / settings tab / official configuration channel / web authentication) |
 | `0.1.1-rc.2` | Verified and adapted (page loading / pricing bar / model selector / settings tab / official configuration channel) |
 
@@ -277,12 +282,13 @@ dsh-0-tools/
 ├── lib/
 │   ├── index.js     # host side: local health monitoring proxy server (127.0.0.1:3095), bypasses browser CORS
 │   └── client.js    # browser side: bottom-left toolbar + settings tab "dsh-0-tools" + read/write config via official /api
-├── guide/                # v1.8.0 added: 4 dedicated illustrated tutorial pages for free models
-│   ├── zai.html              # Zhipu AI tutorial
-│   ├── openrouter-free.html  # OpenRouter tutorial
+├── guide/                     # 5 dedicated illustrated tutorial pages for free models
+│   ├── zai.html               # Zhipu AI tutorial
+│   ├── openrouter-free.html   # OpenRouter tutorial
 │   ├── siliconflow.html       # SiliconFlow tutorial
-│   ├── xinghuo.html          # iFlytek Spark tutorial
-│   └── images/               # tutorial screenshots
+│   ├── xinghuo.html           # iFlytek Spark tutorial (new users)
+│   ├── xinghuo-upgrade.html   # iFlytek Spark tutorial (existing users: authorize the new model on your current key)
+│   └── images/                # tutorial screenshots
 ├── screenshots/           # README screenshots
 ├── cordis.patch.yml       # web profile injection declaration
 ├── package.json
