@@ -25,7 +25,7 @@ dsh-0-tools is designed for users with zero programming experience who are using
 
 ## Current Version & Compatibility
 
-- Current version: **v1.14.0**
+- Current version: **v1.15.0**
 - Compatible DSH version: **`0.1.5` through `0.2.x`** (verified with `0.1.7-rc.2` and `0.2.0-rc.2`)
   - Since `v1.11.0` a single package covers both DSH generations: `0.1.x` and `0.2.x` work with the
     same plugin release, no version switching needed.
@@ -37,6 +37,22 @@ dsh-0-tools is designed for users with zero programming experience who are using
     we make no promise before testing it. On `0.3+` the installer detects the version, stops, and
     points you at a verified release.
 - **System Requirements**: One-click installation scripts support **Windows 10 / Windows 11** (`install.bat`) and **macOS / Linux** (`install.sh`); the plugin core code itself is cross-platform. Users who have manually installed DSH can install the plugin manually via `dsh plugin --profile web add /path/to/dsh-0-tools`.
+
+## What's New in v1.15.0
+
+**Making sure "you need a new key" is no longer silently skipped.**
+
+v1.14.0 switched the iFlytek model — and then stopped there. Existing users **saw no notice at all**,
+the plugin can't rewrite their config, so automatic routing quietly routed around Spark
+and everything "looked fine." This release says it out loud, and gives you a shortcut.
+
+| Capability | Details |
+|------|------|
+| **The update badge states the reason** | The footer "new version" badge no longer shows only a version number — it says "iFlytek Spark needs a new key: Spark Lite is delisted, click 「开通服务」 on the official site." If the text is too long it scrolls horizontally instead of breaking the layout. That sentence is **hot-updatable remotely**, so rewording it later never needs a new release. |
+| **A red prompt box in the config center** | If you still have iFlytek configured, a red box explains why and offers a **「去看更新教程」** button straight to the guide. It deliberately **does not push you to delete your key** — you have to visit the official site anyway, so copying the new key adds zero extra work. |
+| **The guide is now two pages** | Following the actual workflow: **new users** (6 steps: register → create key → activate service) and **existing users** (5 steps: pick your existing key → activate service). Existing users do not re-register or recreate an application — about 2 minutes. |
+
+> v1.15.0 does not change the DSH compatibility range (still `0.1.5` through `0.2.x`); all v1.14.0 and earlier capabilities are retained.
 
 ## What's New in v1.14.0
 

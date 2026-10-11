@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>讯飞星火 API Key 配置引导 - 零号工具</title>
+<title>讯飞星火 API Key 申请引导 - 零号工具</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; background: #fafafa; color: #333; line-height: 1.6; }
@@ -48,118 +48,133 @@
 <body>
 <div class="container">
   <div class="header">
-    <span class="badge">零号工具 · 免费模型配置引导</span>
-    <h1>讯飞星火 API Key 配置</h1>
+    <span class="badge">零号工具 · 新用户申请</span>
+    <h1>讯飞星火 API Key 申请</h1>
     <p>Spark-X2.5-1.7B 限时免费，1M 超长上下文，国内直连</p>
   </div>
 
+  <div class="note">
+    <strong>已经创建过讯飞 API Key 的老用户，请不要走这一页。</strong><br>
+    你只需回到那个 Key 点一下「开通服务」，<strong>约 2 分钟，不用重新注册、不用重建应用</strong> ——
+    请看<a href="xinghuo-upgrade.html">老用户更新指南</a>。
+  </div>
+
   <div class="warn">
-    <strong>⚠️ 如果你以前配置过讯飞星火，请注意这里换了模型。</strong><br>
-    旧教程里的 <strong>Spark Lite</strong> 已被讯飞官方下架 —— 即使完成实名认证也领不到「无限量」礼包，
-    原来的配置必然调用失败。现已改用当前免费的 <strong>Spark-X2.5-1.7B</strong>。<br>
-    <strong>你需要重新走一遍下面的流程、粘贴新的 API Key</strong>（新旧是两套互不相通的密钥，无法自动迁移）。
-    在你换新 Key 之前，零号工具的自动路由会把这个不可用的讯飞绕开、切换到其他可用模型 —— 界面上看起来一切正常，
-    但你实际上一直没在用讯飞。
+    <strong>为什么是「新模型」而不是老的 Spark Lite？</strong><br>
+    老的免费模型 <strong>Spark Lite 已被讯飞官方下架</strong> —— 即使完成实名认证也领不到「无限量」礼包，
+    用它必然失败。现在改用当前免费的 <strong>Spark-X2.5-1.7B</strong>（1M 上下文，0 元/百万 tokens）。
+    <br>如果你以前配置过讯飞，请走<a href="xinghuo-upgrade.html">老用户更新指南</a>。
   </div>
 
   <div class="note">
-    讯飞星火是 4 个免费模型中注册流程最复杂的（需要手机号注册 + 创建应用 + 开通模型）。
+    讯飞是 4 个免费模型里注册流程最复杂的（需要手机号注册 + 创建 API Key + 开通服务）。
     如果觉得麻烦，可以先配置智谱和硅基流动（流程更简单），讯飞以后再补。
   </div>
 
   <div class="step">
-    <div class="step-title"><span class="step-num">1</span>注册并登录星辰 MaaS 平台</div>
+    <div class="step-title"><span class="step-num">1</span>注册并登录讯飞开放平台</div>
     <div class="step-desc">
-      访问 <a href="https://maas.xfyun.cn/modelSquare" target="_blank">https://maas.xfyun.cn/modelSquare</a>，
-      用<strong>手机号</strong>注册并登录（默认即为免费版，自带免费资源，无需付费）。
+      访问 <a href="https://www.xfyun.cn/" target="_blank">https://www.xfyun.cn/</a>，
+      点击右上角「立即注册」，推荐用<strong>微信扫码</strong>登录（最快）。
       <br><br>
-      这是讯飞官方的<strong>星辰 MaaS 平台</strong>（大模型一站式服务平台），
-      与讯飞开放平台（<code>console.xfyun.cn</code>）是<strong>两个不同的平台</strong>，密钥不能通用。
+      登录成功后进入顶部导航的<strong>「控制台」</strong>。
+      <br><br>
+      ⚠️ <strong>不需要实名认证。</strong>旧的 Spark Lite 需要实名才能领礼包，那个模型已经下架了；
+      现在的星辰 MaaS 平台用手机号注册即可直接使用免费模型。
     </div>
     <div class="shot-pending">
-      <span class="shot-name">images/xinghuo/01-星辰MaaS登录页.png</span>
-      <div class="shot-what">待补截图：星辰 MaaS 平台登录页（含手机号登录入口与「免费版」标识）。</div>
+      <span class="shot-name">images/xinghuo/01-讯飞开放平台登录页.png</span>
+      <div class="shot-what">待补截图：讯飞开放平台首页，需拍到「立即注册」与微信扫码登录入口。</div>
     </div>
   </div>
 
   <div class="step">
-    <div class="step-title"><span class="step-num">2</span>在模型广场找到 Spark-X2.5-1.7B</div>
+    <div class="step-title"><span class="step-num">2</span>进入星辰 MaaS 平台，找到 Spark-X2.5-1.7B</div>
     <div class="step-desc">
-      登录后进入<strong>「模型广场」（模型集市）</strong>页面，在筛选栏里选<strong>「限时免费」</strong>，
-      或直接搜索 <code>Spark-X2.5-1.7B</code>，点击模型卡片进入<strong>模型详情页</strong>。
+      从讯飞开放平台导航进入<strong>「星辰 MaaS 平台」</strong>（<code>maas.xfyun.cn</code>），
+      或直接访问 <a href="https://maas.xfyun.cn/modelSquare" target="_blank">https://maas.xfyun.cn/modelSquare</a>
+      的<strong>「模型广场」</strong>页面。
       <br><br>
-      详情页可以看到该模型的免费到期时间、接口地址、在线体验入口。找到后点击页面上的<strong>「API 调用」</strong>按钮。
+      页面里「星火模型」分类下能看到 <strong>Spark-X2.5-1.7B</strong>，卡片上标注了
+      <strong>1M</strong> 上下文 和 <strong>0 元/百万 tokens</strong>。点击它进入详情页，
+      然后点详情页上的<strong>「API 调用」</strong>按钮。
       <br><br>
-      也可以直接打开该模型的详情页：
+      也可以直接打开该模型详情页：
       <a href="https://maas.xfyun.cn/modelSquare/base/2624338063517705?sort=0&inputValue=&userSelectCategoryList=&userSelectCategory=%255B%255D" target="_blank">Spark-X2.5-1.7B 详情页</a>
     </div>
     <div class="shot-pending">
-      <span class="shot-name">images/xinghuo/02-模型广场限时免费列表.png</span>
-      <div class="shot-what">待补截图：模型广场列表页，需体现「限时免费」筛选条件与 Spark-X2.5-1.7B 卡片位置。</div>
+      <span class="shot-name">images/xinghuo/02-模型广场SparkX2.5-1.7B.png</span>
+      <div class="shot-what">待补截图：模型广场列表，需拍到 Spark-X2.5-1.7B 卡片及其「1M」「0 元/百万 tokens」标注。</div>
     </div>
     <div class="shot-pending">
-      <span class="shot-name">images/xinghuo/03-SparkX2.5-1.7B详情页.png</span>
-      <div class="shot-what">待补截图：模型详情页，需体现免费到期时间与「API 调用」按钮所在位置。</div>
+      <span class="shot-name">images/xinghuo/03-模型详情页API调用.png</span>
+      <div class="shot-what">待补截图：模型详情页，需拍到「模型简介」「推理上下文长度 1M」「推理定价 0 元」与「API 调用」按钮。</div>
     </div>
   </div>
 
   <div class="step">
-    <div class="step-title"><span class="step-num">3</span>开通模型并关联应用</div>
+    <div class="step-title"><span class="step-num">3</span>在「API 调用」弹窗里创建 API Key</div>
     <div class="step-desc">
-      点击「API 调用」后弹出配置窗口，按提示填写：
+      点「API 调用」后会弹出<strong>「第一步：选择 API Key」</strong>窗口。新用户这里会是空的，
+      点击<strong>「+ 创建 API Key」</strong>：
       <ol>
-        <li><strong>模型服务 API 名称：</strong>随意填写，如「零号工具-DSH」</li>
-        <li><strong>选择应用：</strong>如果已有应用，下拉直接选；<strong>如果没有则点「前往创建应用」</strong>，进入下一步</li>
+        <li><strong>API Key 名称：</strong>随意填写，如「零号工具-DSH」</li>
+        <li><strong>提交：</strong>创建完成后，它会出现在 Key 列表里</li>
       </ol>
-      填写完成后点击<strong>「确定」</strong>。
+      <br>
+      <strong>注意：</strong>创建 Key 之后，还需要<strong>开通模型服务</strong>才能调用 —— 下一步。
     </div>
     <div class="shot-pending">
-      <span class="shot-name">images/xinghuo/04-API调用配置弹窗.png</span>
-      <div class="shot-what">待补截图：「API 调用」弹窗，需体现「模型服务 API 名称」输入框与应用下拉选择（含「前往创建应用」入口）。</div>
+      <span class="shot-name">images/xinghuo/04-创建APIKey.png</span>
+      <div class="shot-what">待补截图：「第一步：选择 API Key」弹窗，需拍到「+ 创建 API Key」按钮与新建表单。</div>
     </div>
   </div>
 
   <div class="step">
-    <div class="step-title"><span class="step-num">4</span>创建应用</div>
+    <div class="step-title"><span class="step-num">4</span>勾选协议，点「开通服务」</div>
     <div class="step-desc">
-      上一步点了「前往创建应用」会跳到创建表单。应用信息<strong>随意填写</strong>即可，没有审核：
-      <ol>
-        <li><strong>应用名称：</strong>如「零号工具-DSH免费模型」</li>
-        <li><strong>应用描述：</strong>如「用于 DeepSeek Harness 零号工具的免费模型调用」</li>
-      </ol>
-      点击<strong>「提交」</strong>，创建成功后会自动跳回上一步的弹窗（此时应用下拉框里就有它了，选中并确定）。
+      创建好 Key 后，弹窗会显示一句提示：
+      <br>
+      <span style="display:inline-block;background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:6px 10px;margin:6px 0;font-size:13px;color:#92400e">
+        「该 API Key 暂未开通模型服务，点击下方「开通服务」按钮即可开通并正常调用。」
+      </span>
+      <br>
+      <strong>这句话是正常的，不是出错。</strong>它只是说 Key 建好了，但还没开通这个模型。
+      <br><br>
+      勾选「<strong>我已阅读并同意计费说明、服务协议及《用户使用须知》</strong>」，
+      然后点 <strong>「开通服务」</strong>。定价是 0 元/百万 tokens，开通不产生费用。
     </div>
     <div class="shot-pending">
-      <span class="shot-name">images/xinghuo/05-创建应用表单.png</span>
-      <div class="shot-what">待补截图：创建应用表单（含应用名称、描述字段与「提交」按钮）。</div>
+      <span class="shot-name">images/xinghuo/05-开通服务.png</span>
+      <div class="shot-what">待补截图：勾选协议复选框 + 「开通服务」按钮，以及上方那句「暂未开通模型服务」提示。</div>
     </div>
   </div>
 
   <div class="step">
-    <div class="step-title"><span class="step-num">5</span>在「推理服务」页复制 API Key</div>
+    <div class="step-title"><span class="step-num">5</span>复制 API Key</div>
     <div class="step-desc">
-      提交后系统会跳到<strong>推理服务</strong>页面；<strong>如果没有自动跳转，请手动点左侧菜单的「推理服务」</strong>。
-      这个页面会列出你开通的模型服务，每条包含三项信息：
+      开通成功后，弹窗进入<strong>「第二步：调用示例」</strong>，并自动生成完整调用示例。
+      页面下方显示：
       <ol>
         <li><strong>API Key：</strong>以 <code>ak-</code> 开头的长字符串（形如 <code>ak-f30b1********fc84b82e86a</code>）—— <strong>这就是要填进零号工具的东西</strong></li>
-        <li><strong>Model ID：</strong>模型标识，形如 <code>spark-x2.5-1.7b</code></li>
-        <li><strong>接口地址：</strong>OpenAI 兼容接口，形如 <code>https://maas-api.cn-huabei-1.xf-yun.com/v2</code></li>
+        <li><strong>Model ID：</strong>形如 <code>spark-x2.5-1.7b</code></li>
+        <li><strong>接口地址：</strong>形如 <code>https://maas-api.cn-huabei-1.xf-yun.com/v2</code></li>
       </ol>
       点击 API Key 旁边的<strong>「复制」</strong>按钮。
       <br><br>
-      <strong>注意区分：</strong>页面上可能还有 AppID、APISecret 等其他字段，那些<strong>都不是</strong>要填进零号工具的东西，
+      <strong>注意区分：</strong>页面上可能还有 AppID、APISecret 等字段，那些<strong>都不是</strong>要填进零号工具的东西，
       只要<strong>以 <code>ak-</code> 开头的那一个 API Key</strong>。
     </div>
     <div class="shot-pending">
-      <span class="shot-name">images/xinghuo/06-推理服务页APIKey.png</span>
-      <div class="shot-what">待补截图：推理服务列表页，需清楚拍到 API Key（ak- 开头）、Model ID、接口地址三列，以及「复制」按钮。</div>
+      <span class="shot-name">images/xinghuo/06-调用示例与APIKey.png</span>
+      <div class="shot-what">待补截图：第二步调用示例区，需拍到 API Key（ak- 开头）、Model ID、接口地址，以及「复制」按钮。</div>
     </div>
   </div>
 
   <div class="key-format">
-    <strong>重要：讯飞的新密钥是「一段」而不是「两段」。</strong><br>
-    v1.14.0 起，零号工具需要的是星辰 MaaS 平台的 <code>ak-</code> 开头的<strong>单个字符串</strong>，
-    <strong>不需要</strong>再用冒号拼接两个密钥（那是旧版 Spark Lite 的 <code>APIKey:APISecret</code> 格式，已废弃）。<br>
+    <strong>重要：讯飞的密钥是「一段」。</strong><br>
+    网上旧教程会让你把 <code>APIKey</code> 和 <code>APISecret</code> 用冒号拼起来 ——
+    那是已下架的 Spark Lite 的格式，<strong>现在不再需要</strong>。<br>
     正确示例：<code>ak-f30b1a1b2c3d4e5f6a7b8fc84b82e86a</code><br>
     粘贴时不要带引号、不要带前后空格、不要把 Model ID 或接口地址一起复制进去。
   </div>
@@ -167,7 +182,7 @@
   <div class="step">
     <div class="step-title"><span class="step-num">6</span>核对三项信息</div>
     <div class="step-desc">
-      把推理服务页显示的三项值和下表逐项比对。<strong>这三项只要有一项对不上，调用就会失败</strong>，而报错信息往往看不出是哪一项错了 —— 先核对能省掉一轮试错。
+      把页面上显示的三项值和下表逐项比对。<strong>这三项只要有一项对不上，调用就会失败</strong>，而报错信息往往看不出是哪一项错了 —— 先核对能省掉一轮试错。
       <table class="verify-table">
         <tr><th>项目</th><th>你页面上应显示</th></tr>
         <tr><td>接口地址</td><td><code>https://maas-api.cn-huabei-1.xf-yun.com/v2</code></td></tr>
@@ -175,19 +190,19 @@
         <tr><td>API Key</td><td>以 <code>ak-</code> 开头的长字符串</td></tr>
       </table>
       <br>
-      接口地址和 Model ID 零号工具已内置，你<strong>不需要</strong>手动填 —— 但如果页面上显示的不一样，
-      说明你选的是别的模型（比如 Spark-X2.5-4B），请回到第 2 步确认选的是 1.7B。
+      接口地址和 Model ID 零号工具已内置，你<strong>不需要</strong>手动填。
     </div>
   </div>
 
   <div class="warn">
     <strong>常见问题：</strong>
     <ol>
-      <li><strong>报 401 / 「apikey not found」</strong> —— 多半是把 Model ID 或接口地址当 Key 填进去了，或者复制时带了引号/空格。只填 <code>ak-</code> 开头那一段。</li>
-      <li><strong>报「model not found」</strong> —— 开通的不是 Spark-X2.5-1.7B，回第 2 步重新选。</li>
-      <li><strong>提示额度不足</strong> —— 「限时免费」有到期时间。到期后需要重新开通，或改用其他免费模型。</li>
-      <li><strong>在旧的讯飞开放平台（console.xfyun.cn）找不到入口</strong> —— 那是另一个平台，Spark Lite 已在那里下架。请到星辰 MaaS 平台（maas.xfyun.cn）操作。</li>
-      <li><strong>零号工具里还显示「讯飞」但一直不可用</strong> —— 你的本地配置仍是旧版 Spark Lite。请在配置中心重新粘贴新的 <code>ak-</code> Key 覆盖它。</li>
+      <li><strong>提示「该 API Key 暂未开通模型服务」</strong> —— 正常提示，点「开通服务」即可（第 4 步）。</li>
+      <li><strong>报 401 / 「apikey not found」</strong> —— 多半是把 Model ID 或接口地址当 Key 填了，或复制时带了引号/空格。只填 <code>ak-</code> 开头那一段。</li>
+      <li><strong>报「model not found」</strong> —— 开通的不是 Spark-X2.5-1.7B，回第 2 步确认选的是 1.7B。</li>
+      <li><strong>提示额度不足</strong> —— 「限时免费」有到期时间，到期后需重新开通或改用其他免费模型。</li>
+      <li><strong>找不到「开通服务」按钮</strong> —— 需要先勾选下方的协议复选框，勾上按钮才可点。</li>
+      <li><strong>看到的是 Spark-X2.5（293B）而不是 1.7B</strong> —— 那个要收费（输入 0.96 元/百万 tokens）。本教程要用的是同名的<strong>1.7B 版本</strong>，卡片上标着「1M」和「0 元」。</li>
     </ol>
   </div>
 
@@ -205,7 +220,8 @@
   </div>
 
   <div class="footer">
-    <p>零号工具 dsh-0-tools · <a href="https://github.com/ai-yukin/dsh-0-tools" target="_blank">GitHub</a> · <a href="https://gitee.com/ai-yukin/dsh-0-tools" target="_blank">Gitee</a></p>
+    <p>已经创建过讯飞 API Key？<a href="xinghuo-upgrade.html">走老用户更新指南（约 2 分钟）→</a></p>
+    <p style="margin-top:8px">零号工具 dsh-0-tools · <a href="https://github.com/ai-yukin/dsh-0-tools" target="_blank">GitHub</a> · <a href="https://gitee.com/ai-yukin/dsh-0-tools" target="_blank">Gitee</a></p>
   </div>
 </div>
 
@@ -218,7 +234,8 @@ function goToDSH() {
   if (key.indexOf('ak-') === 0) {
     if (key.length < 24) { alert('API Key 长度不正确，请检查是否复制完整'); return; }
   } else if (key.indexOf(':') >= 0) {
-    if (!confirm('你粘贴的像是旧版 Spark Lite 的 APIKey:APISecret 格式，该模型已下架。\n\n确定要继续吗？')) return;
+    alert('你粘贴的是旧版 Spark Lite 的 APIKey:APISecret 格式，该模型已下架。\n\n请回到上一步复制以 ak- 开头的新 Key。');
+    return;
   } else {
     if (!confirm('这个 Key 不以 ak- 开头，也不像旧版格式。\n\n星辰 MaaS 平台的 API Key 应该以 ak- 开头。\n\n确定要继续吗？')) return;
   }
