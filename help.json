@@ -2,7 +2,7 @@
   "version": "2026-10-11.2",
   "updatedAt": "2026-10-11",
   "plugin": {
-    "latestVersion": "1.16.1",
+    "latestVersion": "1.16.2",
     "minDsh": "0.1.5",
     "maxDsh": "0.2.99",
     "releaseUrl": "https://github.com/ai-yukin/dsh-0-tools/releases/latest",

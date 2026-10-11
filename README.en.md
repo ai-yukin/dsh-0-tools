@@ -25,7 +25,7 @@ dsh-0-tools is designed for users with zero programming experience who are using
 
 ## Current Version & Compatibility
 
-- Current version: **v1.16.1**
+- Current version: **v1.16.2**
 - Compatible DSH version: **`0.1.5` through `0.2.x`** (verified with `0.1.7-rc.2` and `0.2.0-rc.2`)
   - Since `v1.11.0` a single package covers both DSH generations: `0.1.x` and `0.2.x` work with the
     same plugin release, no version switching needed.
