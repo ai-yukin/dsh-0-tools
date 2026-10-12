@@ -125,9 +125,21 @@ check("★ 第一行含「零号工具 dsh-0-tools（v+版本号）」",
       '"✦零号工具 dsh-0-tools（v" + PLUGIN_VERSION + "）"' in CODE)
 check("★ 版本号引用 PLUGIN_VERSION（不硬编码）", CODE.count("PLUGIN_VERSION") >= 2)
 check("★ 第一行含「帮助版本」+ 远端版本号", '"✦帮助版本" + data.version' in CODE)
-check("★ 第一行含「作者：ai-yukin」", '"✦作者：ai-yukin"' in CODE)
+check("★ 第一行含「作者： ai-yukin」（冒号后有空格，与设计稿一致）",
+      '"✦作者： ai-yukin"' in CODE)
 check("★ 离线内置时有提示、已同步时不加噪",
       'source === "remote" ? null : "（离线内置）"' in CODE)
+
+# ---------- 4b. 显式两行 + 条目不劈开（用户报的「公众号被劈成两行」）----------
+# 五个条目 15px 下排一起要 ~852px，卡片内宽只有 ~620px，必然折行；
+# 不显式断行时浏览器会挑最"好看"的点断，结果把「✦关注作者公众号」劈成两半。
+check("★ 第一行容器内含两个子 div（显式两行）",
+      re.search(r'✦零号工具 dsh-0-tools', CODE) and CODE.count('"div", { children: [') >= 2)
+check("★ 断点落在「帮助版本」之后（设计稿的第一行结尾）",
+      CODE.index('"✦帮助版本" + data.version') < CODE.index('"✦作者： ai-yukin"'))
+check("★ 每个条目都有 whiteSpace:nowrap（宽度变化也不会被劈开）",
+      CODE.count('whiteSpace: "nowrap"') >= 3)
+check("★ 分隔符是普通空格，不再是「　✦　」", 'const SEP = " "' in CODE)
 
 # ---------- 5. 三处超链落点（本次需求核心） ----------
 check("★ 零号工具 dsh-0-tools 指向 GitHub 仓库",
@@ -155,7 +167,12 @@ if os.path.isfile(QR):
     check("二维码边长足够扫码（≥200px）", w >= 200, expect=True)
 
 # ---------- 7. DSH 官方资料区 ----------
-check("★ 有「DSH 官方资料：」标题行", '"DSH 官方资料："' in CODE)
+check("★ 有「DSH官方资料：」标题行", '"DSH官方资料："' in CODE)
+check("★ 官方资料链接无行首项目符号（设计稿是纯文字行）", '"• " + l.title' not in CODE)
+# ⚠️ 只查 HelpLinkList 内部，别全文件找 "underline" ——
+# ②费用管控中心的「查看官方资费说明」本就该有下划线，那是另一个组件的事。
+_hl = CODE[CODE.index("function HelpLinkList"):CODE.index("function HelpContent")]
+check("★ 官方资料链接无下划线（设计稿是纯文字行）", "underline" not in _hl)
 check("官方资料列表仍渲染", "HelpLinkList, { items: data.official" in CODE)
 check("官方资料条数保持 3", len(HELP.get("official", [])) == 3)
 # selected 已不再渲染（链接都并入第一行超链），但 help.json 里保留该字段，
