@@ -7,6 +7,25 @@ Installers and release notes for each version: [Releases](https://github.com/ai-
 
 ---
 
+## What's New in v1.16.3
+
+**After you switch to the new iFlytek key, the red "model retired" notice now clears itself.**
+
+The notice used to appear whenever an iFlytek provider was configured at all — which
+stayed true after you pasted the new key, so it kept showing and made it look like the
+switch had failed. It now compares the model actually in your settings: the notice stays
+while the old model is still configured and disappears once the new one is in place,
+replaced by a single "讯飞星火模型已经完成更新" line.
+
+**Also tidied up the settings page structure:**
+
+- The help center and the about panel are merged into one card (they answered the same
+  questions, so splitting them forced needless scrolling and showed the version twice);
+- The help center is now a single block: project / version / author / WeChat / feedback on
+  one line, with DSH official resources and API Key backup below;
+- Added "关注作者公众号", which shows a QR code;
+- "精选资料" is now "工具资料", listing only the repository and the issue tracker.
+
 ## What's New in v1.16.0
 
 **iFlytek Spark has a new model — existing users need to authorize their current key once (about 2 minutes).**

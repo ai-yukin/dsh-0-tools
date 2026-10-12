@@ -26,7 +26,7 @@ dsh-0-tools is designed for users with zero programming experience who are using
 
 ## Current Version & Compatibility
 
-- Current version: **v1.16.2**
+- Current version: **v1.16.3**
 - Compatible DSH version: **`0.1.5` through `0.2.x`** (verified with `0.1.7-rc.2` and `0.2.0-rc.2`)
   - DSH `0.1.x` and `0.2.x` work with **the same plugin release** — no version switching needed.
   - ⚠️ DSH `0.3` and above are not supported yet: that generation may carry incompatible changes and
@@ -192,6 +192,8 @@ dsh-0-tools/
 │   ├── xinghuo-upgrade.html   # iFlytek Spark tutorial (existing users: authorize the new model on your current key)
 │   └── images/                # tutorial screenshots
 ├── screenshots/           # README screenshots
+├── images/
+│   └── wechat-qrcode.png   # WeChat official account QR code (shown when "关注作者公众号" is clicked)
 ├── cordis.patch.yml       # web profile injection declaration
 ├── package.json
 ├── help.json              # help center online data source (hosted on GitHub Pages, supports remote hot-update model list)
@@ -204,7 +206,7 @@ dsh-0-tools/
 └── LICENSE
 ```
 
-> The zip attached to Releases contains `lib/`, `guide/`, `screenshots/`, `cordis.patch.yml`, `package.json`, `help.json`, the install scripts and the READMEs.
+> The zip attached to Releases contains `lib/`, `guide/`, `screenshots/`, `images/`, `cordis.patch.yml`, `package.json`, `help.json`, the install scripts and the READMEs.
 > `.github/`, `article/`, `draft_*/` and leftover debug files are not packaged.
 
 ## Mechanism Explanation

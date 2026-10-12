@@ -26,7 +26,7 @@
 
 ## 当前版本与兼容范围
 
-- 当前版本：**v1.16.2**
+- 当前版本：**v1.16.3**
 - 兼容 DSH 版本：**`0.1.5` ~ `0.2.x`**（实测适配 `0.1.7-rc.2` 与 `0.2.0-rc.2`）
   - DSH `0.1.x` 和 `0.2.x` 用**同一个插件包**，无需切换版本。
   - ⚠️ 尚未支持 DSH `0.3` 及以上：那一代可能有不兼容改动，实测前不做承诺。
@@ -186,6 +186,8 @@ dsh-0-tools/
 │   ├── xinghuo-upgrade.html   # 讯飞星火教程（老用户给已有 Key 授权新模型）
 │   └── images/                # 教程截图
 ├── screenshots/           # README 用截图
+├── images/
+│   └── wechat-qrcode.png   # 公众号二维码（设置页「关注作者公众号」点击后显示）
 ├── cordis.patch.yml       # web profile 注入声明
 ├── package.json
 ├── help.json              # 帮助中心在线数据源（托管于 GitHub Pages，支持远程热更新模型清单）
@@ -198,7 +200,7 @@ dsh-0-tools/
 └── LICENSE
 ```
 
-> 打 zip 发 Release 时会包含 `lib/`、`guide/`、`screenshots/`、`cordis.patch.yml`、`package.json`、`help.json`、安装脚本与 README。
+> 打 zip 发 Release 时会包含 `lib/`、`guide/`、`screenshots/`、`images/`、`cordis.patch.yml`、`package.json`、`help.json`、安装脚本与 README。
 > `.github/`、`article/`、`draft_*/`、调试残留文件不打包。
 
 ## 机制说明

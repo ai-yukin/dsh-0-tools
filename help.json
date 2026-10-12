@@ -1,13 +1,13 @@
 {
-  "version": "2026-10-11.2",
-  "updatedAt": "2026-10-11",
+  "version": "2026-10-12.1",
+  "updatedAt": "2026-10-12",
   "plugin": {
-    "latestVersion": "1.16.2",
+    "latestVersion": "1.16.3",
     "minDsh": "0.1.5",
     "maxDsh": "0.2.99",
     "releaseUrl": "https://github.com/ai-yukin/dsh-0-tools/releases/latest",
-    "badgeText": "⬆ v1.16.0 讯飞星火要换新 Key：Spark Lite 已下架，去官网点「授权管理」勾上新模型即可",
-    "notes": "讯飞星火换新模型：Spark Lite 已下架，改用 Spark-X2.5-1.7B（1M 上下文）。已配置讯飞的老用户请去官网「模型服务 → API Key 管理 → 授权管理」，勾选 Spark-X2.5-1.7B（注意不是收费的 293B 大模型），复制 ak- 开头的 Key 重新粘贴一次，约 2 分钟。"
+    "badgeText": "⬆ v1.16.3 已换新 Key 的用户：讯飞提醒红框会自动撤掉，设置页也已重新排版",
+    "notes": "本次把「小白帮助中心」与「关于」合并为一张卡片并重排版式；换完讯飞新 Key 后，模型下线提醒会依据你实际配置的模型自动撤掉，不再一直挂着。"
   },
   "official": [
     {

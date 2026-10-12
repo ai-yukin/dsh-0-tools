@@ -210,7 +210,8 @@ for tag, g in (("新用户页", GUIDE_NEW), ("老用户页", GUIDE_UPG)):
 # 提醒链路：help.json 的 badgeText 与 retired 引导
 check("help.json · badgeText 已填（角标直接说要点）", bool(HP_PLUGIN.get("badgeText")), True)
 check("badgeText 长度在过滤上限内", len(HP_PLUGIN.get("badgeText", "")) <= 60, True)
-check("badgeText 说清了为什么要更新", "讯飞" in HP_PLUGIN["badgeText"] and "下架" in HP_PLUGIN["badgeText"], True)
+check("badgeText 说清了本次要点",
+      ("讯飞" in HP_PLUGIN["badgeText"] or "设置页" in HP_PLUGIN["badgeText"]), True)
 
 xh_retired = next((r for r in HELP["retired"] if r.get("type") == "xinghuo"), None)
 check("help.json · retired 含讯飞引导项", xh_retired is not None, True)
@@ -239,13 +240,21 @@ check("客户端 · RetiredResidueZone 渲染引导按钮", "r.guideUrl ?" in CL
 check("客户端 · 有引导时按钮改为「清理旧配置」", 'uninstallLabel: r.guideUrl ? "清理旧配置"' in CLIENT, True)
 
 # --------------------------------------------------------- 5. 版本号同步
-print("\n=== 5. 版本号三处同步 ===")
+print("\n=== 5. 版本号五处同步 ===")
 pkg = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
-check("package.json", pkg["version"], "1.16.2")
-check("client.js PLUGIN_VERSION", re.search(r'PLUGIN_VERSION = "([\d.]+)"', CLIENT).group(1), "1.16.2")
-check("help.json latestVersion", HP_PLUGIN["latestVersion"], "1.16.2")
-check("README 中文当前版本", "- 当前版本：**v1.16.2**" in README_CN, True)
-check("README 英文当前版本", "- Current version: **v1.16.2**" in README_EN, True)
+VER = pkg["version"]          # 基准：package.json 是唯一真源
+# v1.16.3：原断言写死"1.16.2"，每发一次版就得手改这 5 行 —— 漏改就是
+# 用户看到的版本号与实际不符（用户可见的错误信息）。
+# 改为「五处必须与 package.json 同源」，发版只需改 package.json 一处，
+# 剩下的由本断言自动跟随；真不同源时会立刻报红。
+check("client.js PLUGIN_VERSION 与 package.json 同源",
+      re.search(r'PLUGIN_VERSION = "([\d.]+)"', CLIENT).group(1), VER)
+check("help.json latestVersion 与 package.json 同源", HP_PLUGIN["latestVersion"], VER)
+check("README 中文当前版本与 package.json 同源",
+      ("- 当前版本：**v%s**" % VER) in README_CN, True)
+check("README 英文当前版本与 package.json 同源",
+      ("- Current version: **v%s**" % VER) in README_EN, True)
+check("版本号是三段语义化格式", bool(re.fullmatch(r"\d+\.\d+\.\d+", VER)), True)
 check("CHANGELOG 保留了 v1.16.0 段", "## v1.16.0" in CHANGELOG_CN, True)
 check("CHANGELOG 英文保留了 v1.16.0 段", "v1.16.0" in CHANGELOG_EN, True)
 check("CHANGELOG 保留了 v1.15.0 段", "## v1.15.0" in CHANGELOG_CN, True)
@@ -277,8 +286,11 @@ check("v1.16.2 新用户页实图 7 张已就位", GUIDE_NEW.count('<img src="im
 check("v1.16.0 老用户页声明无需开通服务", "不需要点「开通服务」" in GUIDE_UP, True)
 check("v1.16.0 新用户页仍保留「开通服务」（流程未被污染）", "开通服务" in GUIDE_NEW, True)
 check("v1.16.0 新用户页有分流判据", "本页（新用户）" in GUIDE_NEW and "老用户页" in GUIDE_NEW, True)
-check("v1.16.0 badgeText 已改指「授权管理」", "授权管理" in HP_PLUGIN["badgeText"], True)
-check("v1.16.0 badgeText 不再指向「开通服务」", "开通服务" in HP_PLUGIN["badgeText"], False)
+# v1.16.3：badgeText 已改为播报本次改动，不再复述 v1.16.0 的讯飞换 Key 提醒
+# （那个提醒已由「按实际配置的模型自动撤掉红框」接管，文案不该继续催用户去换）。
+check("badgeText 已指向当前版本", VER in HP_PLUGIN["badgeText"], True)
+check("badgeText 不再催用户去换讯飞 Key",
+      ("授权管理" in HP_PLUGIN["badgeText"] or "去官网" in HP_PLUGIN["badgeText"]), False)
 _xh = [r for r in HELP["retired"] if r["type"] == "xinghuo"][0]
 check("v1.16.0 retired.reason 已改指「授权管理」", "授权管理" in _xh["reason"], True)
 # reason 里出现「开通服务」是对的 —— 那句是「也不用点『开通服务』」，
