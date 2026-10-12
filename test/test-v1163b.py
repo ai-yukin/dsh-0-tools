@@ -125,10 +125,21 @@ check("★ 第一行含「零号工具 dsh-0-tools（v+版本号）」",
       '"✦零号工具 dsh-0-tools（v" + PLUGIN_VERSION + "）"' in CODE)
 check("★ 版本号引用 PLUGIN_VERSION（不硬编码）", CODE.count("PLUGIN_VERSION") >= 2)
 check("★ 第一行含「帮助版本」+ 远端版本号", '"✦帮助版本" + data.version' in CODE)
-check("★ 第一行含「作者： ai-yukin」（冒号后有空格，与设计稿一致）",
-      '"✦作者： ai-yukin"' in CODE)
+check("★ 第一行含「✦作者：ai-yukin」（冒号后无空格）", '"✦作者：ai-yukin"' in CODE)
 check("★ 离线内置时有提示、已同步时不加噪",
       'source === "remote" ? null : "（离线内置）"' in CODE)
+
+# ---------- 4a. 版本号必须是「活」的（用户明确提醒）----------
+# 这两处一旦硬编码，每次发版就会漏改一处，且用户看到的版本与实际不符。
+# 发版时改 PLUGIN_VERSION 与 help.json 的 version 即可，这两处自动跟随。
+check("★ 插件版本走 PLUGIN_VERSION 变量（不硬编码）",
+      '"✦零号工具 dsh-0-tools（v" + PLUGIN_VERSION + "）"' in CODE)
+check("★ 帮助版本走远程 data.version（不硬编码）",
+      '"✦帮助版本" + data.version' in CODE)
+# 反向断言：这两行附近不得出现形如 (v1.16.2) 的字面量版本
+_title_line = re.search(r'✦零号工具 dsh-0-tools[^"]*"', CODE)
+check("★ 标题行内无字面量版本号（除 PLUGIN_VERSION 外）",
+      _title_line and not re.search(r'v\d+\.\d+\.\d+', _title_line.group(0)))
 
 # ---------- 4b. 显式两行 + 条目不劈开（用户报的「公众号被劈成两行」）----------
 # 五个条目 15px 下排一起要 ~852px，卡片内宽只有 ~620px，必然折行；
@@ -136,7 +147,7 @@ check("★ 离线内置时有提示、已同步时不加噪",
 check("★ 第一行容器内含两个子 div（显式两行）",
       re.search(r'✦零号工具 dsh-0-tools', CODE) and CODE.count('"div", { children: [') >= 2)
 check("★ 断点落在「帮助版本」之后（设计稿的第一行结尾）",
-      CODE.index('"✦帮助版本" + data.version') < CODE.index('"✦作者： ai-yukin"'))
+      CODE.index('"✦帮助版本" + data.version') < CODE.index('"✦作者：ai-yukin"'))
 check("★ 每个条目都有 whiteSpace:nowrap（宽度变化也不会被劈开）",
       CODE.count('whiteSpace: "nowrap"') >= 3)
 check("★ 分隔符是普通空格，不再是「　✦　」", 'const SEP = " "' in CODE)
@@ -181,8 +192,8 @@ check("help.json selected 字段仍是合法数组", isinstance(HELP.get("select
 
 # ---------- 8. API Key 备份区 ----------
 check("★ 有「API Key 备份：」标题行", '"API Key 备份："' in CODE)
-check("★ 导出按钮文案为「✦导出」", '"✦导出"' in CODE)
-check("★ 导入按钮文案为「✦导入」", '"✦导入"' in CODE)
+check("★ 导出按钮文案为「⇧导出」", '"⇧导出"' in CODE)
+check("★ 导入按钮文案为「⇩导入」", '"⇩导入"' in CODE)
 check("★ 导出仍走 localStorage 备份键",
       'localStorage.getItem("dsh0_free_model_backup")' in CODE)
 check("★ 导入仍走 doAutoInstall 写回", "doAutoInstall(modelType, apiKey, BUILTIN_FREE_MODELS)" in CODE)
